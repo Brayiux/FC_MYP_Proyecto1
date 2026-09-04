@@ -1,0 +1,37 @@
+\section{Estructura de directorios}
+
+\dirtree{%
+    .1 FC\_MYP\_Proyecto1/.
+        .2 Docs/.
+            .3 Process/.
+            .3 Analysis\_Design/.
+            .3 CodeDocs/.
+                .4 Client/.
+                .4 Server/.
+        .2 Client/.
+            .3 Model/.
+            .3 View/.
+            .3 Controller/.
+        .2 Server/.
+            .3 Model/.
+            .3 View/.
+            .3 Controller/.
+}
+\vspace{2mm}
+
+\subsection{Directorio {\ttfamily FC\_MYP\_Proyecto1}}
+Es la raíz del proyecto, y aunque sus subdirectorios tienen nombres claros, contiene además cualquier archivo que requiera estar en la raíz del proyecto, así como archivos de configuración como el {\ttfamily .gitignore}, archivos de configuración para la generación automatizada de documentación, etc.
+
+\subsection{Directorio {\ttfamily Docs}}
+Sus subdirectorios son muy descriptivos:
+\begin{itemize}
+    \item En {\ttfamily Process} se documenta el proceso de cómo se desarrolló el proyecto completo y qué flujos de trabajo se siguieron.
+    \item En {\ttfamily Analysys\_Design} va este mismo documento y cualquier otro recurso que ayudara para completar las etapas de análisis y diseño.
+    \item En {\ttfamily CodeDocs} va la documentación del código, generada por la herramienta \textit{Doxygen} mediante la integración continua. Tiene una sección para la documentación del código del cliente y otra para la del código del servidor.
+\end{itemize}
+
+\subsection{Directorio {\ttfamily Client}}
+Contiene el ejecutable del cliente y utiliza el patrón de diseño MVC, dividiendo la conexión y comunicación con el servidor, la interfaz gráfica y el canal de comunicación entre ambos en tres capas diferentes.
+
+\subsection{Directorio {\ttfamily Server}}
+Contiene el ejecutable del servidor y al igual que con el cliente, usa el patrón MVC, dividiendo las reglas de la aplicación desde el servidor, la impresión en consola y la comunicación entre ambos en tres capas.

@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Página-1" id="3FUn1U-mSWEY54q8FLFA">
-    <mxGraphModel dx="710" dy="432" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2039" dy="736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -56,28 +56,28 @@
           <mxGeometry height="26" width="220" y="62" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-33" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Chat" vertex="1">
-          <mxGeometry height="130" width="210" x="40" y="640" as="geometry" />
+          <mxGeometry height="170" width="210" x="360" y="660" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-34" parent="234_sLhIZ5YmnxCSnLvd-33" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;- historial de mensajes&lt;div&gt;- usuarios miembros del chat&lt;/div&gt;" vertex="1">
-          <mxGeometry height="54" width="210" y="26" as="geometry" />
-        </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-35" parent="234_sLhIZ5YmnxCSnLvd-33" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
-          <mxGeometry height="8" width="210" y="80" as="geometry" />
-        </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-36" parent="234_sLhIZ5YmnxCSnLvd-33" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- recibir mensaje&lt;div&gt;- mostrar mensajes&lt;/div&gt;" vertex="1">
-          <mxGeometry height="42" width="210" y="88" as="geometry" />
-        </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-37" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Sala Principal" vertex="1">
-          <mxGeometry height="140" width="210" x="40" y="780" as="geometry" />
-        </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-38" parent="234_sLhIZ5YmnxCSnLvd-37" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;- historial de mensajes&lt;div&gt;- usuarios miembros del chat (todos los usuarios identificados)&lt;/div&gt;" vertex="1">
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-34" parent="234_sLhIZ5YmnxCSnLvd-33" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;&lt;div&gt;- nombre&lt;/div&gt;- historial de mensajes&lt;div&gt;- usuarios miembros del chat&lt;/div&gt;" vertex="1">
           <mxGeometry height="64" width="210" y="26" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-39" parent="234_sLhIZ5YmnxCSnLvd-37" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-35" parent="234_sLhIZ5YmnxCSnLvd-33" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
           <mxGeometry height="8" width="210" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-40" parent="234_sLhIZ5YmnxCSnLvd-37" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- recibir mensaje&lt;div&gt;- mostrar mensajes&lt;/div&gt;" vertex="1">
-          <mxGeometry height="42" width="210" y="98" as="geometry" />
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-36" parent="234_sLhIZ5YmnxCSnLvd-33" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- registrar usuario&lt;/div&gt;&lt;div&gt;- eliminar usuario&lt;/div&gt;- recibir mensaje&lt;div&gt;- mostrar mensajes&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="210" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-37" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Sala Principal" vertex="1">
+          <mxGeometry height="180" width="210" x="360" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-38" parent="234_sLhIZ5YmnxCSnLvd-37" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;&lt;div&gt;- nombre&lt;/div&gt;- historial de mensajes&lt;div&gt;- usuarios miembros del chat (todos los usuarios identificados)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="74" width="210" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-39" parent="234_sLhIZ5YmnxCSnLvd-37" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="210" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-40" parent="234_sLhIZ5YmnxCSnLvd-37" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- registrar usuario&lt;/div&gt;&lt;div&gt;- eliminar usuario&lt;/div&gt;- recibir mensaje&lt;div&gt;- mostrar mensajes&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="210" y="108" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-45" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Servidor" vertex="1">
           <mxGeometry height="110" width="210" x="260" y="480" as="geometry" />
@@ -92,43 +92,43 @@
           <mxGeometry height="42" width="210" y="68" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-49" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Sala Privada" vertex="1">
-          <mxGeometry height="130" width="210" x="40" y="1120" as="geometry" />
+          <mxGeometry height="170" width="210" x="360" y="1290" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-50" parent="234_sLhIZ5YmnxCSnLvd-49" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;&lt;div&gt;- historial de mensajes&lt;/div&gt;- 2 usuarios miembros" vertex="1">
-          <mxGeometry height="54" width="210" y="26" as="geometry" />
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-50" parent="234_sLhIZ5YmnxCSnLvd-49" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;&lt;div&gt;- nombre&lt;/div&gt;&lt;div&gt;- historial de mensajes&lt;/div&gt;- 2 usuarios miembros" vertex="1">
+          <mxGeometry height="64" width="210" y="26" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-51" parent="234_sLhIZ5YmnxCSnLvd-49" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
-          <mxGeometry height="8" width="210" y="80" as="geometry" />
+          <mxGeometry height="8" width="210" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-52" parent="234_sLhIZ5YmnxCSnLvd-49" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- recibir mensaje&lt;div&gt;- mostrar mensajes&lt;/div&gt;" vertex="1">
-          <mxGeometry height="42" width="210" y="88" as="geometry" />
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-52" parent="234_sLhIZ5YmnxCSnLvd-49" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- registrar usuario&lt;/div&gt;&lt;div&gt;- eliminar usuario&lt;/div&gt;- recibir mensaje&lt;div&gt;- mostrar mensajes&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="210" y="98" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-54" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Sala Compartida" vertex="1">
-          <mxGeometry height="160" width="210" x="40" y="940" as="geometry" />
+          <mxGeometry height="200" width="210" x="360" y="1060" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-55" parent="234_sLhIZ5YmnxCSnLvd-54" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;- historial de mensajes&lt;div&gt;- usuarios miembros del chat (invitados y dueño)&lt;/div&gt;&lt;div&gt;- dueño de la sala&lt;/div&gt;" vertex="1">
-          <mxGeometry height="84" width="210" y="26" as="geometry" />
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-55" parent="234_sLhIZ5YmnxCSnLvd-54" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;&lt;div&gt;- nombre&lt;/div&gt;- historial de mensajes&lt;div&gt;- usuarios miembros del chat (invitados y dueño)&lt;/div&gt;&lt;div&gt;- dueño de la sala&lt;/div&gt;" vertex="1">
+          <mxGeometry height="94" width="210" y="26" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-56" parent="234_sLhIZ5YmnxCSnLvd-54" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
-          <mxGeometry height="8" width="210" y="110" as="geometry" />
+          <mxGeometry height="8" width="210" y="120" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-57" parent="234_sLhIZ5YmnxCSnLvd-54" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- recibir mensaje&lt;div&gt;- mostrar mensajes&lt;/div&gt;" vertex="1">
-          <mxGeometry height="42" width="210" y="118" as="geometry" />
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-57" parent="234_sLhIZ5YmnxCSnLvd-54" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- registrar usuario&lt;/div&gt;&lt;div&gt;- eliminar usuario&lt;/div&gt;- recibir mensaje&lt;div&gt;- mostrar mensajes&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72" width="210" y="128" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-58" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Usuario" vertex="1">
-          <mxGeometry height="230" width="210" x="280" y="930" as="geometry" />
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-58" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Cliente" vertex="1">
+          <mxGeometry height="210" width="210" x="-360" y="920" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-59" parent="234_sLhIZ5YmnxCSnLvd-58" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;ve:&lt;/div&gt;&lt;div&gt;- sala principal&lt;/div&gt;&lt;div&gt;- salas compartidas (invitado)&lt;/div&gt;&lt;div&gt;- salas compartidas (creadas)&lt;/div&gt;&lt;div&gt;- salas privadas&lt;/div&gt;" vertex="1">
-          <mxGeometry height="84" width="210" y="26" as="geometry" />
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-59" parent="234_sLhIZ5YmnxCSnLvd-58" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;ve:&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- sala principal&lt;/div&gt;&lt;div&gt;- salas compartidas (invitado)&lt;/div&gt;&lt;div&gt;- salas compartidas (creadas)&lt;/div&gt;&lt;div&gt;- salas privadas&lt;/div&gt;" vertex="1">
+          <mxGeometry height="94" width="210" y="26" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-60" parent="234_sLhIZ5YmnxCSnLvd-58" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
-          <mxGeometry height="8" width="210" y="110" as="geometry" />
+          <mxGeometry height="8" width="210" y="120" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-61" parent="234_sLhIZ5YmnxCSnLvd-58" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- enviar mensaje a sala principal&lt;div&gt;- enviar mensaje a alguna sala compartida seleccionada&lt;/div&gt;&lt;div&gt;- enviar mensaje a algún miembro identificado (sala privada)&lt;/div&gt;&lt;div&gt;- invitar a un miembro a una sala compartida de la que es dueño&lt;/div&gt;" vertex="1">
-          <mxGeometry height="112" width="210" y="118" as="geometry" />
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-61" parent="234_sLhIZ5YmnxCSnLvd-58" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;puede:&lt;/div&gt;- recibir invitación a una sala&lt;div&gt;- unirse a una sala a partir de una invitación&lt;/div&gt;&lt;div&gt;- desconectarse&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="210" y="128" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-62" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Servidor" vertex="1">
-          <mxGeometry height="210" width="210" x="280" y="1240" as="geometry" />
+          <mxGeometry height="210" width="210" x="-120" y="920" as="geometry" />
         </mxCell>
         <mxCell id="234_sLhIZ5YmnxCSnLvd-63" parent="234_sLhIZ5YmnxCSnLvd-62" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;tiene:&lt;/div&gt;&lt;div&gt;- usuarios&lt;/div&gt;&lt;div&gt;- información de usuarios&lt;/div&gt;&lt;div&gt;- sala principal&lt;/div&gt;&lt;div&gt;- salas compartidas&lt;/div&gt;&lt;div&gt;- salas privadas&lt;/div&gt;" vertex="1">
           <mxGeometry height="94" width="210" y="26" as="geometry" />
@@ -136,8 +136,20 @@
         <mxCell id="234_sLhIZ5YmnxCSnLvd-64" parent="234_sLhIZ5YmnxCSnLvd-62" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
           <mxGeometry height="8" width="210" y="120" as="geometry" />
         </mxCell>
-        <mxCell id="234_sLhIZ5YmnxCSnLvd-65" parent="234_sLhIZ5YmnxCSnLvd-62" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="-" vertex="1">
+        <mxCell id="234_sLhIZ5YmnxCSnLvd-65" parent="234_sLhIZ5YmnxCSnLvd-62" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- invitar a usuario a una sala&lt;div&gt;- ingresar a usuario a una sala&lt;/div&gt;&lt;div&gt;- dar usuarios de una sala&lt;/div&gt;&lt;div&gt;- enviar mensaje a una sala&lt;/div&gt;&lt;div&gt;- desconectar usuario&lt;/div&gt;" vertex="1">
           <mxGeometry height="82" width="210" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="cenh7zvb0NXPX1cbg_l_-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Usuario - Servidor" vertex="1">
+          <mxGeometry height="110" width="210" x="120" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="cenh7zvb0NXPX1cbg_l_-2" parent="cenh7zvb0NXPX1cbg_l_-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="tiene:&lt;div&gt;- invitaciones a salas&lt;/div&gt;" vertex="1">
+          <mxGeometry height="34" width="210" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="cenh7zvb0NXPX1cbg_l_-3" parent="cenh7zvb0NXPX1cbg_l_-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="210" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cenh7zvb0NXPX1cbg_l_-4" parent="cenh7zvb0NXPX1cbg_l_-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- recibir invitación a una sala&lt;div&gt;- desconectarse&lt;/div&gt;" vertex="1">
+          <mxGeometry height="42" width="210" y="68" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
