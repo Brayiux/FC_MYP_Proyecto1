@@ -1,0 +1,8 @@
+Report.run.xml
+Report.synctex.gz
+*.bkp
+*.dtmp
+*.aux
+*.bcf
+*.log
+*.pdf
