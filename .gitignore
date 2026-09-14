@@ -7,6 +7,11 @@ Report.synctex.gz
 *.log
 *.pdf
 
+# Visual Studio y MSBuild
+
 obj/
 bin/
 .vs/
+
+# Doxygen
+CodeDocs/
