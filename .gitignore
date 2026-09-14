@@ -6,3 +6,7 @@ Report.synctex.gz
 *.bcf
 *.log
 *.pdf
+
+obj/
+bin/
+.vs/
