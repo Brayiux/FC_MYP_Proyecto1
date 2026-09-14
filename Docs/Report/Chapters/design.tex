@@ -60,3 +60,107 @@ A continuación, una explicación general del contenido de cada directorio:
 	\item \textbf{Client:} Contiene el ejecutable del cliente y todos los directorios necesarios para su implementación.
 	\item \textbf{Server:} Contiene el ejecutable del servidor y todos los directorios necesarios para su implementación.
 \end{itemize}
+
+\section{Pseudocódigo}
+
+\subsection{Servidor}
+Del programa (\textbf{Servidor})
+\begin{verbatim}
+	clase Servidor:
+	    método Main():
+	      Asignar comando ``ctrl + c'' para finalizar el servidor.
+	      finalizado = falso.
+	      puerto = Preguntar el puerto donde se ejecutará el servidor.
+	      controlador = Crear el ControladorServicio(IP local, puerto).
+	      Mientras el servidor no esté finalizado:
+	        Correr el controlador
+	      Imprimir mensaje de despedida.
+\end{verbatim}
+
+Del controlador (\textbf{ControladorServidor})
+
+\begin{verbatim}
+	clase ControladorServidor:
+	  campo Codificador codificador = nuevo CodificadorUTF8.
+	  campo Intérprete intérprete = nuevo Intérprete.
+	  
+	  constructor ControladorServidor(IP local, puerto)
+	    Obtener la instancia del Conector y asignarles la IP local y puerto.
+	    Conectar el socket en modo escucha con el conector.
+		
+	  método Correr():
+	    mensaje = RecibirDatos()
+	    estrategia = Interpretar(mensaje)
+	    EjecutarEstrategia(estrategia)
+			
+	  método RecibirDatos()
+	    conexión = Obtener la conexión del Conector.
+	    datos codificados = Obtener los datos de la conexión.
+	    regresar datos codificados.
+			
+	  método Interpretar(mensaje)
+	    estrategia de acción respuesta = Interpretar mensaje con el intérprete.
+	    regresar estrategia de acción respuesta.
+			
+	  método EjecutarEstrategia(estrategia):
+	    Ejecutar la estrategia.
+\end{verbatim}
+
+Del \textbf{Conector}:
+
+\begin{verbatim}
+	clase Conector:
+	  campo estático instancia
+	  campo conexión : TcpListener.
+	
+	  constructor privado Conector():
+	    Conexión = nula.
+	  
+	  método ComenzarAEscuchar():
+	    Empezar conexión.
+	  
+	  método ObtenerConexión()
+	    regresar conexión.
+	  
+	  método EstablecerConexión(IP, puerto)
+	    si conexión es nula
+	      conexión = nuevo TcpListener(IP, puerto)
+	
+	  método ObtenerInstancia():
+	    Si instancia es nula:
+	      instancia = nuevo Conector.
+	    regresar instancia.
+\end{verbatim}
+
+Del \textbf{Codificador}
+
+\begin{verbatim}
+	clase Codificador:
+	  campo conexión : TcpListener.
+	  
+	  método decodificar(codificado):
+	    decodificado = Decodificar codificado a cadena en formato UTF-8.
+	     regresar decodificado.
+	     
+	  método codificar(decodificado):
+	    codificado = Codificar decodificado en formato UTF-8 a un arreglo de bytes.
+	    regresar codificado.
+	    
+\end{verbatim}
+
+Del \textbf{Intérprete}
+
+\begin{verbatim}
+	clase Intérprete:
+	
+	  método interpretar(mensaje):
+	    ValidarFormato(mensaje)
+	    
+	    
+	  método validarFormato(mensaje):
+	  
+\end{verbatim}
+
+
+\subsection{Cliente}
+
