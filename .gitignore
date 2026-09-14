@@ -1,8 +1,7 @@
-Report.aux
-Report.bcf
-Report.log
-Report.pdf
 Report.run.xml
 Report.synctex.gz
 *.bkp
 *.dtmp
+*.aux
+*.bcf
+*.log
