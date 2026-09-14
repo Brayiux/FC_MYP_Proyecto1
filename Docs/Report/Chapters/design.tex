@@ -1,0 +1,62 @@
+\chapter{Diseño}
+
+La mayoría del diseño se encuentra en diagramas, en los directorios de documentación correspondientes.
+
+\section{Decisiones fundamentales}
+
+Tras realizar el análisis, se consideraron las siguientes decisiones como las más adecuadas y que mejor se apegan a este proyecto.
+
+\begin{itemize}
+	\item \textbf{Lenguaje de programación:} El cliente y el servidor se programarán en \texttt{C\#} con el framework de \texttt{.NET}, ya que el lenguaje es orientado a objetos y el framework tiene bibliotecas útiles para el protocolo TCP/IP, serialización y deserialización de JSON, entre otras ventajas.
+	\item \textbf{Programas:}
+	\begin{itemize}
+		\item \textbf{Servidor:} Se utilizará el patrón de diseño MVC y no se contará con interfaz gráfica, sino con salida de texto a consola.
+		\item \textbf{Cliente:} Se utilizará el patrón de diseño MVVM y contará con interfaz gráfica, para lo cual se utilizará el framework de \texttt{Avalonia}.
+	\end{itemize}
+	\item \textbf{Sistema de construcción:}
+	\begin{itemize}
+		\item \textbf{Compilación:} \textit{MSBuild} a través del framework de \texttt{.NET}.
+		\item \textbf{Generación de documentación:} Herramienta \textit{Doxygen}.
+		\item \textbf{Pruebas unitarias:} \textit{MSTest}, integrado en el framework de \texttt{.NET}.
+
+	\end{itemize}
+	\item \textbf{Sistema de control de versiones:} \textit{Git} y \textit{GitHub} para repositorio remoto.
+\end{itemize}
+
+
+\section{Directorios}
+
+\dirtree{%
+    .1 FC\_MYP\_Proyecto1/.
+        .2 Docs/.
+            .3 Process/.
+            .3 AnalysisDesign/.
+            .3 Report/.
+            .3 CodeDocs/.
+                .4 Client/.
+                .4 Server/.
+        .2 Client/.
+            .3 Model/.
+            .3 ViewModel/.
+            .3 View/.
+        .2 Server/.
+            .3 Model/.
+            .3 Controller/.
+            .3 View/.
+}
+\vspace{2mm}
+
+A continuación, una explicación general del contenido de cada directorio:
+
+\begin{itemize}
+	\item \textbf{FC\_MYP\_Proyecto1:} Destinado a contener todos los directorios del proyecto y archivos de configuración (\texttt{.gitignore}, \texttt{doxygen}, etc.)
+	\item \textbf{Docs:} Guarda la documentación de todo el proceso llevado a cabo, desde el análisis hasta la distribución. 
+	\begin{itemize}
+		\item \textbf{Process:} Documenta el proceso de cómo se desarrolló el proyecto y qué flujos de trabajo se siguieron.
+		\item \textbf{AnalysisDesign:} Elementos necesarios para el análisis y diseño.
+		\item \textbf{Report:} Contiene este reporte y toda su organización.
+		\item \textbf{CodeDocs:} Contiene la documentación del código, tanto del cliente como del servidor, generada por la herramienta \textit{Doxygen}.
+	\end{itemize}
+	\item \textbf{Client:} Contiene el ejecutable del cliente y todos los directorios necesarios para su implementación.
+	\item \textbf{Server:} Contiene el ejecutable del servidor y todos los directorios necesarios para su implementación.
+\end{itemize}

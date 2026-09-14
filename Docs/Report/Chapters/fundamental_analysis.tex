@@ -1,0 +1,91 @@
+\chapter{Análisis fundamental}
+
+Seguiremos el modelo cliente-servidor, y usaremos \textit{sockets} para establecer la conexión entre estos dos programas, en particular, usaremos el protocolo ITC/IP; además, habrá una única instancia del servidor ejecutándose en el mismo equipo, por el alcance del proyecto.
+Para que el cliente pueda establecer una conexión con el servidor, este último debe conectarse a una IP local en un puerto configurable (por defecto 1234) y ponerse en modo LISTEN.
+
+\section{Servidor}
+
+El servidor admite doce tipos de mensajes, los cuales indican una \textbf{acción} solicitada y un conjunto de \textbf{argumentos} relativos a ella, que entendemos como los datos asociados a dicha acción.
+El servidor debe contar con una estructura o \textbf{base de datos} por lo menos, para almacenar los datos de los clientes que están usando el chat, como sus estados, salas, etc.
+
+Analizando el flujo de las operaciones que el protocolo describe implícitamente, dado un cliente que se va a conectar con el servidor, se observan seis responsabilidades fundamentales para las componentes que este tenga:
+
+\begin{enumerate}
+	\item Conectar el socket del servidor, ponerlo en modo LISTEN y aceptar conexiones.
+	\item Almacenar los datos de los clientes conectados.
+	\item Recibir los datos del socket extrayendo los bytes transmitidos desde el cliente.
+	\item Decodificar los bytes en cadenas (los mensajes) bajo el formato UTF-8.
+	\item Validar el formato del mensaje bajo el estándar JSON y la identificación del usuario (cuando aplique) y asignar una estrategia de acción-respuesta correspondiente al mensaje.
+	\item Tener un algoritmo para acceder o modificar información dentro del servidor, notificar a otros usuarios, responder al cliente cuando sea necesario y recibir parámetros personalizados.
+	\item Ejecutar la estrategia de la acción-respuesta asignada al mensaje.
+\end{enumerate}
+
+A los objetos que cumplan con estas responsabilidades les llamaremos:
+
+\begin{enumerate}
+	\item Conector
+	\item Base de datos
+	\item Proovedor de datos de la conexión
+	\item Traductor
+	\item Intérprete
+	\item Estrategia de acción-respuesta
+	\item Ejecutor de estrategia
+\end{enumerate}
+
+respectivamente, todo relativo al servidor.
+
+\section{Cliente}
+
+A diferencia del servidor, el cliente realiza acciones mediante dos canales de entrada: \textbf{interacción con el usuario} y \textbf{mensajes del servidor}.
+
+Una \textbf{intención} del usuario provoca una \textbf{acción} en el cliente, que puede proseguir a un \textbf{mensaje} al servidor, y que tras varios procesos intermedios termina en la actualización de la vista del usuario, es decir, que basta con obtener las responsabilidades fundamentales que el cliente tiene de la interacción con el usuario y de los mensajes del servidor (además de un servidor que funcione) para tener un cliente que funcione.
+
+\subsection{Interacción con el usuario}
+
+El usuario puede interactuar con el cliente de mediante la consola, una interfaz gráfica, etc. Para evitar depender de ello se considerará que el número de funciones fundamentales con las cuales el usuario puede interctuar con el cliente es igual al número de mensajes distintos que puede recibir el servidor desde el cliente.
+
+Analizando el flujo de estas operaciones fundamentales, se obtiene que las responsabilidades fundamentales con las cuales debe cumplir las componentes del cliente (en esta sección) son:
+\begin{enumerate}
+	\item Recibir una instrucción del usuario.
+	\item Validar el formato de la instrucción y construir un mensaje en formato JSON para el servidor a través de la instrucción.
+	\item Codificar el mensaje en formato UTF-8.
+	\item Enviar mensaje al servidor a través de la conexión activa.
+\end{enumerate}
+
+A los objetos que cumplan con estas responsabilidades se les llamará:
+\begin{enumerate}
+	\item Receptor
+	\item Constructor de mensaje
+	\item Traductor
+	\item Emisor al servidor
+\end{enumerate}
+respectivamente.
+
+\subsection{Mensajes del servidor}
+
+Aquí el cliente tiene un comportamiento similar al servidor ya que recibe mensajes de otro programa bajo el mismo protocolo, pero el cliente no emite respuestas. Puede una de sus acciones desencadenar un nuevo mensaje al servidor pero no es formalmente una respuesta que el servidor esté esperando.
+Por esto mismo, con el flujo de operaciones que el protocolo describe implícitamente, dado el servidor que le enviará mensajes al cliente, se observa algunas responsabilidades fundamentales para las componentes que este tenga (en esta sección):
+
+\begin{enumerate}
+	\item Conectar el socket del cliente al servidor.
+	\item Almacenar los datos proporcionados por el servidor.
+	\item Recibir los datos del socket extrayendo los bytes transmitidos desde el servidor.
+	\item Decodificar los bytes en cadenas (los mensajes y respuestas) bajo el formato UTF-8.
+	\item Validar el formato del mensaje bajo el estándar JSON y asignar una estrategia de acción correspondiente al mensaje.
+	\item Tener un algoritmo para acceder o modificar información dentro del cliente, así como la notificar la vista y que pueda enviar nuevos mensajes al servidor.
+	\item Ejecutar la estrategia de la acción asignada al mensaje.
+\end{enumerate}
+
+A los objetos que cumplan con estas responsabilidades se les llamará:
+
+\begin{enumerate}
+	\item Conector
+	\item Base de Datos
+	\item Proovedor de datos de la conexión
+	\item Traductor
+	\item Intérprete
+	\item Estrategia de acción
+	\item Ejecutor de estrategia
+\end{enumerate}
+
+respectivamente.
