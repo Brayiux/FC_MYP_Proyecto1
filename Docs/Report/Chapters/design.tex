@@ -72,8 +72,7 @@ Del programa (\textbf{Servidor})
 	      finalizado = falso.
 	      puerto = Preguntar el puerto donde se ejecutará el servidor.
 	      controlador = Crear el ControladorServicio(IP local, puerto).
-	      Mientras el servidor no esté finalizado:
-	        Correr el controlador
+	      Correr el controlador.
 	      Imprimir mensaje de despedida.
 \end{verbatim}
 
@@ -81,55 +80,45 @@ Del controlador (\textbf{ControladorServidor})
 
 \begin{verbatim}
 	clase ControladorServidor:
-	  campo Codificador codificador = nuevo CodificadorUTF8.
-	  campo Intérprete intérprete = nuevo Intérprete.
+	  campo codificador : Codificador = nuevo CodificadorUTF8.
+	  campo intérprete : Intérprete = nuevo Intérprete.
+	  campo servidor : TcpListener.
+	  campo servidor activo : bool = verdadero.
+	  campo bd : DatosServidor.
 	  
 	  constructor ControladorServidor(IP local, puerto)
-	    Obtener la instancia del Conector y asignarles la IP local y puerto.
-	    Conectar el socket en modo escucha con el conector.
-		
+	    servidor = Crear un TcpListener con la IP local y el puerto.
+	    Conectar el socket del servidor en modo escucha.
+	    
 	  método Correr():
-	    mensaje = RecibirDatos()
-	    estrategia = Interpretar(mensaje)
-	    EjecutarEstrategia(estrategia)
-			
+	    Mientras el servidor esté activo:
+	    	cliente = EsperarCliente().
+	    	ManejarCliente(cliente).
+	  
+	  método EsperarCliente():
+	    cliente = Esperar a Aceptar cliente TCP de servidor.
+	    regresar cliente.
+	  
+	  método ManejarCliente(cliente):
+	    id = Crear ID.
+	    Registrar a id-cliente en la bd como activo en el servidor.
+	    Mientras el cliente esté registrado como activo en el servidor:
+	      mensaje = Esperar a RecibirDatos()
+	      estrategia = Esperar a Interpretar(mensaje)
+	      Esperar a EjecutarEstrategia(estrategia)
+	
+	  método AceptarConexiones()	
 	  método RecibirDatos()
-	    conexión = Obtener la conexión del Conector.
-	    datos codificados = Obtener los datos de la conexión.
+	    stream = Obtener el stream del servidor.
+	    datos codificados = Obtener los datos del stream.
 	    regresar datos codificados.
 			
 	  método Interpretar(mensaje)
-	    estrategia de acción respuesta = Interpretar mensaje con el intérprete.
+	    estrategia de acción respuesta = Esperar a Interpretar mensaje con el intérprete.
 	    regresar estrategia de acción respuesta.
 			
 	  método EjecutarEstrategia(estrategia):
-	    Ejecutar la estrategia.
-\end{verbatim}
-
-Del \textbf{Conector}:
-
-\begin{verbatim}
-	clase Conector:
-	  campo estático instancia
-	  campo conexión : TcpListener.
-	
-	  constructor privado Conector():
-	    Conexión = nula.
-	  
-	  método ComenzarAEscuchar():
-	    Empezar conexión.
-	  
-	  método ObtenerConexión()
-	    regresar conexión.
-	  
-	  método EstablecerConexión(IP, puerto)
-	    si conexión es nula
-	      conexión = nuevo TcpListener(IP, puerto)
-	
-	  método ObtenerInstancia():
-	    Si instancia es nula:
-	      instancia = nuevo Conector.
-	    regresar instancia.
+	    Esperar a Ejecutar la estrategia.
 \end{verbatim}
 
 Del \textbf{Codificador}
@@ -151,14 +140,8 @@ Del \textbf{Codificador}
 Del \textbf{Intérprete}
 
 \begin{verbatim}
-	clase Intérprete:
-	
-	  método interpretar(mensaje):
-	    ValidarFormato(mensaje)
-	    
-	    
-	  método validarFormato(mensaje):
-	  
+	interfaz Intérprete:	
+	  método interpretar(mensaje, ID del cliente).  
 \end{verbatim}
 
 
