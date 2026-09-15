@@ -1,0 +1,24 @@
+name: Integración Continua
+
+on:
+  push:
+
+jobs:
+  compile-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - run: sudo apt-add-repository universe && sudo apt-get update && sudo apt-get install doxygen 
+      - run:  |
+              dotnet build Server/Server.sln
+              dotnet build Client/Client.sln
+      - run:  |
+              dotnet test Tests/Server/ServerUnitTests.sln
+              dotnet test Tests/Client/ClientUnitTests.sln
+      - run: doxygen doxygen_cfg
+      
+      
