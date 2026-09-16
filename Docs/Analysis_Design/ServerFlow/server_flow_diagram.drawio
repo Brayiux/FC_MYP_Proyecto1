@@ -7,32 +7,8 @@
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-72" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-52" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Intérprete&amp;nbsp;recibe &lt;b&gt;mensaje&lt;/b&gt;&amp;nbsp;del cliente con ID &lt;b&gt;id&lt;/b&gt;" vertex="1">
+        <mxCell id="DcyrWYUOLPF7U-3Cncoi-33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Intérprete&amp;nbsp;recibe &lt;b&gt;mensaje&lt;/b&gt;&amp;nbsp;de un &lt;b&gt;cliente&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="70" y="270" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-36" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:" vertex="1">
-          <mxGeometry height="60" width="120" x="-2537.5" y="1205" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-39" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="DcyrWYUOLPF7U-3Cncoi-36">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-42" connectable="0" parent="DcyrWYUOLPF7U-3Cncoi-39" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Sí" vertex="1">
-          <mxGeometry relative="1" x="-0.0417" y="-1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-41" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="DcyrWYUOLPF7U-3Cncoi-85">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-2665" y="1205" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-43" connectable="0" parent="DcyrWYUOLPF7U-3Cncoi-41" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
-          <mxGeometry relative="1" x="0.0111" y="1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-38" parent="1" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" value="¿Existe un cliente con ID &lt;b&gt;id&lt;/b&gt;&amp;nbsp;en la base de datos?" vertex="1">
-          <mxGeometry height="80" width="120" x="-2630" y="1055" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-71" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-54" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -107,11 +83,11 @@
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-62" parent="1" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" value="¿El mensaje ya terminó?" vertex="1">
           <mxGeometry height="80" width="120" x="230" y="775" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-79" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-38" value="">
+        <mxCell id="LXB1ACQJJDp49hhqvRbf-5" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-85" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-68" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcccc;strokeColor=#36393d;" value="Identificar Usuario&lt;div&gt;info: &lt;b&gt;username&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-2630" y="950" as="geometry" />
+          <mxGeometry height="60" width="120" x="-2702.5" y="950" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-89" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="DcyrWYUOLPF7U-3Cncoi-87">
           <mxGeometry relative="1" as="geometry" />
@@ -138,40 +114,40 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-85" parent="1" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" value="Validar &lt;b&gt;username&lt;/b&gt;" vertex="1">
-          <mxGeometry height="80" width="120" x="-2722.5" y="1205" as="geometry" />
+          <mxGeometry height="80" width="120" x="-2702.5" y="1060" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-93" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-92" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-87" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Extraer el &lt;b&gt;cliente&lt;/b&gt; con el ID &lt;b&gt;id&lt;/b&gt;, colocarle el &lt;b&gt;username&lt;/b&gt;, estado ACTIVE&amp;nbsp;y subirlo a la bd de clientes identificados" vertex="1">
-          <mxGeometry height="90" width="120" x="-2860" y="1375" as="geometry" />
+        <mxCell id="DcyrWYUOLPF7U-3Cncoi-87" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Colocarle a &lt;b&gt;cliente&lt;/b&gt;&amp;nbsp;el &lt;b&gt;username&lt;/b&gt;, estado ACTIVE&amp;nbsp;y subirlo a la bd de clientes identificados" vertex="1">
+          <mxGeometry height="90" width="120" x="-2840" y="1230.39" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-90" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo : respuesta,&lt;br&gt;&lt;div&gt;operación: identificar,&lt;/div&gt;&lt;div&gt;resultado: usuario ya existe,&lt;/div&gt;&lt;div&gt;extra: &lt;b&gt;username&lt;/b&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="120" width="120" x="-2722.5" y="1375" as="geometry" />
+          <mxGeometry height="120" width="120" x="-2702.5" y="1230.39" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-97" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-92" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-96" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-92" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar mensaje a cada cliente identificado menos a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo: nuevo usuario&lt;/div&gt;&lt;div&gt;username: &lt;b&gt;username&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="110" width="120" x="-2860" y="1495.39" as="geometry" />
+          <mxGeometry height="110" width="120" x="-2840" y="1350.7800000000002" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-96" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo : respuesta,&lt;/div&gt;&lt;div&gt;operación: identificar,&lt;/div&gt;&lt;div&gt;resultado: éxito,&lt;/div&gt;&lt;div&gt;extra: &lt;b&gt;username&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="100" width="120" x="-2860" y="1635" as="geometry" />
+          <mxGeometry height="100" width="120" x="-2840" y="1490.39" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-106" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-99" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-100" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-99" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo: respuesta,&lt;br&gt;&lt;div&gt;operación inválida,&lt;/div&gt;&lt;div&gt;resultado inválido&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="120" x="-2580" y="1375" as="geometry" />
+          <mxGeometry height="80" width="120" x="-2560" y="1230.39" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-100" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Desconectar al &lt;b&gt;cliente&lt;/b&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-2580" y="1485" as="geometry" />
+          <mxGeometry height="60" width="120" x="-2560" y="1340.39" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-233" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-107" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-232" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-107" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo: respuesta&lt;/div&gt;&lt;div&gt;operación: inválido,&lt;/div&gt;&lt;div&gt;resultado: no identificado&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="120" x="-2143.75" y="1205" as="geometry" />
+          <mxGeometry height="80" width="120" x="-2128.75" y="1205" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-108" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-112" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="DcyrWYUOLPF7U-3Cncoi-107">
           <mxGeometry relative="1" as="geometry" />
@@ -205,41 +181,30 @@
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-115" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-121" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="DcyrWYUOLPF7U-3Cncoi-123">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-116" connectable="0" parent="DcyrWYUOLPF7U-3Cncoi-115" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Es válido" vertex="1">
-          <mxGeometry relative="1" x="0.7733" as="geometry">
+        <mxCell id="LXB1ACQJJDp49hhqvRbf-11" connectable="0" parent="DcyrWYUOLPF7U-3Cncoi-115" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Es válido" vertex="1">
+          <mxGeometry relative="1" x="0.365" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-117" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-121" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="DcyrWYUOLPF7U-3Cncoi-155">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-2212.5" y="1375" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="LXB1ACQJJDp49hhqvRbf-8" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-121" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-107" value="">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-133" connectable="0" parent="DcyrWYUOLPF7U-3Cncoi-117" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Fuera de rango o&lt;/div&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Es el actual de &lt;/span&gt;&lt;b style=&quot;font-size: 10px;&quot;&gt;cliente&lt;/b&gt;" vertex="1">
-          <mxGeometry relative="1" x="0.7229" as="geometry">
+        <mxCell id="LXB1ACQJJDp49hhqvRbf-9" connectable="0" parent="LXB1ACQJJDp49hhqvRbf-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Fuera de rango o&lt;/div&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Es el actual de &lt;/span&gt;&lt;b style=&quot;font-size: 10px;&quot;&gt;cliente&lt;/b&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0098" y="2" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-121" parent="1" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" value="Validar &lt;b&gt;estado&lt;/b&gt;" vertex="1">
-          <mxGeometry height="80" width="120" x="-2353.75" y="1205" as="geometry" />
+          <mxGeometry height="80" width="120" x="-2368.75" y="1205" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-122" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-123" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-126" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-123" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Cambiar el estado del &lt;b&gt;cliente&lt;/b&gt;&amp;nbsp;a &lt;b&gt;estado&lt;/b&gt;" vertex="1">
-          <mxGeometry height="80" width="120" x="-2422.5" y="1375" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-125" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-126" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-127" value="">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry height="80" width="120" x="-2368.75" y="1343.72" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-126" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar mensaje a cada cliente identificado menos a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo : nuevo estado&lt;/div&gt;&lt;div&gt;username : username de &lt;b&gt;cliente&lt;/b&gt;&lt;/div&gt;&lt;div&gt;status : &lt;b&gt;estado&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="120" width="120" x="-2422.5" y="1485" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-127" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Responder al cliente:&lt;div&gt;Identificación exitosa&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-2422.5" y="1635" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-130" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Desconectar al &lt;b&gt;cliente&lt;/b&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-2285" y="1485" as="geometry" />
+          <mxGeometry height="120" width="120" x="-2368.75" y="1453.72" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-235" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-134" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-234" value="">
           <mxGeometry relative="1" as="geometry" />
@@ -276,19 +241,13 @@
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-141" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcccc;strokeColor=#36393d;" value="Enviar lista de usuarios&lt;div&gt;info:&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="-1918.75" y="950" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-156" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-155" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-130" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-155" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo: respuesta,&lt;br&gt;&lt;div&gt;operación inválida,&lt;/div&gt;&lt;div&gt;resultado inválido&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="120" x="-2285" y="1375" as="geometry" />
-        </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-163" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-157" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-162" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-157" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Extraer &lt;b&gt;lista usuario-estado&lt;/b&gt;&amp;nbsp;de la bd de los clientes conectados al servidor" vertex="1">
           <mxGeometry height="80" width="120" x="-1990" y="1205" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-162" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo: respuesta&lt;/div&gt;&lt;div&gt;usuarios: &lt;b&gt;lista usuario-estado&lt;/b&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="DcyrWYUOLPF7U-3Cncoi-162" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo: lista de usuarios&lt;/div&gt;&lt;div&gt;usuarios: &lt;b&gt;lista usuario-estado&lt;/b&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="120" x="-1990" y="1335" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-238" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-165" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-236" value="">
@@ -351,14 +310,8 @@
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-179" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Extraer a&amp;nbsp;&lt;div&gt;&lt;b&gt;clienteReceptor&lt;/b&gt;&amp;nbsp;con username&amp;nbsp;&lt;b&gt;username&lt;/b&gt;&lt;div&gt;de la bd de clientes conectados&lt;/div&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="120" x="-1765.5" y="1525.39" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-180" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-181" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-182" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-181" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo : texto de&lt;/div&gt;&lt;div&gt;username : username de &lt;b&gt;cliente&lt;/b&gt;&lt;/div&gt;&lt;div&gt;texto: &lt;b&gt;texto&lt;/b&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="120" width="120" x="-1765.5" y="1635.39" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-182" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Responder al cliente:&lt;div&gt;Identificación exitosa&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-1765.5" y="1785.39" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-183" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Desconectar al &lt;b&gt;cliente&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="-1465.5" y="1525.39" as="geometry" />
@@ -433,7 +386,7 @@
           <mxGeometry height="80" width="120" x="-920" y="1205" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-232" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Desconectar al &lt;b&gt;cliente&lt;/b&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="-2143.75" y="1329.61" as="geometry" />
+          <mxGeometry height="60" width="120" x="-2128.75" y="1325" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-234" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Desconectar a&amp;nbsp;&lt;b&gt;cliente&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="-1850" y="1335" as="geometry" />
@@ -637,14 +590,8 @@
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-347" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo: respuesta&lt;/div&gt;&lt;div&gt;operación: invitar&lt;/div&gt;&lt;div&gt;resultado: no hay usuario&lt;/div&gt;&lt;div&gt;extra: primer usuario no identificado de &lt;b&gt;usuarios&lt;/b&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="135" width="120" x="-40" y="1385" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-348" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-349" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-350" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-349" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;usuarios&lt;/b&gt;:&lt;div&gt;tipo : invitación&lt;/div&gt;&lt;div&gt;username : username de &lt;b&gt;cliente&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;roommame :&amp;nbsp;&lt;/span&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;roomname&lt;/b&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="DcyrWYUOLPF7U-3Cncoi-349" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;usuarios&lt;/b&gt;:&lt;div&gt;tipo : invitación&lt;/div&gt;&lt;div&gt;username : username de &lt;b&gt;cliente&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;roomname :&amp;nbsp;&lt;/span&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;roomname&lt;/b&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="90" width="130" x="-340" y="1475" as="geometry" />
-        </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-350" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Agregar&amp;nbsp;&lt;b&gt;cliente&lt;/b&gt;&amp;nbsp;a &lt;b&gt;sala&lt;/b&gt;" vertex="1">
-          <mxGeometry height="60" width="130" x="-340" y="1605" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-352" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo : respuesta&lt;/div&gt;&lt;div&gt;operación : invitar&lt;/div&gt;&lt;div&gt;resultado : no hay sala&lt;/div&gt;&lt;div&gt;extra : &lt;b&gt;roomname&lt;/b&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="75" width="130" x="-190" y="1375" as="geometry" />
@@ -809,8 +756,8 @@
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-416" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo : respuesta&lt;/div&gt;&lt;div&gt;operación : usuarios de sala&lt;/div&gt;&lt;div&gt;resultado : no hay sala&lt;/div&gt;&lt;div&gt;extra : &lt;b&gt;roomname&lt;/b&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="115" width="120" x="1142.5" y="1374.5" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-419" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente:&lt;/b&gt;&lt;div&gt;tipo : respuesta&lt;/div&gt;&lt;div&gt;roomname: &lt;b&gt;roomname&lt;/b&gt;&lt;/div&gt;&lt;div&gt;users : &lt;b&gt;diccionario miembro-estado&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="69.61" width="130" x="842.5" y="1500.39" as="geometry" />
+        <mxCell id="DcyrWYUOLPF7U-3Cncoi-419" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente:&lt;/b&gt;&lt;div&gt;tipo : lista de usuarios de sala&lt;/div&gt;&lt;div&gt;roomname: &lt;b&gt;roomname&lt;/b&gt;&lt;/div&gt;&lt;div&gt;users : &lt;b&gt;diccionario miembro-estado&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="89.61" width="130" x="842.5" y="1500.39" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-420" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Enviar msg a &lt;b&gt;cliente&lt;/b&gt;:&lt;div&gt;tipo : respuesta&lt;/div&gt;&lt;div&gt;operación : usuarios de sala&lt;/div&gt;&lt;div&gt;resultado : no unido&lt;/div&gt;&lt;div&gt;extra : &lt;b&gt;roomname&lt;/b&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="105" width="130" x="992.5" y="1374.5" as="geometry" />
@@ -951,7 +898,7 @@
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-525" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-511" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="DcyrWYUOLPF7U-3Cncoi-522" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="DcyrWYUOLPF7U-3Cncoi-511" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Extraer la sala con nombre &lt;b&gt;roomname&lt;/b&gt;&amp;nbsp;de la bd y sacar a&lt;b&gt;&amp;nbsp;cliente&lt;/b&gt;." vertex="1">
+        <mxCell id="DcyrWYUOLPF7U-3Cncoi-511" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Extraer la sala con nombre &lt;b&gt;roomname&lt;/b&gt;&amp;nbsp;de la bd y sacar a&lt;b&gt;&amp;nbsp;cliente&lt;/b&gt;&amp;nbsp;de la sala" vertex="1">
           <mxGeometry height="75.5" width="130" x="2042.5" y="1374.5" as="geometry" />
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-512" edge="1" parent="1" source="DcyrWYUOLPF7U-3Cncoi-518" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="DcyrWYUOLPF7U-3Cncoi-511">
@@ -1022,6 +969,9 @@
         </mxCell>
         <mxCell id="DcyrWYUOLPF7U-3Cncoi-537" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Desconectar a&amp;nbsp;&lt;b&gt;cliente&lt;/b&gt;" vertex="1">
           <mxGeometry height="60" width="120" x="2752.5" y="1205" as="geometry" />
+        </mxCell>
+        <mxCell id="LXB1ACQJJDp49hhqvRbf-7" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry x="-2050" y="1490" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
