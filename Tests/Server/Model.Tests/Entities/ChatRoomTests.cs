@@ -13,7 +13,7 @@ namespace Model.Tests.Entities
         [Theory]
         [InlineData("")]
         [InlineData("12345678901234567")]
-        public void RoomNameOutOfRangeThrowsArgumentOutOfRangeException(string roomname)
+        public void RoomNameOutOfRangeThrowsRoomnameOutOfRangeException(string roomname)
         {
             Assert.Throws<RoomnameOutOfRangeException>(
                 () => { ChatRoom r = new(roomname, _owner); });
@@ -48,7 +48,7 @@ namespace Model.Tests.Entities
         [Theory]
         [InlineData("")]
         [InlineData("12345678901234567")]
-        public void SetRoomNameOutOfRangeThrowsArgumentOutOfRangeException(string roomname)
+        public void SetRoomNameOutOfRangeThrowsRoomnameOutOfRangeException(string roomname)
         {
             ChatRoom r = new("Sala", _owner);
 
