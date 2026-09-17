@@ -66,7 +66,7 @@
             throw new NotImplementedException();
         }
 
-        public bool IsMember()
+        public bool IsMember(string username)
         {
             throw new NotImplementedException();
         }
