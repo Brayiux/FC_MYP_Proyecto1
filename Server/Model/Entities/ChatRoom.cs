@@ -23,6 +23,15 @@
 
         #endregion
 
+        #region Construcción
+
+        public ChatRoom(string name, ChatUser owner)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region Acceso Público
 
         public void Add(ChatUser cu)
