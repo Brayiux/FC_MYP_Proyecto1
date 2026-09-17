@@ -12,6 +12,8 @@
 
         private readonly Dictionary<string, ChatUser> _members = [];
 
+        private readonly Dictionary<string, ChatUser> _invitations = [];
+
         #endregion
 
         #region Propiedades
@@ -34,7 +36,7 @@
 
         #region Acceso Público
 
-        public void Add(ChatUser cu)
+        public void Add(string username)
         {
             throw new NotImplementedException();
         }
@@ -54,12 +56,12 @@
             throw new NotImplementedException();
         }
 
-        public bool ConsumeInvitation(string username)
+        public void ClearInvitations()
         {
             throw new NotImplementedException();
         }
 
-        public void ClearInvitations()
+        public bool IsInvited(string username)
         {
             throw new NotImplementedException();
         }
