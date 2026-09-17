@@ -16,7 +16,7 @@
         #region Propiedades
         public IReadOnlyList<ChatUser> Members => _members;
 
-        public string Name { get; set; }
+        public string Roomname { get; set; }
 
         #endregion
 

@@ -15,7 +15,7 @@
         #endregion
 
         #region Propiedades
-        public string Name { get; set; }
+        public string Roomname { get; set; }
 
         public ChatUser Owner { get; }
 
