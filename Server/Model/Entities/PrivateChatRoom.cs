@@ -9,12 +9,12 @@
 
         #region Campos
 
-        private readonly ChatUser[] _members = new ChatUser[2];
+        private readonly Dictionary<string, ChatUser> _members = new(capacity: 2);
 
         #endregion
 
         #region Propiedades
-        public IReadOnlyList<ChatUser> Members => _members;
+        public IReadOnlyDictionary<string, ChatUser> Members => _members;
 
         public string Roomname { get; set; }
 
