@@ -4,9 +4,8 @@
     /// Enumera los estados posibles de un usuario (cliente
     /// identificado) dentro usando el chat.
     /// </summary>
-    public enum ClientStatus
+    public enum UserStatus
     {
-        None,
         Active,
         Away,
         Bussy

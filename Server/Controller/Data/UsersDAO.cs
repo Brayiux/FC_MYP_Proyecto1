@@ -28,7 +28,7 @@ namespace Controller.Data
             throw new NotImplementedException();
         }
 
-        public Dictionary<ClientConnection, ClientStatus> GetAllAndStatus()
+        public Dictionary<ClientConnection, UserStatus> GetAllAndStatus()
         {
             throw new NotImplementedException();
         }

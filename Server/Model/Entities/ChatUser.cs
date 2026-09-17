@@ -8,35 +8,106 @@ public class ChatUser
 {
     #region Campos
 
-    private ClientStatus _status;
+    /// <summary>
+    /// El estado del usuario en el chat.
+    /// </summary>
+    private UserStatus _status;
 
+    /// <summary>
+    /// El nombre de usuario del usuario en el chat.
+    /// </summary>
     private string _username;
 
     #endregion
 
     #region Propiedades
 
-    public Guid Id { get; }
+    /// <summary>
+    /// Obtiene y valida la modificación del estado actual
+    /// del usuario en el chat.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Si se modifica
+    /// al estado actual.</exception>
+    public UserStatus Status
+    {
+        get => _status;
+        set
+        {
+            ValidateNewStatus(value);
+            _status = value;
+        }
+    }
+
+    /// <summary>
+    /// Obtiene y valida la modificación del nombre del usuario en el chat.
+    /// </summary>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException">Si el nuevo valor
+    /// excede el rango de 1 a 8 caracteres.</exception>
+    public string Username
+    {
+        get => _username;
+        set
+        {
+            ValidateUsername(value);
+            _username = value;
+        }
+    }
 
     #endregion
 
     #region Construcción
+
+    /// <summary>
+    /// Crea un usuario del chat con el nombre de usuario
+    /// especificado y lo inicia en estado activo.
+    /// </summary>
+    /// <param name="username">Nombre del usuario.</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException">Si <paramref name="username"/>
+    /// excede el rango de 1 a 8 caracteres.</exception>
     public ChatUser(string username)
     {
-        throw new NotImplementedException();
+        ValidateUsername(username);
+        _username = username;
+        _status = UserStatus.Active;
     }
     #endregion
 
-    #region Acceso Público
+    #region Apoyo
 
-    public void SetUsername(string username)
+    /// <summary>
+    /// Valida que el nombre de usuario no sea nulo ni salga de un rango
+    /// de 1 a 8 caracteres.
+    /// </summary>
+    /// <param name="username">Nombre del usuario.</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException">Si <paramref name="username"/>
+    /// sale del rango de 1 a 8 caracteres.</exception>
+    private void ValidateUsername(string username)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(username, nameof(username));
+
+        if (username.Length is 0 or > 8)
+        {
+            throw new ArgumentOutOfRangeException(nameof(username),
+                "Error: El username de un cliente debe entrar en un rango de 1 a 8 caracteres.");
+        }
     }
 
-    public void SetStatus(ClientStatus st)
+    /// <summary>
+    /// Valida que el estado nuevo del usuario sea diferente al actual.
+    /// </summary>
+    /// <param name="newStatus">Estado nuevo para el usuario.</param>
+    /// <exception cref="InvalidOperationException">Si <paramref name="newStatus"/> coincide
+    /// con el estado actual.</exception>
+    private void ValidateNewStatus(UserStatus newStatus)
     {
-        throw new NotImplementedException();
+        if (newStatus == _status)
+        {
+            throw new InvalidOperationException(
+                "Error: No se puede modificar el estado de un usuario al mismo estado.");
+        }
     }
 
     #endregion

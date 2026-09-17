@@ -50,12 +50,12 @@ namespace Controller.Resources
             throw new NotImplementedException();
         }
 
-        public MsgBuilder WithStatus(ClientStatus status)
+        public MsgBuilder WithStatus(UserStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public MsgBuilder WithUsers(Dictionary<string, ClientStatus> users)
+        public MsgBuilder WithUsers(Dictionary<string, UserStatus> users)
         {
             throw new NotImplementedException();
         }
