@@ -11,7 +11,7 @@ namespace Controller.Resources
     {
         #region Propiedades
 
-        public Guid Id => User.Id;
+        public Guid Id { get; }
 
         public ChatUser User { get; set; }
         
