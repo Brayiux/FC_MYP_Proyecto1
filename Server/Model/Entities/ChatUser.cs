@@ -1,4 +1,5 @@
 ﻿using Model.Definitions.Enums;
+using Model.Exceptions;
 
 namespace Model.Entities;
 /// <summary>
@@ -82,7 +83,7 @@ public class ChatUser
     /// </summary>
     /// <param name="username">Nombre del usuario.</param>
     /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="ArgumentOutOfRangeException">Si <paramref name="username"/>
+    /// <exception cref="UsernameOutOfRangeException">Si <paramref name="username"/>
     /// sale del rango de 1 a 8 caracteres.</exception>
     private void ValidateUsername(string username)
     {
@@ -90,8 +91,8 @@ public class ChatUser
 
         if (username.Length is 0 or > 8)
         {
-            throw new ArgumentOutOfRangeException(nameof(username),
-                "Error: El username de un cliente debe entrar en un rango de 1 a 8 caracteres.");
+            throw new UsernameOutOfRangeException(
+                $"Error: El username {username} sale del rango de 1 a 8 caracteres.");
         }
     }
 
@@ -99,13 +100,13 @@ public class ChatUser
     /// Valida que el estado nuevo del usuario sea diferente al actual.
     /// </summary>
     /// <param name="newStatus">Estado nuevo para el usuario.</param>
-    /// <exception cref="InvalidOperationException">Si <paramref name="newStatus"/> coincide
-    /// con el estado actual.</exception>
+    /// <exception cref="InvalidClientStatusException">Si <paramref name="newStatus"/>
+    /// coincide con el estado actual.</exception>
     private void ValidateNewStatus(UserStatus newStatus)
     {
         if (newStatus == _status)
         {
-            throw new InvalidOperationException(
+            throw new InvalidClientStatusException(
                 "Error: No se puede modificar el estado de un usuario al mismo estado.");
         }
     }
