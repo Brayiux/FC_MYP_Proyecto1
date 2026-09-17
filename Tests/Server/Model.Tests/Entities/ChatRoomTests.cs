@@ -15,7 +15,7 @@ namespace Model.Tests.Entities
         [InlineData("12345678901234567")]
         public void RoomNameOutOfRangeThrowsArgumentOutOfRangeException(string roomname)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<RoomnameOutOfRangeException>(
                 () => { ChatRoom r = new(roomname, _owner); });
         }
 
@@ -52,7 +52,7 @@ namespace Model.Tests.Entities
         {
             ChatRoom r = new("Sala", _owner);
 
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<RoomnameOutOfRangeException>(
                 () => { r.Roomname = roomname; });
         }
 
@@ -120,10 +120,20 @@ namespace Model.Tests.Entities
             ChatUser u = new("Pedro");
 
             r.AddInvitation(u);
-            r.RemoveInvitation("Pedro");
 
-            Assert.Throws<UserNotInvitedException>(
-                () => { r.Add("Pedro"); });
+            bool wasRemoved = r.RemoveInvitation(u.Username);
+            bool couldntBeAdded = false;
+            
+            try
+            {
+                r.Add(u.Username);
+            }
+            catch (UserNotInvitedException e)
+            {
+                couldntBeAdded = true;
+            }
+
+            Assert.True(wasRemoved && couldntBeAdded);
         }
 
         [Fact]
