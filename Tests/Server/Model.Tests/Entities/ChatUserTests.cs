@@ -1,5 +1,6 @@
 ﻿using Model.Definitions.Enums;
 using Model.Entities;
+using Model.Exceptions;
 
 namespace Model.Tests.Entities
 {
@@ -10,9 +11,9 @@ namespace Model.Tests.Entities
         [Theory]
         [InlineData("")]
         [InlineData("123456789")]
-        public void UsernameOutOfRangeInConstructorThrowsArgumentOutOfRangeException(string username)
+        public void UsernameOutOfRangeInConstructorThrowsUsernameOutOfRangeException(string username)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<UsernameOutOfRangeException>(
                 () =>
                 { ChatUser user = new(username); });
         }
@@ -48,11 +49,11 @@ namespace Model.Tests.Entities
         [Theory]
         [InlineData("")]
         [InlineData("123456789")]
-        public void SetUsernameOutOfRangeThrowsArgumentOutOfRangeException(string username)
+        public void SetUsernameOutOfRangeThrowsUsernameOutOfRangeException(string username)
         {
             ChatUser user = new("Juan");
 
-            Assert.Throws<ArgumentOutOfRangeException>(
+            Assert.Throws<UsernameOutOfRangeException>(
                 () =>
                 { user.Username = username; });
         }
@@ -77,11 +78,11 @@ namespace Model.Tests.Entities
         }
 
         [Fact]
-        public void SetTheSameStatusThrowsInvalidOperationException()
+        public void SetTheSameStatusThrowsInvalidClientStatusException()
         {
             ChatUser user = new("Juan") { Status = UserStatus.Away };
 
-            Assert.Throws<InvalidOperationException>(
+            Assert.Throws<InvalidClientStatusException>(
                 () => { user.Status = UserStatus.Away; });
         }
 
