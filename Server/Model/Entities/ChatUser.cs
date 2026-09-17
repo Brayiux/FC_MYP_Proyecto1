@@ -21,7 +21,7 @@ public class ChatUser
     #endregion
 
     #region Construcción
-    public ChatUser()
+    public ChatUser(string username)
     {
         throw new NotImplementedException();
     }
