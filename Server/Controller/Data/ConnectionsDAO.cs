@@ -23,7 +23,7 @@ namespace Controller.Data
 
         public void Connect(ClientConnection c)
         {
-            throw new NotImplementedException();
+            ChatData.Instance.AddClient(c);
         }
 
         public void Disconnect(Guid idClient)
@@ -33,7 +33,7 @@ namespace Controller.Data
 
         public List<ClientConnection> GetAll()
         {
-            throw new NotImplementedException();
+            return [.. ChatData.Instance.Clients.Values];
         }
 
         public void Clear()

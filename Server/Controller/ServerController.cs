@@ -68,6 +68,7 @@ public class ServerController
 		{
 			TcpClient clientSocket = await _serverSocket.AcceptTcpClientAsync();
 			ClientConnection client = new(clientSocket);
+			client.IsConnected = true;
 
 			ConnectionsDAO.Instance.Connect(client);
 

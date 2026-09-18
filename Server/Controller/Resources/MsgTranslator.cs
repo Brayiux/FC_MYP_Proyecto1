@@ -25,7 +25,7 @@ namespace Controller.Resources
         {
             ArgumentNullException.ThrowIfNull(msg);
 
-            MsgDataBase? typeData = JsonSerializer.Deserialize<MsgDataBase>(msg);
+            MsgDataBase? typeData = JsonSerializer.Deserialize<TypeMsgData>(msg);
 
             if (typeData == null)
             {

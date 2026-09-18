@@ -25,7 +25,10 @@ namespace Controller.Resources
 
         public ClientConnection(TcpClient socket)
         {
-            throw new NotImplementedException();
+            ArgumentNullException.ThrowIfNull(socket);
+
+            Id = Guid.NewGuid();
+            Socket = socket;
         }
 
         #endregion

@@ -11,15 +11,12 @@ namespace Controller.Resources.DataContainers
     /// </summary>
     public class IdentifyMsgData : MsgDataBase
     {
-        [JsonInclude]
-        private readonly string username;
 
-        [JsonIgnore]
-        public string Username => username;
+        public string Username { get; set; }
 
         public IdentifyMsgData(string type, string username) : base(type)
         {
-            this.username = username;
+            Username = username;
         }
     }
 }

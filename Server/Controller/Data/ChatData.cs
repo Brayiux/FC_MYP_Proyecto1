@@ -51,7 +51,10 @@ namespace Controller.Data
         #region Operaciones para clientes
         public bool AddClient(ClientConnection c)
         {
-            throw new NotImplementedException();
+            if (_clients.ContainsKey(c.Id)) return false;
+
+            _clients[c.Id] = c;
+            return true;
         }
         public bool RemoveClient(Guid id)
         {

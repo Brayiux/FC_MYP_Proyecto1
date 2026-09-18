@@ -1,5 +1,6 @@
 ﻿using ChatServer.Views;
 using Controller;
+using System.Diagnostics;
 using System.Net;
 
 namespace ChatServer;
@@ -10,7 +11,11 @@ public class ChatServer
     private static HandleMsgsView? _view;
     public async static Task Main(string[] args)
     {
+        Console.WriteLine("Bienvenido al server");
+
         string port;
+
+        Debugger.Launch();
 
         Console.CancelKeyPress += Console_CancelKeyPress;
 
