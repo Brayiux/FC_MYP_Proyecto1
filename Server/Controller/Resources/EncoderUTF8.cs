@@ -1,4 +1,5 @@
 ﻿using Controller.Definitions.Interfaces;
+using System.Text;
 
 namespace Controller.Resources
 {
@@ -10,12 +11,12 @@ namespace Controller.Resources
     {
         public string Decode(byte[] data)
         {
-            throw new NotImplementedException();
+            return Encoding.UTF8.GetString(data);
         }
 
         public byte[] Encode(string data)
         {
-            throw new NotImplementedException();
+            return Encoding.UTF8.GetBytes(data);
         }
     }
 }
