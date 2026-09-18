@@ -1,15 +1,15 @@
-﻿using Controller.Definitions.Interfaces;
+﻿using Controller.Definitions.Abstracts;
 using Controller.Resources;
 
 namespace Controller.Strategies
 {
-    public class PrivateMsgSt : IARStrategy
+    public class PrivateMsgSt : ARStrategyBase
     {
         public PrivateMsgSt(string username, string msg)
         {
             throw new NotImplementedException();
         }
-        public void Execute(ClientConnection c)
+        public async override Task ExecuteAsync(ClientConnection c)
         {
             throw new NotImplementedException();
         }

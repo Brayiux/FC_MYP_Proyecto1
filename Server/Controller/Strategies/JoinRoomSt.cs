@@ -1,15 +1,15 @@
-﻿using Controller.Definitions.Interfaces;
+﻿using Controller.Definitions.Abstracts;
 using Controller.Resources;
 
 namespace Controller.Strategies
 {
-    public class JoinRoomSt : IARStrategy
+    public class JoinRoomSt : ARStrategyBase
     {
         public JoinRoomSt(string roomname)
         {
             throw new NotImplementedException();
         }
-        public void Execute(ClientConnection c)
+        public async override Task ExecuteAsync(ClientConnection c)
         {
             throw new NotImplementedException();
         }

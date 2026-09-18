@@ -1,15 +1,15 @@
-﻿using Controller.Definitions.Interfaces;
+﻿using Controller.Definitions.Abstracts;
 using Controller.Resources;
 
 namespace Controller.Strategies
 {
-    public class UsersListSt : IARStrategy
+    public class UsersListSt : ARStrategyBase
     {
         public UsersListSt()
         {
             throw new NotImplementedException();
         }
-        public void Execute(ClientConnection c)
+        public async override Task ExecuteAsync(ClientConnection c)
         {
             throw new NotImplementedException();
         }

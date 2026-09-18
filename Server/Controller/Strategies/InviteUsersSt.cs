@@ -1,15 +1,15 @@
-﻿using Controller.Definitions.Interfaces;
+﻿using Controller.Definitions.Abstracts;
 using Controller.Resources;
 
 namespace Controller.Strategies
 {
-    public class InviteUsersSt : IARStrategy
+    public class InviteUsersSt : ARStrategyBase
     {
-        public InviteUsersSt(string roomname, IReadOnlyList<ClientConnection> users)
+        public InviteUsersSt(string roomname, IReadOnlyList<string> users)
         {
             throw new NotImplementedException();
         }
-        public void Execute(ClientConnection c)
+        public async override Task ExecuteAsync(ClientConnection c)
         {
             throw new NotImplementedException();
         }
