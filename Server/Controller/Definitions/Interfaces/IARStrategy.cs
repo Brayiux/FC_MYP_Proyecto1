@@ -1,5 +1,6 @@
 ﻿using Controller.Resources;
 using Model;
+using Model.Definitions.Delegates;
 
 namespace Controller.Definitions.Interfaces
 {
@@ -16,6 +17,8 @@ namespace Controller.Definitions.Interfaces
         /// un cliente que la solicita.
         /// </summary>
         /// <param name="c"></param>
-        public void Execute(ClientConnection c);
+        public Task ExecuteAsync(ClientConnection c);
+
+        public event MessageSentEventHandler MessageSent;
     }
 }
