@@ -9,6 +9,10 @@ namespace Controller.Resources
     /// </summary>
     public class ClientConnection
     {
+        private readonly HashSet<ChatRoom> _rooms = [];
+
+        private readonly HashSet<ClientConnection> _privateChats = [];
+
         #region Propiedades
 
         public Guid Id { get; }
@@ -18,6 +22,10 @@ namespace Controller.Resources
         public ChatUser User { get; set; }
         
         public TcpClient Socket { get; }
+
+        public IReadOnlySet<ChatRoom> Rooms => _rooms;
+
+        public IReadOnlySet<ClientConnection> PrivateChats => _privateChats;
 
         #endregion
 
@@ -32,6 +40,42 @@ namespace Controller.Resources
         }
 
         #endregion
+
+
+        #region Acceso Público
+
+        public bool AddRoom(ChatRoom room)
+        {
+            return _rooms.Add(room);
+        }
+
+        public bool RemoveRoom(ChatRoom room)
+        {
+            return _rooms.Remove(room);
+        }
+
+        public void ClearRooms()
+        {
+            _rooms.Clear();
+        }
+
+
+        public bool AddPrivateChat(ClientConnection client)
+        {
+            return _privateChats.Add(client);
+        }
+        public bool RemovePrivateChat(ClientConnection client)
+        {
+            return _privateChats.Remove(client);
+        }
+        public void ClearPrivateChats(ClientConnection client)
+        {
+            _privateChats.Clear();
+        }
+
+        #endregion
+
+
 
     }
 }
