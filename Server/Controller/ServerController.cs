@@ -1,7 +1,9 @@
 ﻿using Controller.Definitions.Interfaces;
 using Controller.Resources;
 using Model.Definitions.Delegates;
+using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace Controller;
 
@@ -46,7 +48,7 @@ public class ServerController
 
 	#region Construcción
 
-	public ServerController(string ip, string port)
+	public ServerController(IPAddress ip, string port)
 	{
 		throw new NotImplementedException();
 	}
@@ -55,7 +57,7 @@ public class ServerController
 
 	#region Acceso Público
 
-	public void Run()
+	public async Task RunAsync()
 	{
 		throw new NotImplementedException();
 	}
