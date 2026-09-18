@@ -23,9 +23,19 @@ namespace Controller.Strategies
 
                 UsersDAO.Instance.Identify(c);
 
-                string response = BuildSuccessfulyIdentifiedResponse(mb);
+                string usersNotification = BuildNewUserMsg(mb);
 
-                _ = SendMessageAsync(c, response);
+                foreach (var u in UsersDAO.Instance.GetAll())
+                {
+                    if (!u.Equals(c))
+                    {
+                        _ = SendMessageAsync(u, usersNotification);
+                    }
+                }
+
+                string clientResponse = BuildSuccessfulyIdentifiedResponse(mb);
+
+                _ = SendMessageAsync(c, clientResponse);
             }
             catch (UsernameOutOfRangeException)
             {
@@ -39,6 +49,15 @@ namespace Controller.Strategies
                 await SendMessageAsync(c, response);
                 DisconnectClient(c);
             }
+        }
+
+        private string BuildNewUserMsg(MsgBuilder mb)
+        {
+            mb.Reset();
+            return mb
+                    .WithType("NEW_USER")
+                    .WithUsername(_username)
+                    .Build();
         }
 
         private string BuildUserAlreadyExistsResponse(MsgBuilder mb)
