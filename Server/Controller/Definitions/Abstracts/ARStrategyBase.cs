@@ -16,7 +16,7 @@ namespace Controller.Definitions.Abstracts
 
         public abstract Task ExecuteAsync(ClientConnection c);
 
-        protected async void SendMessage(ClientConnection c, string msg)
+        protected async Task SendMessageAsync(ClientConnection c, string msg)
         {
             await c.Socket.GetStream().WriteAsync(_encoder.Encode(msg));
             
