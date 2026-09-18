@@ -9,7 +9,7 @@ namespace Controller.Definitions.Abstracts
     public abstract class MsgDataBase
     {
         /// <summary>
-        /// Parámetro "type" de los mensajes de respuesta en el protocolo.
+        /// Parámetro "type" de los mensajes de entrada en el protocolo.
         /// </summary>
         [JsonInclude]
         private string type;
@@ -20,9 +20,13 @@ namespace Controller.Definitions.Abstracts
         [JsonIgnore]
         public string Type => type;
 
+        /// <summary>
+        /// Construye un contenedor de datos de los parámetros: "type"
+        /// </summary>
+        /// <param name="type"></param>
         public MsgDataBase(string type)
         {
-            throw new NotImplementedException();
+            this.type = type;
         }
     }
 }
