@@ -13,6 +13,8 @@ namespace Controller.Resources
 
         public Guid Id { get; }
 
+        public bool IsConnected { get; set; } = false;
+
         public ChatUser User { get; set; }
         
         public TcpClient Socket { get; }

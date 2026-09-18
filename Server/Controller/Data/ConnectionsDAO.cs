@@ -30,5 +30,15 @@ namespace Controller.Data
         {
             throw new NotImplementedException();
         }
+
+        public List<ClientConnection> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+
+        }
     }
 }

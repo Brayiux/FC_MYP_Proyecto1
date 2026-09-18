@@ -1,4 +1,5 @@
-﻿using Controller.Definitions.Interfaces;
+﻿using Controller.Data;
+using Controller.Definitions.Interfaces;
 using Controller.Resources;
 using Model.Definitions.Delegates;
 using System.Net;
@@ -44,13 +45,14 @@ public class ServerController
 	/// </summary>
 	private readonly MsgTranslator _translator = new MsgTranslator();
 
+	private bool _isActive = false;
 	#endregion
 
 	#region Construcción
 
 	public ServerController(IPAddress ip, string port)
 	{
-		throw new NotImplementedException();
+		_serverSocket = new(ip, int.Parse(port));
 	}
 
 	#endregion
@@ -59,12 +61,73 @@ public class ServerController
 
 	public async Task RunAsync()
 	{
-		throw new NotImplementedException();
+		StartListening();
+        _isActive = true;
+
+        while (_isActive)
+		{
+			TcpClient clientSocket = await _serverSocket.AcceptTcpClientAsync();
+			ClientConnection client = new(clientSocket);
+
+			ConnectionsDAO.Instance.Connect(client);
+
+            _ = HandleClientAsync(client);
+		}
+
+		DisconnectAll();
 	}
 
     public void Stop()
     {
-        throw new NotImplementedException();
+		_isActive = false;
+		DisconnectAll();
+    }
+	#endregion
+
+	#region Apoyo
+
+	private void StartListening()
+	{
+		_serverSocket.Start();
+	}
+
+	private async Task HandleClientAsync(ClientConnection c)
+	{
+		try
+		{
+            while (c.IsConnected)
+            {
+                byte[] bytes = await ReceiveDataAsync(c);
+                string msg = _encoder.Decode(bytes);
+                IARStrategy s = _translator.Translate(msg);
+                _ = s.ExecuteAsync(c);
+            }
+        }
+		finally
+		{
+			DisconnectClient(c);
+		}
+
+	}
+	private void DisconnectAll()
+	{
+		foreach (var c in ConnectionsDAO.Instance.GetAll())
+		{
+			DisconnectClient(c);
+		}
+	}
+	private async Task<byte[]> ReceiveDataAsync(ClientConnection c)
+	{
+		byte[] buffer = new byte[1024*1024];
+        int bytesRead = await c.Socket.GetStream().ReadAsync(buffer);
+		return buffer[..bytesRead];
+	}
+
+	private void DisconnectClient(ClientConnection c)
+	{
+		c.IsConnected = false;
+        c.Socket.GetStream().Close();
+        c.Socket.Close();
     }
 	#endregion
 }
