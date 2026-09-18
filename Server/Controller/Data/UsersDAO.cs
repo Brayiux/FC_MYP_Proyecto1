@@ -1,5 +1,6 @@
 ﻿using Controller.Resources;
 using Model.Definitions.Enums;
+using Model.Exceptions;
 
 namespace Controller.Data
 {
@@ -21,7 +22,11 @@ namespace Controller.Data
         private UsersDAO() { }
         public void Identify(ClientConnection c)
         {
-            throw new NotImplementedException();
+            if (!ChatData.Instance.AddUser(c))
+            {
+                throw new UserAlreadyExistsException(
+                    "Error: El usuario ya existe en la base de datos");
+            }
         }
 
         public void Remove(Guid id)
@@ -31,10 +36,10 @@ namespace Controller.Data
 
         public bool Exists(string username)
         {
-            throw new NotImplementedException();
+            return ChatData.Instance.Users.ContainsKey(username);
         }
 
-        public List<ClientConnection> GetAll()
+        public IReadOnlyList<ClientConnection> GetAll()
         {
             throw new NotImplementedException();
         }

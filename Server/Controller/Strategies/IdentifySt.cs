@@ -17,34 +17,28 @@ namespace Controller.Strategies
         {
             MsgBuilder mb = new();
 
-
-            if (UsersDAO.Instance.Exists(_username))
-            {
-                string response = BuildUserAlreadyExistsResponse(mb);
-                await SendMessageAsync(c, response);
-                return;
-            }
-
             try
             {
                 c.User = new(username: _username);
+
+                UsersDAO.Instance.Identify(c);
+
+                string response = BuildSuccessfulyIdentifiedResponse(mb);
+
+                _ = SendMessageAsync(c, response);
             }
             catch (UsernameOutOfRangeException)
             {
                 mb.Reset();
                 string response = BuildInvalidResponse(mb);
-                await SendMessageAsync(c, response);
+                _ = SendMessageAsync(c, response);
             }
-        }
-
-        private string BuildInvalidResponse(MsgBuilder mb)
-        {
-            return mb
-                    .WithType("RESPONSE")
-                    .WithOperation("IDENTIFY")
-                    .WithResult("USER_ALREADY_EXISTS")
-                    .WithExtra(_username)
-                    .Build();
+            catch (UserAlreadyExistsException)
+            {
+                string response = BuildUserAlreadyExistsResponse(mb);
+                await SendMessageAsync(c, response);
+                DisconnectClient(c);
+            }
         }
 
         private string BuildUserAlreadyExistsResponse(MsgBuilder mb)
@@ -54,6 +48,17 @@ namespace Controller.Strategies
                     .WithType("RESPONSE")
                     .WithOperation("IDENTIFY")
                     .WithResult("USER_ALREADY_EXISTS")
+                    .WithExtra(_username)
+                    .Build();
+        }
+
+        private string BuildSuccessfulyIdentifiedResponse(MsgBuilder mb)
+        {
+            mb.Reset();
+            return mb
+                    .WithType("RESPONSE")
+                    .WithOperation("IDENTIFY")
+                    .WithResult("SUCCESS")
                     .WithExtra(_username)
                     .Build();
         }

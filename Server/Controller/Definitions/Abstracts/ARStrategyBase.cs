@@ -22,5 +22,20 @@ namespace Controller.Definitions.Abstracts
             
             MessageSent?.Invoke(msg);
         }
+
+        protected string BuildInvalidResponse(MsgBuilder mb)
+        {
+            return mb
+                    .WithType("RESPONSE")
+                    .WithOperation("INVALID")
+                    .WithResult("INVALID")
+                    .Build();
+        }
+        protected void DisconnectClient(ClientConnection c)
+        {
+            c.IsConnected = false;
+            c.Socket.GetStream().Close();
+            c.Socket.Close();
+        }
     }
 }

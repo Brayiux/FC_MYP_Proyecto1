@@ -104,6 +104,10 @@ public class ServerController
                 _ = s.ExecuteAsync(c);
             }
         }
+		catch(ObjectDisposedException)
+		{
+
+		}
 		finally
 		{
 			DisconnectClient(c);

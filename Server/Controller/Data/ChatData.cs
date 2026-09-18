@@ -17,7 +17,7 @@ namespace Controller.Data
 
         private readonly ConcurrentDictionary<Guid, ClientConnection> _clients = [];
 
-        private readonly ConcurrentDictionary<Guid, ClientConnection> _users = [];
+        private readonly ConcurrentDictionary<string, ClientConnection> _users = [];
 
         private readonly ConcurrentDictionary<string, ChatRoom> _rooms = [];
 
@@ -38,7 +38,7 @@ namespace Controller.Data
         }
 
         public IReadOnlyDictionary<Guid, ClientConnection> Clients => _clients;
-        public IReadOnlyDictionary<Guid, ClientConnection> Users => _users;
+        public IReadOnlyDictionary<string, ClientConnection> Users => _users;
         public IReadOnlyDictionary<string, ChatRoom> Rooms => _rooms;
         public IReadOnlyDictionary<string, PrivateChatRoom> PrivateRooms => _privateRooms;
 
@@ -78,7 +78,7 @@ namespace Controller.Data
 
         public bool AddUser(ClientConnection c)
         {
-            throw new NotImplementedException();
+            return _users.TryAdd(c.User.Username, c);
         }
         public bool RemoveUser(Guid id)
         {

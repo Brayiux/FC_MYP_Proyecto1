@@ -2,6 +2,7 @@
 using Controller.Definitions.Interfaces;
 using Controller.Resources.DataContainers;
 using Controller.Strategies;
+using System.Collections;
 using System.Text.Json;
 
 namespace Controller.Resources
@@ -24,8 +25,9 @@ namespace Controller.Resources
         public IARStrategy Translate(string msg)
         {
             ArgumentNullException.ThrowIfNull(msg);
+            JsonSerializerOptions jso = new() { PropertyNameCaseInsensitive = true };
 
-            MsgDataBase? typeData = JsonSerializer.Deserialize<TypeMsgData>(msg);
+            MsgDataBase? typeData = JsonSerializer.Deserialize<TypeMsgData>(msg, jso);
 
             if (typeData == null)
             {
@@ -36,7 +38,7 @@ namespace Controller.Resources
             {
                 case "IDENTIFY":
                     {
-                        IdentifyMsgData data = JsonSerializer.Deserialize<IdentifyMsgData>(msg)!;
+                        IdentifyMsgData data = JsonSerializer.Deserialize<IdentifyMsgData>(msg, jso)!;
                         return new IdentifySt(username: data.Username);
                     }
                 case "STATUS":

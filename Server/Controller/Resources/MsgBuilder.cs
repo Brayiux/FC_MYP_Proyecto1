@@ -151,7 +151,7 @@ namespace Controller.Resources
                     "Error: No puede construir el mensaje porque está vacío.");
 
 
-            return JsonSerializer.Serialize(_msgData);
+            return JsonSerializer.Serialize(_msgData) + "\n";
         }
 
         /// <summary>
