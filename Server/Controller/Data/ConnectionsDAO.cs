@@ -7,6 +7,20 @@ namespace Controller.Data
     /// </summary>
     public class ConnectionsDAO
     {
+        private static ConnectionsDAO _instance;
+
+        public static ConnectionsDAO Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new ConnectionsDAO();
+                return _instance;
+            }
+        }
+
+        private ConnectionsDAO() { }
+
         public void Connect(ClientConnection c)
         {
             throw new NotImplementedException();

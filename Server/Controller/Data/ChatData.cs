@@ -29,7 +29,12 @@ namespace Controller.Data
 
         public static ChatData Instance
         {
-            get => throw new NotImplementedException();
+            get
+            {
+                if (_instance == null)
+                    _instance = new ChatData();
+                return _instance;
+            }
         }
 
         public IReadOnlyDictionary<Guid, ClientConnection> Clients => _clients;
@@ -40,7 +45,6 @@ namespace Controller.Data
         #endregion
 
         #region Construcción
-
         private ChatData() { }
         #endregion
 

@@ -8,6 +8,17 @@ namespace Controller.Data
     /// </summary>
     public class UsersDAO
     {
+        private static UsersDAO _instance;
+        public static UsersDAO Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new UsersDAO();
+                return _instance;
+            }
+        }
+        private UsersDAO() { }
         public void Identify(ClientConnection c)
         {
             throw new NotImplementedException();

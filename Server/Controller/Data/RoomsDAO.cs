@@ -7,6 +7,18 @@ namespace Controller.Data
     /// </summary>
     public class RoomsDAO
     {
+        private static RoomsDAO _instance;
+
+        public static RoomsDAO Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new RoomsDAO();
+                return _instance;
+            }
+        }
+        private RoomsDAO() { }
         public void Add(ChatRoom r)
         {
             throw new NotImplementedException();
