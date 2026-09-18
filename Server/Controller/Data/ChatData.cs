@@ -58,19 +58,20 @@ namespace Controller.Data
         }
         public bool RemoveClient(Guid id)
         {
-            throw new NotImplementedException();
+            return _clients.Remove(id, out _);
         }
         public bool ExistsClient(Guid id)
         {
-            throw new NotImplementedException();
+            return _clients.ContainsKey(id);
         }
         public ClientConnection? GetClientOrNull(Guid id)
         {
-            throw new NotImplementedException();
+            _clients.TryGetValue(id, out ClientConnection? c);
+            return c;
         }
         public void ClearClients()
         {
-            throw new NotImplementedException();
+            _clients.Clear();
         }
         #endregion
 
@@ -80,25 +81,25 @@ namespace Controller.Data
         {
             return _users.TryAdd(c.User.Username, c);
         }
-        public bool RemoveUser(Guid id)
+        public bool RemoveUser(string username)
         {
-            throw new NotImplementedException();
+            return _users.Remove(username, out _);
         }
-        public bool ExistsUser(Guid id)
+        public bool ExistsUser(string username)
         {
-            throw new NotImplementedException();
+            return _users.ContainsKey(username);
         }
-        public ClientConnection? GetUserOrNull(Guid id)
+        public ClientConnection? GetUserOrNull(string username)
         {
-            throw new NotImplementedException();
+            _users.TryGetValue(username, out ClientConnection? c);
+            return c;
         }
         public void ClearUsers()
         {
-            throw new NotImplementedException();
+            _users.Clear();
         }
 
         #endregion
-
 
 
     }

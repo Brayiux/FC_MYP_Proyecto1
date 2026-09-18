@@ -28,17 +28,18 @@ namespace Controller.Data
 
         public void Disconnect(Guid idClient)
         {
-            throw new NotImplementedException();
+            ChatData.Instance.RemoveClient(idClient);
         }
 
-        public List<ClientConnection> GetAll()
+        public IReadOnlyList<ClientConnection> GetAll()
         {
+#warning TODO: Mejorar para devolver la lista de valores sin repoblar
             return [.. ChatData.Instance.Clients.Values];
         }
 
         public void Clear()
         {
-
+            ChatData.Instance.ClearClients();
         }
     }
 }

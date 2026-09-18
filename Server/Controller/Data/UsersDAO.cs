@@ -31,7 +31,11 @@ namespace Controller.Data
 
         public void Remove(Guid id)
         {
-            throw new NotImplementedException();
+            if (!ChatData.Instance.RemoveClient(id))
+            {
+                throw new UserNotFoundException(
+                    "Error: No se puede remover al cliente porque no existe");
+            }
         }
 
         public bool Exists(string username)
@@ -41,7 +45,8 @@ namespace Controller.Data
 
         public IReadOnlyList<ClientConnection> GetAll()
         {
-            throw new NotImplementedException();
+#warning TODO: mejorar para no tener que repoblar la lista.
+            return [.. ChatData.Instance.Clients.Values];
         }
 
         public Dictionary<ClientConnection, UserStatus> GetAllAndStatus()
@@ -49,9 +54,9 @@ namespace Controller.Data
             throw new NotImplementedException();
         }
 
-        public ClientConnection GetClientOrNull(string username)
+        public ClientConnection? GetUserOrNull(string username)
         {
-            throw new NotImplementedException();
+            return ChatData.Instance.GetUserOrNull(username);
         }
 
     }
