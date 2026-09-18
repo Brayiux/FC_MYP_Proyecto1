@@ -1,7 +1,6 @@
-﻿using Controller.Resources.DataContainers;
-using System.Text.Json.Serialization;
+﻿using Controller.Definitions.Abstracts;
 
-namespace Controller.Definitions.Abstracts
+namespace Controller.Resources.DataContainers
 {
     /// <summary>
     /// Contenedor de datos de mensaje de tipo "ROOM_USERS".
