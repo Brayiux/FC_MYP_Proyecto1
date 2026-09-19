@@ -44,12 +44,6 @@ namespace Controller.Strategies
                 return;
             }
 
-            string username = c.User.Username;
-            if (room.IsMember(username) || room.IsInvited(username))
-            {
-                return;
-            }
-
             await HandleInvitationsAsync(c, _users, room);
 
         }
