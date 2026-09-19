@@ -21,8 +21,6 @@ namespace Controller.Data
 
         private readonly ConcurrentDictionary<string, ChatRoom> _rooms = [];
 
-        private readonly ConcurrentDictionary<string, PrivateChatRoom> _privateRooms = [];
-
         #endregion
 
         #region Propiedades
@@ -37,11 +35,6 @@ namespace Controller.Data
             }
         }
 
-        public IReadOnlyDictionary<Guid, ClientConnection> Clients => _clients;
-        public IReadOnlyDictionary<string, ClientConnection> Users => _users;
-        public IReadOnlyDictionary<string, ChatRoom> Rooms => _rooms;
-        public IReadOnlyDictionary<string, PrivateChatRoom> PrivateRooms => _privateRooms;
-
         #endregion
 
         #region Construcción
@@ -49,29 +42,24 @@ namespace Controller.Data
         #endregion
 
         #region Operaciones para clientes
-        public bool AddClient(ClientConnection c)
+        public bool AddClient(ClientConnection client)
         {
-            if (_clients.ContainsKey(c.Id)) return false;
+            if (_clients.ContainsKey(client.Id)) return false;
 
-            _clients[c.Id] = c;
+            _clients[client.Id] = client;
             return true;
         }
         public bool RemoveClient(Guid id)
         {
             return _clients.Remove(id, out _);
         }
-        public bool ExistsClient(Guid id)
-        {
-            return _clients.ContainsKey(id);
-        }
-        public ClientConnection? GetClientOrNull(Guid id)
-        {
-            _clients.TryGetValue(id, out ClientConnection? c);
-            return c;
-        }
         public void ClearClients()
         {
             _clients.Clear();
+        }
+        public IReadOnlyDictionary<Guid, ClientConnection> GetAllClients()
+        {
+            return _clients;
         }
         #endregion
 
@@ -85,22 +73,51 @@ namespace Controller.Data
         {
             return _users.Remove(username, out _);
         }
+        public void ClearUsers()
+        {
+            _users.Clear();
+        }
         public bool ExistsUser(string username)
         {
             return _users.ContainsKey(username);
+        }
+        public IReadOnlyDictionary<string, ClientConnection> GetAllUsers()
+        {
+            return _users;
         }
         public ClientConnection? GetUserOrNull(string username)
         {
             _users.TryGetValue(username, out ClientConnection? c);
             return c;
         }
-        public void ClearUsers()
-        {
-            _users.Clear();
-        }
 
         #endregion
 
+        #region Operaciones para habitaciones
 
+        public bool AddRoom(ChatRoom room)
+        {
+            return _rooms.TryAdd(room.Roomname, room);
+        }
+        public bool RemoveRoom(ChatRoom room)
+        {
+            return _rooms.Remove(room.Roomname, out _);
+        }
+        public void ClearRooms(ChatRoom room)
+        {
+            _rooms.Clear();
+        }
+        public bool ExistsRoom(string roomname)
+        {
+            return _rooms.ContainsKey(roomname);
+        }
+
+        public IReadOnlyDictionary<string, ChatRoom> GetAllRooms()
+        {
+            return _rooms;
+        }
+
+        #endregion
     }
+
 }
