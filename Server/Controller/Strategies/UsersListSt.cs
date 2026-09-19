@@ -7,11 +7,17 @@ namespace Controller.Strategies
     {
         public UsersListSt()
         {
-            throw new NotImplementedException();
+            
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {
             throw new NotImplementedException();
         }
+
+        #region Apoyo
+
+
+
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using Controller.Definitions.Interfaces;
+﻿using Controller.Data;
+using Controller.Definitions.Interfaces;
 using Controller.Resources;
 using Model.Definitions.Delegates;
 
@@ -41,6 +42,19 @@ namespace Controller.Definitions.Abstracts
             c.IsConnected = false;
             c.Socket.GetStream().Close();
             c.Socket.Close();
+        }
+
+        protected bool HandleClientIdentificationValidation(ClientConnection c)
+        {
+            bool isIdentified = ChatData.Instance.ExistsUser(c.User.Username);
+            
+            if (!isIdentified)
+            {
+                ChatData.Instance.RemoveClient(c.Id);
+                DisconnectClient(c);
+            }
+
+            return isIdentified;
         }
     }
 }
