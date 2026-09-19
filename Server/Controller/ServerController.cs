@@ -67,7 +67,7 @@ public class ServerController
         while (_isActive)
 		{
 			ClientConnection client = new(socket: await _serverSocket.AcceptTcpClientAsync());
-			ClientConnectionHandler cch = new(client);
+			ClientConnectionHandler cch = new(client, _encoder);
 
 			ChatData.Instance.AddClient(client);
 
@@ -98,9 +98,19 @@ public class ServerController
 			while (c.IsConnected)
 			{
 				byte[] bytes = await ReceiveDataAsync(c);
-				string msg = _encoder.Decode(bytes);
-				IARStrategy s = _translator.Translate(msg);
-				_ = s.ExecuteAsync(c);
+				string clientMsg = _encoder.Decode(bytes);
+				string[] msgs = clientMsg.Split(["\r","\r\n","\n"], StringSplitOptions.None);
+				
+				// Interpretamos todos los mensajes enviados, separados por saltos de línea:
+
+				foreach (var msg in msgs)
+				{
+					if (string.IsNullOrWhiteSpace(msg))
+						continue;
+                    IARStrategy s = _translator.Translate(msg);
+                    await s.ExecuteAsync(c);
+                }
+				
 			}
 		}
 		catch (ObjectDisposedException)
