@@ -68,7 +68,7 @@ namespace Controller.Resources
         {
             return _privateChats.Remove(client);
         }
-        public void ClearPrivateChats(ClientConnection client)
+        public void ClearPrivateChats()
         {
             _privateChats.Clear();
         }

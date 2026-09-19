@@ -1,8 +1,8 @@
 ﻿using Controller.Data;
 using Controller.Definitions.Abstracts;
-using Controller.Definitions.Interfaces;
 using Controller.Resources;
 using Model.Entities;
+using System.Threading.Tasks;
 
 namespace Controller.Strategies
 {
@@ -21,9 +21,14 @@ namespace Controller.Strategies
             }
             else
             {
-                NotifyDisconnectedToAllUsers(c);
+                var task1 = NotifyDisconnectedToChatAsync(c);
 
-                NotifyDisconnectedToAllUserRooms(c);
+                var task2 = HandleDisconnectedToRoomsAsync(c);
+
+                await Task.WhenAll([task1, task2]);
+                
+                c.ClearRooms();
+                c.ClearPrivateChats();
 
                 ChatData.Instance.RemoveUser(c.User.Username);
             }
@@ -40,42 +45,48 @@ namespace Controller.Strategies
         /// desconectado.
         /// </summary>
         /// <param name="client">Usuario que se desconecta</param>
-        private void NotifyDisconnectedToAllUsers(ClientConnection client)
+        /// <returns></returns>
+        private async Task NotifyDisconnectedToChatAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
+            string notification = mb.WithType("DISCONNECTED")
+                                    .WithUsername(client.User.Username)
+                                    .Build();
+            List<Task> tasks = [];
             foreach (var (username, user) in ChatData.Instance.GetAllUsers())
             {
-                if (!user.Equals(client))
-                {
-                    string notification = mb.WithType("DISCONNECTED")
-                                            .WithUsername(username)
-                                            .Build();
-                    _ = SendMessageAsync(user, notification);
-                }
+                if (user.Equals(client))
+                    continue;
+                tasks.Add(SendMessageAsync(user, notification));
             }
+            await Task.WhenAll(tasks);
         }
 
         /// <summary>
         /// Notifica a todos los usuarios que comparten sala con <paramref name="client"/>
-        /// que este se ha desconectado.
+        /// que este se ha desconectado y lo saca del registro de todas las salas.
         /// </summary>
         /// <param name="client">Cliente que se está desconectando.</param>
-        private void NotifyDisconnectedToAllUserRooms(ClientConnection client)
+        private async Task HandleDisconnectedToRoomsAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
+            List<Task> tasks = [];
             foreach (ChatRoom r in client.Rooms)
             {
                 foreach (var (username, _) in r.Members)
                 {
+                    mb.Reset();
                     ClientConnection user = ChatData.Instance.GetUserOrNull(username)!;
                     string notification = mb.WithType("LEFT_ROOM")
                                             .WithRoomname(r.Roomname)
                                             .WithUsername(client.User.Username)
                                             .Build();
 
-                    _ = SendMessageAsync(user, notification);
+                    tasks.Add(SendMessageAsync(user, notification));
                 }
+                r.Remove(client.User.Username);
             }
+            await Task.WhenAll(tasks);
         }
 
         #endregion

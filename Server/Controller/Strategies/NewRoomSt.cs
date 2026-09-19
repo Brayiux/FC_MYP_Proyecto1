@@ -29,11 +29,11 @@ namespace Controller.Strategies
 
                 if (ChatData.Instance.ExistsRoom(_roomname))
                 {
-                    ReplyRoomAlreadyExists(c);
+                    await ReplyRoomAlreadyExistsAsync(c);
                     return;
                 }
 
-                var replyTask = ReplyRoomSuccessfullyCreatedAsync(c);
+                var replyTask = ReplySuccessAsync(c);
                 c.AddRoom(room);
                 ChatData.Instance.AddRoom(room);
                 await replyTask;
@@ -59,7 +59,8 @@ namespace Controller.Strategies
         /// sala con el nombre de la que intentó crear.
         /// </summary>
         /// <param name="client">Usuario al que se le responde.</param>
-        private void ReplyRoomAlreadyExists(ClientConnection client)
+        /// <returns></returns>
+        private async Task ReplyRoomAlreadyExistsAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
 
@@ -69,10 +70,15 @@ namespace Controller.Strategies
                                 .WithExtra(_roomname)
                                 .Build();
 
-            _ = SendMessageAsync(client, response);
+            await SendMessageAsync(client, response);
         }
 
-        private async Task ReplyRoomSuccessfullyCreatedAsync(ClientConnection client)
+        /// <summary>
+        /// Responde al usuario que su sala se ha creado de manera exitosa.
+        /// </summary>
+        /// <param name="client">Usuario al que se le responde.</param>
+        /// <returns></returns>
+        private async Task ReplySuccessAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
             string response = mb.WithType("RESPONSE")

@@ -3,6 +3,7 @@ using Controller.Definitions.Abstracts;
 using Controller.Resources;
 using Model.Entities;
 using Model.Exceptions;
+using System.Threading.Tasks;
 
 namespace Controller.Strategies
 {
@@ -25,7 +26,7 @@ namespace Controller.Strategies
             try
             {
                 TextRoomRules.ValidateText(_msg);
-                NotifyPublicTextFrom(c);
+                await NotifyPublicTextFromAsync(c);
 
             }
             catch (InvalidTextException)
@@ -46,21 +47,22 @@ namespace Controller.Strategies
         /// al chat principal por <paramref name="client"/>.
         /// </summary>
         /// <param name="client">Usuario que envía el texto público.</param>
-        private void NotifyPublicTextFrom(ClientConnection client)
+        private async Task NotifyPublicTextFromAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
             string notification = mb.WithType("PUBLIC_TEXT_FROM")
                                     .WithUsername(client.User.Username)
                                     .WithText(_msg)
                                     .Build();
-
+            List<Task> tasks = [];
             foreach (var (_, user) in ChatData.Instance.GetAllUsers())
             {
                 if (!user.Equals(client))
                 {
-                    _ = SendMessageAsync(client, notification);
+                    tasks.Add(SendMessageAsync(client, notification));
                 }
             }
+            await Task.WhenAll(tasks);
         }
 
         #endregion

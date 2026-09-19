@@ -3,6 +3,7 @@ using Controller.Definitions.Abstracts;
 using Controller.Resources;
 using Model.Entities;
 using Model.Exceptions;
+using System.Threading.Tasks;
 
 namespace Controller.Strategies
 {
@@ -33,14 +34,14 @@ namespace Controller.Strategies
 
             if (receiver == null)
             {
-                ReplyNoSuchUser(c);
+                await ReplyNoSuchUserAsync(c);
                 return;
             }
 
             try
             {
                 TextRoomRules.ValidateText(_msg);
-                NotifyTextFrom(c, receiver);
+                await NotifyTextFromAsync(c, receiver);
                 
             }
             catch (InvalidTextException)
@@ -61,7 +62,8 @@ namespace Controller.Strategies
         /// usuario con el username indicado.
         /// </summary>
         /// <param name="client">Cliente a quien se le responde.</param>
-        private void ReplyNoSuchUser(ClientConnection client)
+        /// <returns></returns>
+        private async Task ReplyNoSuchUserAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
             string response = mb.WithType("RESPONSE")
@@ -70,7 +72,7 @@ namespace Controller.Strategies
                                 .WithExtra(_username)
                                 .Build();
 
-            _ = SendMessageAsync(client, response);
+            await SendMessageAsync(client, response);
         }
 
         /// <summary>
@@ -78,15 +80,15 @@ namespace Controller.Strategies
         /// </summary>
         /// <param name="client">El usuario emisor.</param>
         /// <param name="receiver">El usuario receptor.</param>
-        private void NotifyTextFrom(ClientConnection client, ClientConnection receiver)
+        /// <returns></returns>
+        private async Task NotifyTextFromAsync(ClientConnection client, ClientConnection receiver)
         {
             MsgBuilder mb = new();
             string notification = mb.WithType("TEXT_FROM")
                                     .WithUsername(client.User.Username)
                                     .WithText(_msg)
                                     .Build();
-
-            _ = SendMessageAsync(receiver, notification);
+            await SendMessageAsync(receiver, notification);
 
         }
 

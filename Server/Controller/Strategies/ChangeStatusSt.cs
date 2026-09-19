@@ -3,6 +3,7 @@ using Controller.Definitions.Abstracts;
 using Controller.Resources;
 using Model.Definitions.Enums;
 using Model.Exceptions;
+using System.Threading.Tasks;
 
 namespace Controller.Strategies
 {
@@ -22,7 +23,7 @@ namespace Controller.Strategies
             {
                 c.User.Status = _newStatus;
 
-                NotifyStatusChanged(c);
+                await NotifyStatusChangedAsync(c);
             } 
             catch (InvalidClientStatusException)
             {
@@ -41,7 +42,7 @@ namespace Controller.Strategies
         /// que este ha cambiado de estado e indica a cuál.
         /// </summary>
         /// <param name="client">Cliente que cambió de estado.</param>
-        private void NotifyStatusChanged(ClientConnection client)
+        private async Task NotifyStatusChangedAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
 
@@ -49,14 +50,16 @@ namespace Controller.Strategies
                                     .WithUsername(client.User.Username)
                                     .WithStatus(client.User.Status)
                                     .Build();
-            
+            List<Task> tasks = [];
+
             foreach (var (_,user) in ChatData.Instance.GetAllUsers())
             {
                 if (!client.Equals(user))
                 {
-                    _ = SendMessageAsync(user, notification);
+                    tasks.Add(SendMessageAsync(user, notification));
                 }
             }
+            await Task.WhenAll(tasks);
         }
 
         #endregion

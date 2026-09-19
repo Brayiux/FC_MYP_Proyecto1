@@ -2,6 +2,7 @@
 using Controller.Definitions.Abstracts;
 using Controller.Resources;
 using Model.Exceptions;
+using System.Threading.Tasks;
 
 namespace Controller.Strategies
 {
@@ -27,7 +28,7 @@ namespace Controller.Strategies
 
                 if (alreadyExists)
                 {
-                    ReplyUserAlreadyExists(c);
+                    await ReplyUserAlreadyExistsAsync(c);
 
                     ChatData.Instance.RemoveClient(c.Id);
                     DisconnectClient(c);
@@ -35,10 +36,10 @@ namespace Controller.Strategies
                 }
 
                 // Notificamos a los usuarios
-                NotifyToAllUsersANewUserWasIdentified(c);
+                await NotifyNewUserAsync(c);
 
                 //Notificamos al cliente
-                ReplySuccessfulyIdentified(c);
+                await ReplySuccessfulyIdentifiedAsync(c);
             }
             catch (UsernameOutOfRangeException)
             {
@@ -57,7 +58,8 @@ namespace Controller.Strategies
         /// que se ha identificado.
         /// </summary>
         /// <param name="client">Nuevo usuario que ingresó.</param>
-        private void NotifyToAllUsersANewUserWasIdentified(ClientConnection client)
+        /// <returns></returns>
+        private async Task NotifyNewUserAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
 
@@ -65,14 +67,15 @@ namespace Controller.Strategies
                                     .WithType("NEW_USER")
                                     .WithUsername(_username)
                                     .Build();
+            List<Task> tasks = [];
 
             foreach (var (_, u) in ChatData.Instance.GetAllUsers())
             {
-                if (!u.Equals(client))
-                {
-                    _ = SendMessageAsync(u, notification);
-                }
+                if (u.Equals(client))
+                    continue;
+                tasks.Add(SendMessageAsync(u, notification));
             }
+            await Task.WhenAll(tasks);
         }
 
         /// <summary>
@@ -80,7 +83,8 @@ namespace Controller.Strategies
         /// ha sido exitosa.
         /// </summary>
         /// <param name="client">Cliente cuya identificación ha sido exitosa.</param>
-        private void ReplySuccessfulyIdentified(ClientConnection client)
+        /// <returns></returns>
+        private async Task ReplySuccessfulyIdentifiedAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
             string response = mb
@@ -90,7 +94,7 @@ namespace Controller.Strategies
                                 .WithExtra(_username)
                                 .Build();
 
-            _ = SendMessageAsync(client, response);
+            await SendMessageAsync(client, response);
 
         }
 
@@ -99,7 +103,8 @@ namespace Controller.Strategies
         /// <i>username</i> con el que se intenta registrar.
         /// </summary>
         /// <param name="client">Cliente al que se le responde.</param>
-        private void ReplyUserAlreadyExists(ClientConnection client)
+        /// <returns></returns>
+        private async Task ReplyUserAlreadyExistsAsync(ClientConnection client)
         {
             MsgBuilder mb = new();
             string response = mb
@@ -108,7 +113,7 @@ namespace Controller.Strategies
                                 .WithResult("USER_ALREADY_EXISTS")
                                 .WithExtra(_username)
                                 .Build();
-            _ = SendMessageAsync(client, response);
+            await SendMessageAsync(client, response);
         }
 
         #endregion
