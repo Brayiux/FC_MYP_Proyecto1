@@ -1,17 +1,38 @@
-﻿using Controller.Definitions.Abstracts;
+﻿using Controller.Data;
+using Controller.Definitions.Abstracts;
 using Controller.Resources;
+using Model.Entities;
 
 namespace Controller.Strategies
 {
-    public class RoomMsgSt : ARStrategyBase
+    public class RoomMsgSt : FindRoomARStrategyBase
     {
-        public RoomMsgSt(string roomname, string msg)
+        private readonly string _msg;
+
+        public RoomMsgSt(string roomname, string msg) : base(roomname, "ROOM_TEXT")
         {
-            throw new NotImplementedException();
+            _msg = msg;
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {
-            throw new NotImplementedException();
+            if (!await HandleClientIdentificationValidationAsync(c))
+                return;
+
+            ChatRoom? room = ChatData.Instance.GetRoomOrNull(_roomname);
+            
+            // Si el la sala no existe:
+
+            if (room == null)
+            {
+                await ReplyInvalidAsync(c);
+                return;
+            }
+
+
+
+
+            
         }
+
     }
 }

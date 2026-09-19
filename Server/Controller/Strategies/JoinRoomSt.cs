@@ -5,16 +5,11 @@ using Model.Entities;
 
 namespace Controller.Strategies
 {
-    public class JoinRoomSt : ARStrategyBase
+    public class JoinRoomSt : FindRoomARStrategyBase
     {
-        /// <summary>
-        /// Nombre de la habitación donde el cliente desea ingresar.
-        /// </summary>
-        private readonly string _roomname;
-
-        public JoinRoomSt(string roomname)
+        public JoinRoomSt(string roomname) : base(roomname, "JOIN_ROOM")
         {
-            _roomname = roomname;
+            
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {
@@ -47,23 +42,6 @@ namespace Controller.Strategies
         }
 
         #region Apoyo
-
-        /// <summary>
-        /// Le responde al <paramref name="client"/> que la sala con el nombre
-        /// indicado no existe.
-        /// </summary>
-        /// <param name="client">Cliente al que se le responde.</param>
-        /// <returns></returns>
-        private async Task ReplyNoSuchRoomAsync(ClientConnection client)
-        {
-            MsgBuilder mb = new();
-            string response = mb.WithType("RESPONSE")
-                                .WithOperation("JOIN_ROOM")
-                                .WithResult("NO_SUCH_ROOM")
-                                .WithExtra(_roomname)
-                                .Build();
-            await SendMessageAsync(client, response);
-        }
 
         /// <summary>
         /// Responde al <paramref name="client"/> que no se puede unir a la sala

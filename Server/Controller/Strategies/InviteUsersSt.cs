@@ -6,21 +6,15 @@ using System.Threading.Tasks;
 
 namespace Controller.Strategies
 {
-    public class InviteUsersSt : ARStrategyBase
+    public class InviteUsersSt : FindRoomARStrategyBase
     {
-        /// <summary>
-        /// Nombre de la sala a la que el cliente desea invitar usuarios.
-        /// </summary>
-        private readonly string _roomname;
-
         /// <summary>
         /// Lista de usuarios que el cliente desea invitar a la sala.
         /// </summary>
         private readonly IReadOnlyList<string> _users;
 
-        public InviteUsersSt(string roomname, IReadOnlyList<string> users)
+        public InviteUsersSt(string roomname, IReadOnlyList<string> users) : base(roomname, "INVITE")
         {
-            _roomname = roomname;
             _users = users;
         }
         public async override Task ExecuteAsync(ClientConnection c)
@@ -49,24 +43,6 @@ namespace Controller.Strategies
         }
 
         #region Apoyo
-
-        /// <summary>
-        /// Responde al <paramref name="client"/> que no existe
-        /// una sala con el nombre que indicó para la invitación.
-        /// </summary>
-        /// <param name="client">Usuario que recibe la respuesta.</param>
-        /// <returns></returns>
-        private async Task ReplyNoSuchRoomAsync(ClientConnection client)
-        {
-            MsgBuilder mb = new();
-            string response = mb.WithType("RESPONSE")
-                                .WithOperation("INVITE")
-                                .WithResult("NO_SUCH_ROOM")
-                                .WithExtra(_roomname)
-                                .Build();
-
-            await SendMessageAsync(client, response);
-        }
 
         /// <summary>
         /// Le responde al cliente que al menos un usuario no fue encontrado

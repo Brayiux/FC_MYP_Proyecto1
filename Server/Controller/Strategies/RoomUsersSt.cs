@@ -6,15 +6,12 @@ using Model.Entities;
 
 namespace Controller.Strategies
 {
-    public class RoomUsersSt : ARStrategyBase
+    public class RoomUsersSt : FindRoomARStrategyBase
     {
-        /// <summary>
-        /// Sala de la cual se desea obtener la lista de usuarios.
-        /// </summary>
-        private readonly string _roomname;
-        public RoomUsersSt(string roomname)
+
+        public RoomUsersSt(string roomname) : base(roomname, "ROOM_USERS")
         {
-            _roomname = roomname;
+
         }
 
         public async override Task ExecuteAsync(ClientConnection c)
@@ -44,22 +41,6 @@ namespace Controller.Strategies
         }
 
         #region Apoyo
-
-        /// <summary>
-        /// Responde al usuario que no hay ninguna sala con el nombre indicado.
-        /// </summary>
-        /// <param name="client">Cliente al que se le responde.</param>
-        /// <returns></returns>
-        private async Task ReplyNoSuchRoomAsync(ClientConnection client)
-        {
-            MsgBuilder mb = new();
-            string response = mb.WithType("RESPONSE")
-                                .WithOperation("ROOM_USERS")
-                                .WithResult("NO_SUCH_ROOM")
-                                .WithExtra(_roomname)
-                                .Build();
-            await SendMessageAsync(client, response);
-        }
 
         /// <summary>
         /// Responde al usuario que no está unido a la sala y por tanto no puede
@@ -92,6 +73,7 @@ namespace Controller.Strategies
                                 .WithRoomname(_roomname)
                                 .WithUsers(usersData)
                                 .Build();
+            await SendMessageAsync(client, response);
         }
         
         /// <summary>
