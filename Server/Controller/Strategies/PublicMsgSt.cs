@@ -16,7 +16,12 @@ namespace Controller.Strategies
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {
-            throw new NotImplementedException();
+            MsgBuilder mb = new();
+
+            if (!await HandleClientIdentificationValidationAsync(c))
+                return;
+
+
         }
     }
 }

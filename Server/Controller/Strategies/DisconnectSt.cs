@@ -14,17 +14,16 @@ namespace Controller.Strategies
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {
-            MsgBuilder mb = new();
 
             if (!ChatData.Instance.ExistsUser(c.User.Username))
             {
-                await ReplyInvalidAsync(c, mb);
+                await ReplyInvalidAsync(c);
             }
             else
             {
-                NotifyDisconnectedToAllUsers(c, mb);
+                NotifyDisconnectedToAllUsers(c);
 
-                NotifyDisconnectedToAllUserRooms(c, mb);
+                NotifyDisconnectedToAllUserRooms(c);
 
                 ChatData.Instance.RemoveUser(c.User.Username);
             }
@@ -41,10 +40,9 @@ namespace Controller.Strategies
         /// desconectado.
         /// </summary>
         /// <param name="client">Usuario que se desconecta</param>
-        /// <param name="mb">Constructor del mensaje de notificación.</param>
-        private void NotifyDisconnectedToAllUsers(ClientConnection client, MsgBuilder mb)
+        private void NotifyDisconnectedToAllUsers(ClientConnection client)
         {
-            mb.Reset();
+            MsgBuilder mb = new();
             foreach (var (username, user) in ChatData.Instance.GetAllUsers())
             {
                 if (!user.Equals(client))
@@ -62,10 +60,9 @@ namespace Controller.Strategies
         /// que este se ha desconectado.
         /// </summary>
         /// <param name="client">Cliente que se está desconectando.</param>
-        /// <param name="mb">Constructor del mensaje de notificación.</param>
-        private void NotifyDisconnectedToAllUserRooms(ClientConnection client, MsgBuilder mb)
+        private void NotifyDisconnectedToAllUserRooms(ClientConnection client)
         {
-            mb.Reset();
+            MsgBuilder mb = new();
             foreach (ChatRoom r in client.Rooms)
             {
                 foreach (var (username, _) in r.Members)

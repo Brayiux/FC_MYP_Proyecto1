@@ -24,8 +24,10 @@ namespace Controller.Definitions.Abstracts
             
             MessageSent?.Invoke(msg);
         }
-        protected async Task ReplyInvalidAsync(ClientConnection c, MsgBuilder mb)
+        protected async Task ReplyInvalidAsync(ClientConnection c)
         {
+            MsgBuilder mb = new();
+
             string response = BuildInvalidResponse(mb);
             await SendMessageAsync(c, response);
         }
@@ -45,7 +47,7 @@ namespace Controller.Definitions.Abstracts
             c.Socket.Close();
         }
 
-        protected async Task<bool> HandleClientIdentificationValidationAsync(ClientConnection c, MsgBuilder mb)
+        protected async Task<bool> HandleClientIdentificationValidationAsync(ClientConnection c)
         {
             bool isIdentified = ChatData.Instance.ExistsUser(c.User.Username);
             
@@ -54,8 +56,7 @@ namespace Controller.Definitions.Abstracts
                 ChatData.Instance.RemoveClient(c.Id);
                 DisconnectClient(c);
             }
-            mb.Reset();
-
+            MsgBuilder mb = new();
             string response = mb.WithType("RESPONSE")
                                 .WithOperation("INVALID")
                                 .WithResult("NOT_IDENTIFIED")

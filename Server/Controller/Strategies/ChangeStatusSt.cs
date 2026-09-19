@@ -1,6 +1,5 @@
 ﻿using Controller.Data;
 using Controller.Definitions.Abstracts;
-using Controller.Definitions.Interfaces;
 using Controller.Resources;
 using Model.Definitions.Enums;
 using Model.Exceptions;
@@ -16,20 +15,18 @@ namespace Controller.Strategies
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {
-
-            MsgBuilder mb = new();
-
-            if (! await HandleClientIdentificationValidationAsync(c, mb)) return;
+            if (! await HandleClientIdentificationValidationAsync(c))
+                return;
 
             try
             {
                 c.User.Status = _newStatus;
 
-                NotifyStatusChanged(c, mb);
+                NotifyStatusChanged(c);
             } 
             catch (InvalidClientStatusException)
             {
-                await ReplyInvalidAsync(c, mb);
+                await ReplyInvalidAsync(c);
 
                 ChatData.Instance.RemoveUser(c.User.Username);
                 ChatData.Instance.RemoveClient(c.Id);
@@ -44,10 +41,9 @@ namespace Controller.Strategies
         /// que este ha cambiado de estado e indica a cuál.
         /// </summary>
         /// <param name="client">Cliente que cambió de estado.</param>
-        /// <param name="mb">Constructor del mensaje de notificación.</param>
-        private void NotifyStatusChanged(ClientConnection client, MsgBuilder mb)
+        private void NotifyStatusChanged(ClientConnection client)
         {
-            mb.Reset();
+            MsgBuilder mb = new();
 
             string notification = mb.WithType("NEW_STATUS")
                                     .WithUsername(client.User.Username)

@@ -25,27 +25,27 @@ namespace Controller.Strategies
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {
-            MsgBuilder mb = new();
 
-            if (!await HandleClientIdentificationValidationAsync(c, mb)) return;
+            if (!await HandleClientIdentificationValidationAsync(c)) 
+                return;
 
             ClientConnection? receiver = ChatData.Instance.GetUserOrNull(_username);
 
             if (receiver == null)
             {
-                ReplyNoSuchUser(c, mb);
+                ReplyNoSuchUser(c);
                 return;
             }
 
             try
             {
                 TextRoomRules.ValidateText(_msg);
-                NotifyTextFrom(c, receiver, mb);
+                NotifyTextFrom(c, receiver);
                 
             }
             catch (InvalidTextException)
             {
-                await ReplyInvalidAsync(c, mb);
+                await ReplyInvalidAsync(c);
 
                 ChatData.Instance.RemoveClient(c.Id);
                 ChatData.Instance.RemoveUser(c.User.Username);
@@ -61,10 +61,9 @@ namespace Controller.Strategies
         /// usuario con el username indicado.
         /// </summary>
         /// <param name="client">Cliente a quien se le responde.</param>
-        /// <param name="mb">Constructor del mensaje de respuesta.</param>
-        private void ReplyNoSuchUser(ClientConnection client, MsgBuilder mb)
+        private void ReplyNoSuchUser(ClientConnection client)
         {
-            mb.Reset();
+            MsgBuilder mb = new();
             string response = mb.WithType("RESPONSE")
                                 .WithOperation("TEXT")
                                 .WithResult("NO_SUCH_USER")
@@ -79,10 +78,9 @@ namespace Controller.Strategies
         /// </summary>
         /// <param name="client">El usuario emisor.</param>
         /// <param name="receiver">El usuario receptor.</param>
-        /// <param name="mb">Constructor del mensaje de notificación.</param>
-        private void NotifyTextFrom(ClientConnection client, ClientConnection receiver, MsgBuilder mb)
+        private void NotifyTextFrom(ClientConnection client, ClientConnection receiver)
         {
-            mb.Reset();
+            MsgBuilder mb = new();
             string notification = mb.WithType("TEXT_FROM")
                                     .WithUsername(client.User.Username)
                                     .WithText(_msg)

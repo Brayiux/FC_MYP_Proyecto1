@@ -19,8 +19,6 @@ namespace Controller.Strategies
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {
-            MsgBuilder mb = new();
-
             try
             {
                 c.User = new(username: _username);
@@ -29,7 +27,7 @@ namespace Controller.Strategies
 
                 if (alreadyExists)
                 {
-                    ReplyUserAlreadyExists(c, mb);
+                    ReplyUserAlreadyExists(c);
 
                     ChatData.Instance.RemoveClient(c.Id);
                     DisconnectClient(c);
@@ -37,14 +35,14 @@ namespace Controller.Strategies
                 }
 
                 // Notificamos a los usuarios
-                NotifyToAllUsersANewUserWasIdentified(c, mb);
+                NotifyToAllUsersANewUserWasIdentified(c);
 
                 //Notificamos al cliente
-                ReplySuccessfulyIdentified(c, mb);
+                ReplySuccessfulyIdentified(c);
             }
             catch (UsernameOutOfRangeException)
             {
-                await ReplyInvalidAsync(c, mb);
+                await ReplyInvalidAsync(c);
 
                 ChatData.Instance.RemoveClient(c.Id);
                 ChatData.Instance.RemoveUser(c.User.Username);
@@ -59,10 +57,9 @@ namespace Controller.Strategies
         /// que se ha identificado.
         /// </summary>
         /// <param name="client">Nuevo usuario que ingresó.</param>
-        /// <param name="mb">Constructor del mensaje de notificación.</param>
-        private void NotifyToAllUsersANewUserWasIdentified(ClientConnection client, MsgBuilder mb)
+        private void NotifyToAllUsersANewUserWasIdentified(ClientConnection client)
         {
-            mb.Reset();
+            MsgBuilder mb = new();
 
             string notification = mb
                                     .WithType("NEW_USER")
@@ -83,10 +80,9 @@ namespace Controller.Strategies
         /// ha sido exitosa.
         /// </summary>
         /// <param name="client">Cliente cuya identificación ha sido exitosa.</param>
-        /// <param name="mb">Constructor del mensaje de respuesta.</param>
-        private void ReplySuccessfulyIdentified(ClientConnection client, MsgBuilder mb)
+        private void ReplySuccessfulyIdentified(ClientConnection client)
         {
-            mb.Reset();
+            MsgBuilder mb = new();
             string response = mb
                                 .WithType("RESPONSE")
                                 .WithOperation("IDENTIFY")
@@ -103,10 +99,9 @@ namespace Controller.Strategies
         /// <i>username</i> con el que se intenta registrar.
         /// </summary>
         /// <param name="client">Cliente al que se le responde.</param>
-        /// <param name="mb">Constructor del mensaje de respuesta.</param>
-        private void ReplyUserAlreadyExists(ClientConnection client, MsgBuilder mb)
+        private void ReplyUserAlreadyExists(ClientConnection client)
         {
-            mb.Reset();
+            MsgBuilder mb = new();
             string response = mb
                                 .WithType("RESPONSE")
                                 .WithOperation("IDENTIFY")
