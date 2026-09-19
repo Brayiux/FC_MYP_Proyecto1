@@ -7,6 +7,9 @@ namespace Controller.Strategies
 {
     public class JoinRoomSt : ARStrategyBase
     {
+        /// <summary>
+        /// Nombre de la habitación donde el cliente desea ingresar.
+        /// </summary>
         private readonly string _roomname;
 
         public JoinRoomSt(string roomname)
@@ -96,6 +99,13 @@ namespace Controller.Strategies
             await SendMessageAsync(client, response);
         }
 
+        /// <summary>
+        /// Notifica al resto de usuarios diferentes de <paramref name="client"/> que este
+        /// ha entrada a la <paramref name="room"/>.
+        /// </summary>
+        /// <param name="client">Usuario que entra a la sala.</param>
+        /// <param name="room">Sala donde el usuario entra.</param>
+        /// <returns></returns>
         private async Task NotifyAllRoomUsersUserJoined(ClientConnection client, ChatRoom room)
         {
             MsgBuilder mb = new();
@@ -106,6 +116,8 @@ namespace Controller.Strategies
             List<Task> tasks = [];
             foreach(var (username, _) in room.Members)
             {
+                if (username.Equals(client.User.Username))
+                    continue;
                 ClientConnection user = ChatData.Instance.GetUserOrNull(username)!;
                 tasks.Add(SendMessageAsync(user, notification));
             }
