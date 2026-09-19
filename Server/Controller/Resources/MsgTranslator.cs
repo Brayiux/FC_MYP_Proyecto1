@@ -43,7 +43,7 @@ namespace Controller.Resources
                     }
                 case "STATUS":
                     {
-                        ChangeStatusMsgData data = JsonSerializer.Deserialize<ChangeStatusMsgData>(msg)!;
+                        ChangeStatusMsgData data = JsonSerializer.Deserialize<ChangeStatusMsgData>(msg, jso)!;
                         return new ChangeStatusSt(status: data.Status);
                     }
                 case "USERS":
@@ -52,43 +52,43 @@ namespace Controller.Resources
                     }
                 case "TEXT":
                     {
-                        PrivateMsgMsgData data = JsonSerializer.Deserialize<PrivateMsgMsgData>(msg)!;
+                        PrivateMsgMsgData data = JsonSerializer.Deserialize<PrivateMsgMsgData>(msg, jso)!;
                         return new PrivateMsgSt(username: data.Username, msg: data.Text);
                     }
                 case "PUBLIC_TEXT":
                     {
-                        PublicMsgMsgData data = JsonSerializer.Deserialize<PublicMsgMsgData>(msg)!;
+                        PublicMsgMsgData data = JsonSerializer.Deserialize<PublicMsgMsgData>(msg, jso)!;
                         return new PublicMsgSt(msg: data.Text);
                     }
                 case "NEW_ROOM":
                     {
-                        NewRoomMsgData data = JsonSerializer.Deserialize<NewRoomMsgData>(msg)!;
+                        NewRoomMsgData data = JsonSerializer.Deserialize<NewRoomMsgData>(msg, jso)!;
                         return new NewRoomSt(roomname: data.Roomname);
                     }
                 case "INVITE":
                     {
-                        InviteUsersMsgData data = JsonSerializer.Deserialize<InviteUsersMsgData>(msg)!;
+                        InviteUsersMsgData data = JsonSerializer.Deserialize<InviteUsersMsgData>(msg, jso)!;
 
                         return new InviteUsersSt(roomname: data.Roomname, users: data.Usernames);
                     }
                 case "JOIN_ROOM":
                     {
-                        JoinRoomMsgData data = JsonSerializer.Deserialize<JoinRoomMsgData>(msg)!;
+                        JoinRoomMsgData data = JsonSerializer.Deserialize<JoinRoomMsgData>(msg, jso)!;
                         return new JoinRoomSt(roomname: data.Roomname);
                     }
                 case "ROOM_USERS":
                     {
-                        RoomUsersMsgData data = JsonSerializer.Deserialize<RoomUsersMsgData>(msg)!;
+                        RoomUsersMsgData data = JsonSerializer.Deserialize<RoomUsersMsgData>(msg, jso)!;
                         return new RoomUsersSt(roomname: data.Roomname);
                     }
                 case "ROOM_TEXT":
                     {
-                        RoomMsgMsgData data = JsonSerializer.Deserialize<RoomMsgMsgData>(msg)!;
+                        RoomMsgMsgData data = JsonSerializer.Deserialize<RoomMsgMsgData>(msg, jso)!;
                         return new RoomMsgSt(roomname: data.Roomname, msg: data.Text);
                     }
                 case "LEAVE_ROOM":
                     {
-                        LeaveRoomMsgData data = JsonSerializer.Deserialize<LeaveRoomMsgData>(msg)!;
+                        LeaveRoomMsgData data = JsonSerializer.Deserialize<LeaveRoomMsgData>(msg, jso)!;
                         return new LeaveRoomSt(roomname: data.Roomname);
                     }
                 case "DISCONNECT":
