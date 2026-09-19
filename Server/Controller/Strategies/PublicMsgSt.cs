@@ -33,9 +33,7 @@ namespace Controller.Strategies
             {
                 await ReplyInvalidAsync(c);
 
-                ChatData.Instance.RemoveClient(c.Id);
-                ChatData.Instance.RemoveUser(c.User.Username);
-                DisconnectClient(c);
+                c.Disconnect();
             }
 
         }
@@ -59,7 +57,7 @@ namespace Controller.Strategies
             {
                 if (!user.Equals(client))
                 {
-                    tasks.Add(SendMessageAsync(client, notification));
+                    tasks.Add(SendMessageAsync(user, notification));
                 }
             }
             await Task.WhenAll(tasks);

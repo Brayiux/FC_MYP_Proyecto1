@@ -10,14 +10,14 @@ namespace Controller.Resources.DataContainers
     {
 
         [JsonInclude]
-        private readonly List<string> usernames;
+        private readonly List<string> users;
 
         [JsonIgnore]
-        public IReadOnlyList<string> Usernames => usernames;
+        public List<string> Users => users;
 
-        public InviteUsersMsgData(string type, string roomname, List<string> usernames) : base(type, roomname)
+        public InviteUsersMsgData(string type, string roomname, List<string> users) : base(type, roomname)
         {
-            this.usernames = usernames;
+            this.users = users;
         }
     }
 }

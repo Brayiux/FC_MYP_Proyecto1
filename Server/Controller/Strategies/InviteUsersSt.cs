@@ -2,6 +2,7 @@
 using Controller.Definitions.Abstracts;
 using Controller.Resources;
 using Model.Entities;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Controller.Strategies
@@ -38,9 +39,7 @@ namespace Controller.Strategies
             {
                 // Lo desconectamos, pues el protocolo no especifica respuesta alguna.
                 await ReplyInvalidAsync(c);
-                ChatData.Instance.RemoveUser(c.User.Username);
-                ChatData.Instance.RemoveClient(c.Id);
-                DisconnectClient(c);
+                c.Disconnect();
                 return;
             }
 

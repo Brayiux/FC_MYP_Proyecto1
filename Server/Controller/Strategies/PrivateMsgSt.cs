@@ -47,10 +47,7 @@ namespace Controller.Strategies
             catch (InvalidTextException)
             {
                 await ReplyInvalidAsync(c);
-
-                ChatData.Instance.RemoveClient(c.Id);
-                ChatData.Instance.RemoveUser(c.User.Username);
-                DisconnectClient(c);
+                c.Disconnect();
             }
 
         }

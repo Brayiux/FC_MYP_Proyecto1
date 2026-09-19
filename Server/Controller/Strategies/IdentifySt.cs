@@ -19,7 +19,14 @@ namespace Controller.Strategies
             _username = username;
         }
         public async override Task ExecuteAsync(ClientConnection c)
-        {
+        { 
+            if (c.User != null)
+            {
+                await ReplyInvalidAsync(c);
+                c.Disconnect();
+                return;
+            }
+
             try
             {
                 c.User = new(username: _username);
@@ -29,9 +36,7 @@ namespace Controller.Strategies
                 if (alreadyExists)
                 {
                     await ReplyUserAlreadyExistsAsync(c);
-
-                    ChatData.Instance.RemoveClient(c.Id);
-                    DisconnectClient(c);
+                    c.Disconnect();
                     return;
                 }
 
@@ -45,9 +50,7 @@ namespace Controller.Strategies
             {
                 await ReplyInvalidAsync(c);
 
-                ChatData.Instance.RemoveClient(c.Id);
-                ChatData.Instance.RemoveUser(c.User.Username);
-                DisconnectClient(c);
+                c.Disconnect();
             }
         }
 

@@ -96,7 +96,7 @@ namespace Model.Entities
         public void AddInvitation(ChatUser cu)
         {
             ArgumentNullException.ThrowIfNull(cu);
-
+            if (_members.ContainsKey(cu.Username)) return;
             _invitations[cu.Username] = cu;
         }
         
@@ -135,6 +135,7 @@ namespace Model.Entities
                     $"Error: No puede agregar a {username} a la sala {Roomname} porque no ha sido invitado.");
             }
             _members[user.Username] = user;
+            _invitations.Remove(username);
         }
 
         /// <summary>

@@ -40,22 +40,13 @@ namespace Controller.Definitions.Abstracts
                     .WithResult("INVALID")
                     .Build();
         }
-        protected void DisconnectClient(ClientConnection c)
-        {
-            c.IsConnected = false;
-            c.Socket.GetStream().Close();
-            c.Socket.Close();
-        }
 
         protected async Task<bool> HandleClientIdentificationValidationAsync(ClientConnection c)
         {
             bool isIdentified = ChatData.Instance.ExistsUser(c.User.Username);
-            
-            if (!isIdentified)
-            {
-                ChatData.Instance.RemoveClient(c.Id);
-                DisconnectClient(c);
-            }
+
+            if (isIdentified) return true;
+           
             MsgBuilder mb = new();
             string response = mb.WithType("RESPONSE")
                                 .WithOperation("INVALID")
@@ -63,10 +54,9 @@ namespace Controller.Definitions.Abstracts
                                 .Build();
 
             await SendMessageAsync(c, response);
+            c.Disconnect();
 
-            DisconnectClient(c);
-
-            return isIdentified;
+            return false;
         }
     }
 }

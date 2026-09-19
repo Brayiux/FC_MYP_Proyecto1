@@ -3,6 +3,7 @@ using Controller.Definitions.Interfaces;
 using Controller.Resources.DataContainers;
 using Controller.Strategies;
 using System.Collections;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace Controller.Resources
@@ -67,9 +68,10 @@ namespace Controller.Resources
                     }
                 case "INVITE":
                     {
+                        Debugger.Launch();
                         InviteUsersMsgData data = JsonSerializer.Deserialize<InviteUsersMsgData>(msg, jso)!;
 
-                        return new InviteUsersSt(roomname: data.Roomname, users: data.Usernames);
+                        return new InviteUsersSt(roomname: data.Roomname, users: data.Users);
                     }
                 case "JOIN_ROOM":
                     {

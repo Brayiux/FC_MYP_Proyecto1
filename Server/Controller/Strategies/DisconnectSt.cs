@@ -26,16 +26,9 @@ namespace Controller.Strategies
                 var task2 = HandleDisconnectedToRoomsAsync(c);
 
                 await Task.WhenAll([task1, task2]);
-                
-                c.ClearRooms();
-                c.ClearPrivateChats();
-
-                ChatData.Instance.RemoveUser(c.User.Username);
             }
 
-            ChatData.Instance.RemoveClient(c.Id);
-
-            DisconnectClient(c);
+            c.Disconnect();
         }
 
         #region Apoyo

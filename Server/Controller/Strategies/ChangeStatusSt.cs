@@ -29,9 +29,7 @@ namespace Controller.Strategies
             {
                 await ReplyInvalidAsync(c);
 
-                ChatData.Instance.RemoveUser(c.User.Username);
-                ChatData.Instance.RemoveClient(c.Id);
-                DisconnectClient(c);
+                c.Disconnect();
             }
         }
 

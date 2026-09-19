@@ -1,4 +1,5 @@
-﻿using Model.Entities;
+﻿using Controller.Data;
+using Model.Entities;
 using System.Net.Sockets;
 
 namespace Controller.Resources
@@ -9,15 +10,28 @@ namespace Controller.Resources
     /// </summary>
     public class ClientConnection
     {
+
+        #region Eventos
+
+        public event Action Disconnected;
+
+        #endregion
+
+        #region Campos
+
         private readonly HashSet<ChatRoom> _rooms = [];
 
         private readonly HashSet<ClientConnection> _privateChats = [];
+
+        private bool _isConnected;
+
+        #endregion
 
         #region Propiedades
 
         public Guid Id { get; }
 
-        public bool IsConnected { get; set; } = false;
+        public bool IsConnected => _isConnected;
 
         public ChatUser User { get; set; }
         
@@ -37,6 +51,7 @@ namespace Controller.Resources
 
             Id = Guid.NewGuid();
             Socket = socket;
+            _isConnected = true;
         }
 
         #endregion
@@ -73,9 +88,15 @@ namespace Controller.Resources
             _privateChats.Clear();
         }
 
+        public void Disconnect()
+        {
+            Socket.GetStream().Close();
+            Socket.Close();
+            _isConnected = false;
+            Disconnected?.Invoke();
+        }
+
         #endregion
-
-
 
     }
 }

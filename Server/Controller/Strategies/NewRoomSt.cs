@@ -42,12 +42,9 @@ namespace Controller.Strategies
             {
                 var replyTask =  ReplyInvalidAsync(c);
 
-                ChatData.Instance.RemoveUser(c.User.Username);
-                ChatData.Instance.RemoveClient(c.Id);
-
                 await replyTask;
 
-                DisconnectClient(c);
+                c.Disconnect();
             }
 
         }

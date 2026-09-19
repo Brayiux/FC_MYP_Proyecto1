@@ -66,9 +66,8 @@ public class ServerController
 
         while (_isActive)
 		{
-			TcpClient clientSocket = await _serverSocket.AcceptTcpClientAsync();
-			ClientConnection client = new(clientSocket);
-			client.IsConnected = true;
+			ClientConnection client = new(socket: await _serverSocket.AcceptTcpClientAsync());
+			ClientConnectionHandler cch = new(client);
 
 			ChatData.Instance.AddClient(client);
 
@@ -96,21 +95,25 @@ public class ServerController
 	{
 		try
 		{
-            while (c.IsConnected)
-            {
-                byte[] bytes = await ReceiveDataAsync(c);
-                string msg = _encoder.Decode(bytes);
-                IARStrategy s = _translator.Translate(msg);
-                _ = s.ExecuteAsync(c);
-            }
-        }
-		catch(ObjectDisposedException)
+			while (c.IsConnected)
+			{
+				byte[] bytes = await ReceiveDataAsync(c);
+				string msg = _encoder.Decode(bytes);
+				IARStrategy s = _translator.Translate(msg);
+				_ = s.ExecuteAsync(c);
+			}
+		}
+		catch (ObjectDisposedException)
 		{
 
 		}
+		catch (Exception e)
+		{
+            Console.WriteLine(e.Message);
+		}
 		finally
 		{
-			DisconnectClient(c);
+			c.Disconnect();
 		}
 
 	}
@@ -118,7 +121,7 @@ public class ServerController
 	{
 		foreach (var (_,c) in ChatData.Instance.GetAllClients())
 		{
-			DisconnectClient(c);
+			c.Disconnect();
 		}
 	}
 	private async Task<byte[]> ReceiveDataAsync(ClientConnection c)
@@ -127,12 +130,5 @@ public class ServerController
         int bytesRead = await c.Socket.GetStream().ReadAsync(buffer);
 		return buffer[..bytesRead];
 	}
-
-	private void DisconnectClient(ClientConnection c)
-	{
-		c.IsConnected = false;
-        c.Socket.GetStream().Close();
-        c.Socket.Close();
-    }
 	#endregion
 }
