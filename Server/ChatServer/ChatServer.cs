@@ -15,8 +15,6 @@ public class ChatServer
 
         string port;
 
-        Debugger.Launch();
-
         Console.CancelKeyPress += Console_CancelKeyPress;
 
         // Lee y valida el puerto en consola o lo inicializamos en 1234 por defecto
