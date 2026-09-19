@@ -34,6 +34,7 @@ namespace Controller.Strategies
                 }
 
                 var replyTask = ReplyRoomSuccessfullyCreatedAsync(c);
+                c.AddRoom(room);
                 ChatData.Instance.AddRoom(room);
                 await replyTask;
             } 
