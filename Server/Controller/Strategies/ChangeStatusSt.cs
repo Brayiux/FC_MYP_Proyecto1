@@ -29,7 +29,7 @@ namespace Controller.Strategies
             } 
             catch (InvalidClientStatusException)
             {
-                _ = ReplyInvalidAsync(c, mb);
+                await ReplyInvalidAsync(c, mb);
 
                 ChatData.Instance.RemoveUser(c.User.Username);
                 ChatData.Instance.RemoveClient(c.Id);

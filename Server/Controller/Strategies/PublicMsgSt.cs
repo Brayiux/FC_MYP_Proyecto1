@@ -5,9 +5,14 @@ namespace Controller.Strategies
 {
     public class PublicMsgSt : ARStrategyBase
     {
+        /// <summary>
+        /// El mensaje que se intenta enviar al chat público.
+        /// </summary>
+        private readonly string _msg;
+
         public PublicMsgSt(string msg)
         {
-            throw new NotImplementedException();
+            _msg = msg;
         }
         public async override Task ExecuteAsync(ClientConnection c)
         {

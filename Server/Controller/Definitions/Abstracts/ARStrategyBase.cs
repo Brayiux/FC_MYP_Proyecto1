@@ -2,6 +2,7 @@
 using Controller.Definitions.Interfaces;
 using Controller.Resources;
 using Model.Definitions.Delegates;
+using System.Threading.Tasks;
 
 namespace Controller.Definitions.Abstracts
 {
@@ -44,7 +45,7 @@ namespace Controller.Definitions.Abstracts
             c.Socket.Close();
         }
 
-        protected bool HandleClientIdentificationValidation(ClientConnection c)
+        protected async Task<bool> HandleClientIdentificationValidation(ClientConnection c, MsgBuilder mb)
         {
             bool isIdentified = ChatData.Instance.ExistsUser(c.User.Username);
             
@@ -53,6 +54,16 @@ namespace Controller.Definitions.Abstracts
                 ChatData.Instance.RemoveClient(c.Id);
                 DisconnectClient(c);
             }
+            mb.Reset();
+
+            string response = mb.WithType("RESPONSE")
+                                .WithOperation("INVALID")
+                                .WithResult("NOT_IDENTIFIED")
+                                .Build();
+
+            await SendMessageAsync(c, response);
+
+            DisconnectClient(c);
 
             return isIdentified;
         }

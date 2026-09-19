@@ -44,7 +44,7 @@ namespace Controller.Strategies
             }
             catch (UsernameOutOfRangeException)
             {
-                _ = ReplyInvalidAsync(c, mb);
+                await ReplyInvalidAsync(c, mb);
 
                 ChatData.Instance.RemoveClient(c.Id);
                 ChatData.Instance.RemoveUser(c.User.Username);

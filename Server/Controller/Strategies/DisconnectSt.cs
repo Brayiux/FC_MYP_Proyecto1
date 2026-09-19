@@ -18,7 +18,7 @@ namespace Controller.Strategies
 
             if (!ChatData.Instance.ExistsUser(c.User.Username))
             {
-                _ = ReplyInvalidAsync(c, mb);
+                await ReplyInvalidAsync(c, mb);
             }
             else
             {
