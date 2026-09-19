@@ -81,14 +81,14 @@ namespace Controller.Data
         {
             return _users.ContainsKey(username);
         }
-        public IReadOnlyDictionary<string, ClientConnection> GetAllUsers()
-        {
-            return _users;
-        }
         public ClientConnection? GetUserOrNull(string username)
         {
             _users.TryGetValue(username, out ClientConnection? c);
             return c;
+        }
+        public IReadOnlyDictionary<string, ClientConnection> GetAllUsers()
+        {
+            return _users;
         }
 
         #endregion
@@ -103,13 +103,19 @@ namespace Controller.Data
         {
             return _rooms.Remove(room.Roomname, out _);
         }
-        public void ClearRooms(ChatRoom room)
+        public void ClearRooms()
         {
             _rooms.Clear();
         }
         public bool ExistsRoom(string roomname)
         {
             return _rooms.ContainsKey(roomname);
+        }
+
+        public ChatRoom? GetRoomOrNull(string roomname)
+        {
+            _rooms.TryGetValue(roomname, out ChatRoom? room);
+            return room;
         }
 
         public IReadOnlyDictionary<string, ChatRoom> GetAllRooms()

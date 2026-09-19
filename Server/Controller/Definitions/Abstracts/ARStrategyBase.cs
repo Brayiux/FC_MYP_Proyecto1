@@ -22,6 +22,11 @@ namespace Controller.Definitions.Abstracts
             
             MessageSent?.Invoke(msg);
         }
+        protected async Task ReplyInvalidAsync(ClientConnection c, MsgBuilder mb)
+        {
+            string response = BuildInvalidResponse(mb);
+            await SendMessageAsync(c, response);
+        }
 
         protected string BuildInvalidResponse(MsgBuilder mb)
         {

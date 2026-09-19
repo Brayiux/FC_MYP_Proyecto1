@@ -70,7 +70,7 @@ public class ServerController
 			ClientConnection client = new(clientSocket);
 			client.IsConnected = true;
 
-			ConnectionsDAO.Instance.Connect(client);
+			ChatData.Instance.AddClient(client);
 
             _ = HandleClientAsync(client);
 		}
@@ -116,7 +116,7 @@ public class ServerController
 	}
 	private void DisconnectAll()
 	{
-		foreach (var c in ConnectionsDAO.Instance.GetAll())
+		foreach (var (_,c) in ChatData.Instance.GetAllClients())
 		{
 			DisconnectClient(c);
 		}

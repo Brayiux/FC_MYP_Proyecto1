@@ -8,6 +8,10 @@ namespace Controller.Strategies
     
     public class IdentifySt : ARStrategyBase
     {
+        /// <summary>
+        /// Nombre de usuario que que la estrategia usa para el intento de identificación
+        /// del cliente.
+        /// </summary>
         private readonly string _username;
         public IdentifySt(string username)
         {
@@ -21,65 +25,97 @@ namespace Controller.Strategies
             {
                 c.User = new(username: _username);
 
-                UsersDAO.Instance.Identify(c);
+                bool alreadyExists = !ChatData.Instance.AddUser(c);
 
-                string usersNotification = BuildNewUserMsg(mb);
-
-                foreach (var u in UsersDAO.Instance.GetAll())
+                if (alreadyExists)
                 {
-                    if (!u.Equals(c))
-                    {
-                        _ = SendMessageAsync(u, usersNotification);
-                    }
+                    ReplyUserAlreadyExists(c, mb);
+
+                    ChatData.Instance.RemoveClient(c.Id);
+                    DisconnectClient(c);
+                    return;
                 }
 
-                string clientResponse = BuildSuccessfulyIdentifiedResponse(mb);
+                // Notificamos a los usuarios
+                NotifyToAllUsersANewUserWasIdentified(c, mb);
 
-                _ = SendMessageAsync(c, clientResponse);
+                //Notificamos al cliente
+                ReplySuccessfulyIdentified(c, mb);
             }
             catch (UsernameOutOfRangeException)
             {
-                mb.Reset();
-                string response = BuildInvalidResponse(mb);
-                _ = SendMessageAsync(c, response);
-            }
-            catch (UserAlreadyExistsException)
-            {
-                string response = BuildUserAlreadyExistsResponse(mb);
-                await SendMessageAsync(c, response);
+                _ = ReplyInvalidAsync(c, mb);
+
+                ChatData.Instance.RemoveClient(c.Id);
+                ChatData.Instance.RemoveUser(c.User.Username);
                 DisconnectClient(c);
             }
         }
 
-        private string BuildNewUserMsg(MsgBuilder mb)
+        #region Apoyo
+
+        /// <summary>
+        /// Notifica a todos los usuarios que hay un nuevo usuario <paramref name="client"/>
+        /// que se ha identificado.
+        /// </summary>
+        /// <param name="client">Nuevo usuario que ingresó.</param>
+        /// <param name="mb">Constructor del mensaje de notificación.</param>
+        private void NotifyToAllUsersANewUserWasIdentified(ClientConnection client, MsgBuilder mb)
         {
             mb.Reset();
-            return mb
-                    .WithType("NEW_USER")
-                    .WithUsername(_username)
-                    .Build();
+
+            string notification = mb
+                                    .WithType("NEW_USER")
+                                    .WithUsername(_username)
+                                    .Build();
+
+            foreach (var (_, u) in ChatData.Instance.GetAllUsers())
+            {
+                if (!u.Equals(client))
+                {
+                    _ = SendMessageAsync(u, notification);
+                }
+            }
         }
 
-        private string BuildUserAlreadyExistsResponse(MsgBuilder mb)
+        /// <summary>
+        /// Responde al <paramref name="client"/> que se su operación <i>identificar</i>
+        /// ha sido exitosa.
+        /// </summary>
+        /// <param name="client">Cliente cuya identificación ha sido exitosa.</param>
+        /// <param name="mb">Constructor del mensaje de respuesta.</param>
+        private void ReplySuccessfulyIdentified(ClientConnection client, MsgBuilder mb)
         {
             mb.Reset();
-            return mb
-                    .WithType("RESPONSE")
-                    .WithOperation("IDENTIFY")
-                    .WithResult("USER_ALREADY_EXISTS")
-                    .WithExtra(_username)
-                    .Build();
+            string response = mb
+                                .WithType("RESPONSE")
+                                .WithOperation("IDENTIFY")
+                                .WithResult("SUCCESS")
+                                .WithExtra(_username)
+                                .Build();
+
+            _ = SendMessageAsync(client, response);
+
         }
 
-        private string BuildSuccessfulyIdentifiedResponse(MsgBuilder mb)
+        /// <summary>
+        /// Responde al <paramref name="client"/> que ya existe un usuario con el
+        /// <i>username</i> con el que se intenta registrar.
+        /// </summary>
+        /// <param name="client">Cliente al que se le responde.</param>
+        /// <param name="mb">Constructor del mensaje de respuesta.</param>
+        private void ReplyUserAlreadyExists(ClientConnection client, MsgBuilder mb)
         {
             mb.Reset();
-            return mb
-                    .WithType("RESPONSE")
-                    .WithOperation("IDENTIFY")
-                    .WithResult("SUCCESS")
-                    .WithExtra(_username)
-                    .Build();
+            string response = mb
+                                .WithType("RESPONSE")
+                                .WithOperation("IDENTIFY")
+                                .WithResult("USER_ALREADY_EXISTS")
+                                .WithExtra(_username)
+                                .Build();
+            _ = SendMessageAsync(client, response);
         }
+
+        #endregion
     }
 }
