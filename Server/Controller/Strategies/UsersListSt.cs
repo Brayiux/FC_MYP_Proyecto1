@@ -15,7 +15,7 @@ namespace Controller.Strategies
         {
             MsgBuilder mb = new();
 
-            if (!HandleClientIdentificationValidation(c)) return;
+            if (! await HandleClientIdentificationValidationAsync(c)) return;
 
             ReplyUsersList(c, mb);
         }

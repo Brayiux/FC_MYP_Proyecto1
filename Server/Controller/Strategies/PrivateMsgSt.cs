@@ -27,7 +27,7 @@ namespace Controller.Strategies
         {
             MsgBuilder mb = new();
 
-            if (!HandleClientIdentificationValidation(c)) return;
+            if (!await HandleClientIdentificationValidationAsync(c, mb)) return;
 
             ClientConnection? receiver = ChatData.Instance.GetUserOrNull(_username);
 

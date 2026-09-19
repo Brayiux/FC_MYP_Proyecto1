@@ -45,7 +45,7 @@ namespace Controller.Definitions.Abstracts
             c.Socket.Close();
         }
 
-        protected async Task<bool> HandleClientIdentificationValidation(ClientConnection c, MsgBuilder mb)
+        protected async Task<bool> HandleClientIdentificationValidationAsync(ClientConnection c, MsgBuilder mb)
         {
             bool isIdentified = ChatData.Instance.ExistsUser(c.User.Username);
             
