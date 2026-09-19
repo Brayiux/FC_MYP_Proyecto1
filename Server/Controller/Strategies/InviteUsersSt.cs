@@ -24,19 +24,37 @@ namespace Controller.Strategies
 
             ChatRoom? room = ChatData.Instance.GetRoomOrNull(_roomname);
 
+            // Si la sala no existe:
+
             if (room == null)
             {
                 await ReplyNoSuchRoomAsync(c);
                 return;
             }
 
+            // Si no es miembro de la sala:
+
+            if (!room.IsMember(c.User.Username))
+            {
+                // Lo desconectamos, pues el protocolo no especifica respuesta alguna.
+                await ReplyInvalidAsync(c);
+                ChatData.Instance.RemoveUser(c.User.Username);
+                ChatData.Instance.RemoveClient(c.Id);
+                DisconnectClient(c);
+                return;
+            }
+
             string? firstNI = GetFirstNotIdentifiedOrNull(_users);
+
+            // Si algún usuario de los invitados no existe:
 
             if (firstNI != null)
             {
                 await ReplyNoSuchUserAsync(c, firstNI);
                 return;
             }
+
+            // Enviamos los mensajes de invitaciones a los usuarios:
 
             await HandleInvitationsAsync(c, _users, room);
 
