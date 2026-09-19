@@ -37,6 +37,7 @@ namespace Controller.Strategies
             // Si la sala existe y es miembro:
 
             room.Remove(c.User.Username);
+            c.RemoveRoom(room);
             await NotifyLeftRoom(c, room);
 
         }
