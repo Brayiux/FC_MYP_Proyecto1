@@ -1,4 +1,5 @@
-﻿using Model.Exceptions;
+﻿using Model.Definitions.Delegates;
+using Model.Exceptions;
 
 namespace Model.Entities
 {
@@ -9,6 +10,15 @@ namespace Model.Entities
     /// </summary>
     public class ChatRoom
     {
+
+        #region Eventos
+
+        /// <summary>
+        /// Ocurre cuando la sala se queda sin miembros.
+        /// </summary>
+        public event EmptiedRoomEventHandler? EmptiedRoom;
+
+        #endregion
 
         #region Campos
 
@@ -151,6 +161,7 @@ namespace Model.Entities
                 throw new UserNotFoundException(
                     $"Error: No puede remover a {username} a la sala {Roomname} porque no es miembro.");
             }
+            if (_members.Count == 0) EmptiedRoom?.Invoke(this);
         }
 
         /// <summary>
