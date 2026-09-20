@@ -67,7 +67,11 @@ namespace Controller.Data
 
         public bool AddUser(ClientConnection c)
         {
-            return _users.TryAdd(c.User.Username, c);
+            if (_users.ContainsKey(c.User.Username))
+                return false;
+
+            _users[c.User.Username] = c;
+            return true;
         }
         public bool RemoveUser(string username)
         {
@@ -97,13 +101,15 @@ namespace Controller.Data
 
         public bool AddRoom(ChatRoom room)
         {
-            if (_rooms.TryAdd(room.Roomname, room))
-            {
-                // Se auto-elimina al vaciarse
-                room.EmptiedRoom += Room_EmptiedRoom;
-                return true;
-            }
-            return false;
+            if (_rooms.ContainsKey(room.Roomname))
+                return false;
+
+            _rooms[room.Roomname] = room;
+
+            // Se auto-elimina al vaciarse
+            
+            room.EmptiedRoom += Room_EmptiedRoom;
+            return true;
         }
 
         public bool RemoveRoom(string roomname)

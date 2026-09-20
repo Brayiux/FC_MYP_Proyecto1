@@ -13,7 +13,7 @@ namespace Controller.Resources
 
         #region Eventos
 
-        public event Action Disconnected;
+        public event Action? Disconnected;
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace Controller.Resources
 
         public bool IsConnected => _isConnected;
 
-        public ChatUser User { get; set; }
+        public ChatUser? User { get; set; }
         
         public TcpClient Socket { get; }
 

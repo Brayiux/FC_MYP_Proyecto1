@@ -35,8 +35,8 @@ namespace Controller.Strategies
 
                 if (alreadyExists)
                 {
+                    c.User = null;
                     await ReplyUserAlreadyExistsAsync(c);
-                    c.Disconnect();
                     return;
                 }
 
