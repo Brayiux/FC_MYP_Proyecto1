@@ -68,7 +68,6 @@ namespace Controller.Resources
                     }
                 case "INVITE":
                     {
-                        Debugger.Launch();
                         InviteUsersMsgData data = JsonSerializer.Deserialize<InviteUsersMsgData>(msg, jso)!;
 
                         return new InviteUsersSt(roomname: data.Roomname, users: data.Users);

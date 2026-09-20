@@ -97,11 +97,18 @@ namespace Controller.Data
 
         public bool AddRoom(ChatRoom room)
         {
-            return _rooms.TryAdd(room.Roomname, room);
+            if (_rooms.TryAdd(room.Roomname, room))
+            {
+                // Se auto-elimina al vaciarse
+                room.EmptiedRoom += Room_EmptiedRoom;
+                return true;
+            }
+            return false;
         }
-        public bool RemoveRoom(ChatRoom room)
+
+        public bool RemoveRoom(string roomname)
         {
-            return _rooms.Remove(room.Roomname, out _);
+            return _rooms.Remove(roomname, out _);
         }
         public void ClearRooms()
         {
@@ -121,6 +128,21 @@ namespace Controller.Data
         public IReadOnlyDictionary<string, ChatRoom> GetAllRooms()
         {
             return _rooms;
+        }
+
+        #endregion
+
+        #region Apoyo
+
+        /// <summary>
+        /// Se ejecuta cuando una sala se vacía. La elimina del
+        /// registro de salas.
+        /// </summary>
+        /// <param name="room"></param>
+        private void Room_EmptiedRoom(ChatRoom room)
+        {
+            room.EmptiedRoom -= Room_EmptiedRoom;
+            RemoveRoom(room.Roomname);
         }
 
         #endregion

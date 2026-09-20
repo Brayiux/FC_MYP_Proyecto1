@@ -2,7 +2,6 @@
 using Controller.Definitions.Abstracts;
 using Controller.Resources;
 using Model.Entities;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Controller.Strategies
