@@ -1,7 +1,10 @@
 <Window xmlns="https://github.com/avaloniaui"
+        xmlns:chat="using:Client.Views.Chat"
+        xmlns:connection="using:Client.Views.Connection"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Client.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:login="using:Client.Views.Login"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Client.Views.MainWindow"
@@ -15,8 +18,13 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <Grid>
+        <connection:ConnectionView DataContext="{Binding ConnectionVM}"
+                                   IsVisible="{Binding $parent[Window].DataContext.IsConnectionVisible}"/>
+        <login:LoginView DataContext="{Binding LoginVM}"
+                         IsVisible="{Binding $parent[Window].DataContext.IsLoginVisible}"/>
+        <chat:ChatView DataContext="{Binding ChatVM}"
+                       IsVisible="{Binding $parent[Window].DataContext.IsChatVisible}"/>
+    </Grid>
 
 </Window>
