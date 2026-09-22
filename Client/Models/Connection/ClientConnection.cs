@@ -146,7 +146,7 @@ namespace Client.Models.Connection
         /// <param name="ip">IP del servidor.</param>
         /// <param name="port">Puerto donde se conectará el socket.</param>
         /// <returns></returns>
-        private async Task ConnectAsync(string ip, int port)
+        public async Task ConnectAsync(string ip, int port)
         {
             if (IsConnected)
                 return;
