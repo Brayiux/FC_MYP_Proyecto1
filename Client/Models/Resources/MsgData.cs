@@ -70,6 +70,12 @@ namespace Client.Models.Resources
         /// </summary>
         [JsonInclude]
         private string? text;
+
+        /// <summary>
+        /// Clave "roomname" del mensaje según el protocolo.
+        /// </summary>
+        [JsonInclude]
+        private string? roomname;
         #endregion
 
         #region Propiedades de acceso
@@ -197,6 +203,17 @@ namespace Client.Models.Resources
         {
             get => text;
             set => text = value;
+        }
+
+        /// <summary>
+        /// Brinda acceso y modificación a la clave "roomname" del mensaje
+        /// según el protocolo.
+        /// </summary>
+        [JsonIgnore]
+        public string? Roomname
+        {
+            get => roomname;
+            set => roomname = value;
         }
 
         #endregion
