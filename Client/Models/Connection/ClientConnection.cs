@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Client.Models.Connection
@@ -21,12 +22,6 @@ namespace Client.Models.Connection
         /// servidor ha finalizado.
         /// </summary>
         public event Action? Disconnected;
-
-        /// <summary>
-        /// Ocurre cuando la conexión se encuentra leyendo y recibe un
-        /// mensaje del servidor.
-        /// </summary>
-        public event MsgReceivedEventHandler? MsgReceived;
         #endregion
 
 
@@ -113,14 +108,7 @@ namespace Client.Models.Connection
             ValidateSocket();
             ValidateMessage(msg);
 
-            try
-            {
-                await _socket!.GetStream().WriteAsync(Encode(msg));
-            }
-            finally
-            {
-                Disconnect();
-            }
+            await _socket!.GetStream().WriteAsync(Encode(msg));
         }
 
         /// <summary>
@@ -128,23 +116,30 @@ namespace Client.Models.Connection
         /// </summary>
         /// <returns>Una cadena de caracteres que representa el mensaje
         /// recibido por el cliente.</returns>
-        public async Task<string> ReceiveMsgAsync()
+        /// <param name="ct">Token para cancelar la operación.</param>
+        /// <returns></returns>
+        public async Task<string> ReceiveMsgAsync(CancellationToken ct = default)
         {
             ValidateSocket();
 
             byte[] bytes = new byte[1024 * 1024];
-            try
-            {
-                int bytesRead = await _socket!.GetStream().ReadAsync(bytes);
-                string msg = Decode(bytes, 0, bytesRead);
-                MsgReceived?.Invoke(msg);
-                return msg;
 
-            }
-            finally
-            {
-                Disconnect();
-            }
+            int bytesRead = await _socket!.GetStream().ReadAsync(bytes, ct);
+            string msg = Decode(bytes, 0, bytesRead);
+            return msg;
+        }
+
+        /// <summary>
+        /// Desconecta al cliente del servidor.
+        /// </summary>
+        public void Disconnect()
+        {
+            _socket?.GetStream().Close();
+            _socket?.Close();
+
+            IsConnected = false;
+
+            Disconnected?.Invoke();
         }
 
         #endregion
@@ -157,33 +152,24 @@ namespace Client.Models.Connection
         /// </summary>
         /// <param name="ip">IP del servidor.</param>
         /// <param name="port">Puerto donde se conectará el socket.</param>
-        /// <returns></returns>
-        public async Task ConnectAsync(string ip, int port)
+        /// <returns>Una tarea con un valor booleano que indica si la conexión
+        /// se estableció con éxito o ya se encontraba establecida, en cuyo caso
+        /// es <see langword="true"/> y <see langword="false"/> en otro caso.</returns>
+        public async Task<bool> ConnectAsync(string ip, int port)
         {
             if (IsConnected)
-                return;
+                return true;
             try
             {
-                _socket = new TcpClient(ip, port);
+                _socket = new TcpClient();
+                await _socket.ConnectAsync(ip, port);
                 IsConnected = true;
             }
             catch (SocketException)
             {
-                
+
             }
-        }
-
-        /// <summary>
-        /// Desconecta al cliente del servidor.
-        /// </summary>
-        private void Disconnect()
-        {
-            _socket?.GetStream().Close();
-            _socket?.Close();
-
-            IsConnected = false;
-
-            Disconnected?.Invoke();
+            return IsConnected;
         }
 
         private byte[] Encode(string msg)
@@ -235,6 +221,5 @@ namespace Client.Models.Connection
         }
 
         #endregion
-
     }
 }

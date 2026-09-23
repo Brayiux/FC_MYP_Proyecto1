@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Client.Models.Connection
 {
+    /// <summary>
+    /// Singleton que sirve como un punto de comunicación accesible
+    /// con el servidor (a través de la conexión del cliente) sólo 
+    /// para el envío de mensajes.
+    /// </summary>
     public class MsgSender
     {
         #region Campos
