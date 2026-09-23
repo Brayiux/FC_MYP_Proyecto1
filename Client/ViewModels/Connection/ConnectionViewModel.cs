@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -19,15 +20,27 @@ namespace Client.ViewModels.Connection
 
         #region Propiedades observables
 
+        /// <summary>
+        /// IP para establecer la conexión.
+        /// </summary>
         [ObservableProperty]
         private string _ip = string.Empty;
 
+        /// <summary>
+        /// Número de puerto para establecer la conexión.
+        /// </summary>
         [ObservableProperty]
         private string _port = string.Empty;
 
+        /// <summary>
+        /// Mensaje de error.
+        /// </summary>
         [ObservableProperty]
         private string _errorMsg = string.Empty;
 
+        /// <summary>
+        /// Indica si se debe o no mostrar un mensaje de error.
+        /// </summary>
         [ObservableProperty]
         private bool _showErrorMsg = false;
 
@@ -35,6 +48,11 @@ namespace Client.ViewModels.Connection
 
         #region Comandos
 
+        /// <summary>
+        /// Establece la conexión con el cliente y notifica
+        /// mensajes de error.
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task Connect()
         {
@@ -51,22 +69,25 @@ namespace Client.ViewModels.Connection
 
             ShowErrorMsg = false;
 
-            try
-            {
-                await ClientConnection.Instance.ConnectAsync(Ip, port);
-                ConnectionEstablished?.Invoke();
-            }
-            catch (SocketException)
+            bool established = await ClientConnection.Instance.ConnectAsync(Ip, port);
+            if (!established)
             {
                 ErrorMsg = $"No se pudo establecer la conexión con IP:{Ip}, Puerto:{Port}";
                 ShowErrorMsg = true;
+                return;
             }
+            ConnectionEstablished?.Invoke();
         }
 
         #endregion
 
         #region Apoyo
 
+        /// <summary>
+        /// Valida que la IP tenga un formato adecuado.
+        /// </summary>
+        /// <returns><see langword="true"/> si la IP fue válida y <see langword="false"/>
+        /// de lo contrario.</returns>
         private bool ValidateIp()
         {
             if (string.IsNullOrEmpty(Ip))
@@ -85,6 +106,12 @@ namespace Client.ViewModels.Connection
             return true;
         }
 
+        /// <summary>
+        /// Valida que el puerto tenga el formato y alcance adecuado.
+        /// </summary>
+        /// <param name="port">Número de puerto, parseado a entero.</param>
+        /// <returns><see langword="true"/> si el puerto fue válido y <see langword="false"/>
+        /// de lo contrario.</returns>
         private bool ValidatePort(out int port)
         {
             port = -1;

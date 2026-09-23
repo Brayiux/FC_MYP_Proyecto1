@@ -170,7 +170,8 @@ namespace Client.Models.Connection
             }
             catch (SocketException)
             {
-
+                Console.WriteLine("Excepción atrapada");
+                return false;
             }
             return IsConnected;
         }
