@@ -97,18 +97,19 @@ namespace Client.Models.Connection
 
 
         #region Acceso Publico
-        
+
         /// <summary>
         /// Envía un mensaje de manera asíncrona al servidorl
         /// </summary>
         /// <param name="msg">Mensaje que se envía al servidor.</param>
+        /// <param name="ct">Token para cancelar la operación de envío.</param>
         /// <returns></returns>
-        public async Task SendMsgAsync(string msg)
+        public async Task SendMsgAsync(string msg, CancellationToken ct)
         {
             ValidateSocket();
             ValidateMessage(msg);
 
-            await _socket!.GetStream().WriteAsync(Encode(msg));
+            await _socket!.GetStream().WriteAsync(Encode(msg), ct);
         }
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace Client.Models.Connection
         /// recibido por el cliente.</returns>
         /// <param name="ct">Token para cancelar la operación.</param>
         /// <returns></returns>
-        public async Task<string> ReceiveMsgAsync(CancellationToken ct = default)
+        public async Task<string> ReceiveMsgAsync(CancellationToken ct)
         {
             ValidateSocket();
 
@@ -134,6 +135,8 @@ namespace Client.Models.Connection
         /// </summary>
         public void Disconnect()
         {
+            if (!IsConnected) return;
+
             _socket?.GetStream().Close();
             _socket?.Close();
 

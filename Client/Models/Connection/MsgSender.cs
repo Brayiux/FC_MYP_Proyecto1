@@ -2,6 +2,7 @@
 using Client.Models.Resources;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Client.Models.Connection
@@ -66,8 +67,9 @@ namespace Client.Models.Connection
         /// <summary>
         /// Envía un mensaje al servidor para desconectar al cliente.
         /// </summary>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task DisconnectAsync()
+        public async Task DisconnectAsync(CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -77,8 +79,8 @@ namespace Client.Models.Connection
                 new()
                 {
                     Type = "DISCONNECT",
-                }
-                );
+                },
+                ct);
         }
 
         /// <summary>
@@ -86,8 +88,9 @@ namespace Client.Models.Connection
         /// con el username especificado.
         /// </summary>
         /// <param name="username">Nombre de usuario para la identificación.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task IdentifyAsync(string username)
+        public async Task IdentifyAsync(string username, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -97,16 +100,17 @@ namespace Client.Models.Connection
                 {
                     Type = "IDENTIFY",
                     Username = username
-                }
-                );
+                },
+                ct);
         }
 
         /// <summary>
         /// Envía un mensaje al servidor para cambiar el estado del cliente.
         /// </summary>
         /// <param name="newStatus">Nuevo estado del cliente.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task ChangeStatusAsync(UserStatus newStatus)
+        public async Task ChangeStatusAsync(UserStatus newStatus, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -116,8 +120,8 @@ namespace Client.Models.Connection
                 {
                     Type = "STATUS",
                     Status = newStatus
-                }
-                );
+                },
+                ct);
 
 
         }
@@ -126,8 +130,9 @@ namespace Client.Models.Connection
         /// Envía un mensaje al servidor para solicitar la lista de usuarios
         /// y estados conectados al chat.
         /// </summary>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task RequestUsersInChatAsync()
+        public async Task RequestUsersInChatAsync(CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -136,7 +141,8 @@ namespace Client.Models.Connection
                 new()
                 {
                     Type = "USERS"
-                });
+                },
+                ct);
 
         }
 
@@ -147,8 +153,9 @@ namespace Client.Models.Connection
         /// </summary>
         /// <param name="username">Nombre de usuario del destinatario.</param>
         /// <param name="text">Mensaje para el destinatario.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task TextToAsync(string username, string text)
+        public async Task TextToAsync(string username, string text, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -159,7 +166,8 @@ namespace Client.Models.Connection
                     Type = "TEXT",
                     Username = username,
                     Text = text
-                });
+                },
+                ct);
         }
 
         /// <summary>
@@ -167,8 +175,9 @@ namespace Client.Models.Connection
         /// al chat.
         /// </summary>
         /// <param name="text">Mensaje que se envía al chat.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task SendPublicTextAsync(string text)
+        public async Task SendPublicTextAsync(string text, CancellationToken ct = default)
         {
             if (!Connection.IsConnected || Connection.User == null)
                 return;
@@ -179,7 +188,8 @@ namespace Client.Models.Connection
                     Type = "PUBLIC_TEXT",
                     Username = Connection.User.Username,
                     Text = text
-                });
+                },
+                ct);
         }
 
         /// <summary>
@@ -187,8 +197,9 @@ namespace Client.Models.Connection
         /// con el nombre especificado.
         /// </summary>
         /// <param name="roomname">Nombre de la sala.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task CreateNewRoomAsync(string roomname)
+        public async Task CreateNewRoomAsync(string roomname, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -198,7 +209,8 @@ namespace Client.Models.Connection
                 {
                     Type = "NEW_ROOM",
                     Roomname = roomname
-                });
+                },
+                ct);
         }
 
         /// <summary>
@@ -207,8 +219,9 @@ namespace Client.Models.Connection
         /// </summary>
         /// <param name="roomname">Nombre de la sala.</param>
         /// <param name="username">Nombre de usuario del invitado.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task InviteToRoomAsync(string roomname, string username)
+        public async Task InviteToRoomAsync(string roomname, string username, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -219,7 +232,8 @@ namespace Client.Models.Connection
                     Type = "INVITE",
                     Roomname = roomname,
                     Username = username
-                });
+                },
+                ct);
         }
 
         /// <summary>
@@ -227,8 +241,9 @@ namespace Client.Models.Connection
         /// especificada.
         /// </summary>
         /// <param name="roomname">Nombre de la sala.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task JoinToRoomAsync(string roomname)
+        public async Task JoinToRoomAsync(string roomname, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -238,7 +253,8 @@ namespace Client.Models.Connection
                 {
                     Type = "JOIN_ROOM",
                     Roomname = roomname
-                });
+                },
+                ct);
         }
 
         /// <summary>
@@ -246,8 +262,9 @@ namespace Client.Models.Connection
         /// y sus estados dentro de una sala especificada.
         /// </summary>
         /// <param name="roomname">Nombre de la sala.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task RequestRoomUsers(string roomname)
+        public async Task RequestRoomUsers(string roomname, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -257,7 +274,8 @@ namespace Client.Models.Connection
                 {
                     Type = "ROOM_USERS",
                     Roomname = roomname
-                });
+                },
+                ct);
         }
 
         /// <summary>
@@ -266,8 +284,9 @@ namespace Client.Models.Connection
         /// </summary>
         /// <param name="roomname">Nombre de la sala.</param>
         /// <param name="text">Mensaje que se envía a la sala.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        public async Task TextToRoomAsync(string roomname, string text)
+        public async Task TextToRoomAsync(string roomname, string text, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -278,15 +297,17 @@ namespace Client.Models.Connection
                     Type = "ROOM_TEXT",
                     Roomname = roomname,
                     Text = text
-                });
+                },
+                ct);
         }
 
         /// <summary>
         /// Envía un mensaje al servidor para salir de una sala especificada.
         /// </summary>
         /// <param name="roomname">Nombre de la sala.</param>
+        /// <param name="ct">Token para la cancelación de la operación.</param>
         /// <returns></returns>
-        public async Task LeaveFromRoomAsync(string roomname)
+        public async Task LeaveFromRoomAsync(string roomname, CancellationToken ct = default)
         {
             if (!Connection.IsConnected)
                 return;
@@ -296,22 +317,25 @@ namespace Client.Models.Connection
                 {
                     Type = "LEAVE_ROOM",
                     Roomname = roomname
-                });
+                },
+                ct);
         }
 
 
         #endregion
 
         #region Apoyo
+
         /// <summary>
         /// Envía, de manera asíncrona, un mensaje a la conexión
         /// del cliente.
         /// </summary>
-        /// <param name="msgData"></param>
+        /// <param name="msgData">Contenedor de datos a serializar.</param>
+        /// <param name="ct">Token de cancelación de la tarea.</param>
         /// <returns></returns>
-        private async Task SendSerializedMsgAsync(MsgData msgData)
+        private async Task SendSerializedMsgAsync(MsgData msgData, CancellationToken ct)
         {
-            await Connection.SendMsgAsync(GetSerialized(msgData));
+            await Connection.SendMsgAsync(GetSerialized(msgData), ct);
         }
 
         /// <summary>

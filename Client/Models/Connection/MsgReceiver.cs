@@ -1,4 +1,5 @@
 ﻿using Client.Models.Definitions;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,6 +19,8 @@ namespace Client.Models.Connection
         /// iniciada su lectura.
         /// </summary>
         public event MsgReceivedEventHandler? MsgReceived;
+
+        public event Action? ReceptionInterrupted;
 
         #endregion
 
@@ -58,7 +61,7 @@ namespace Client.Models.Connection
         /// <summary>
         /// Indica cuando la lectura de mensajes ha comenzado.
         /// </summary>
-        private bool IsReadingEnabled { get; set; } = false;
+        public bool IsReadingEnabled { get; private set; } = false;
 
         #endregion
 
@@ -83,11 +86,27 @@ namespace Client.Models.Connection
             _cts = new();
             IsReadingEnabled = true;
 
-            while (Connection.IsConnected && IsReadingEnabled)
+            try
             {
-                string msg = await Connection.ReceiveMsgAsync();
+                while (Connection.IsConnected && IsReadingEnabled)
+                {
+                    string msg = await Connection.ReceiveMsgAsync(_cts.Token);
+
+                    MsgReceived?.Invoke(msg);
+                }
+            }
+            catch (OperationCanceledException)
+            {
                 
-                MsgReceived?.Invoke(msg);
+            }
+            catch (Exception)
+            {
+                Connection.Disconnect();
+            }
+            finally
+            {
+                IsReadingEnabled = false;
+                ReceptionInterrupted?.Invoke();
             }
         }
 
