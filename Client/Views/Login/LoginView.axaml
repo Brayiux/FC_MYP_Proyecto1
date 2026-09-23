@@ -6,5 +6,27 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Client.Views.Login.LoginView"
              x:DataType="login:LoginViewModel">
-  LoginView
+  <Border Background="Gray"
+          CornerRadius="50"
+          Padding="30"
+          Width="400"
+          Height="180">
+      <Grid RowDefinitions="Auto, Auto, Auto, Auto">
+          <TextBlock Text="Registro"
+                     HorizontalAlignment="Center"/>
+          <TextBox Grid.Row="1" PlaceholderText="Nombre de usuario" Text="{Binding Username}"/>
+          <TextBlock Grid.Row="2"
+                     Text="{Binding ErrorMsg}"
+                     IsVisible="{Binding ShowErrorMsg}"
+                     HorizontalAlignment="Center"
+                     Foreground="DarkRed"/>
+          <Button Grid.Row="3"
+                  Content="Conectar"
+                  Command="{Binding LoginCommand}"
+                  HorizontalAlignment="Center"
+                  HorizontalContentAlignment="Stretch"
+                  />
+
+      </Grid>
+  </Border>
 </UserControl>

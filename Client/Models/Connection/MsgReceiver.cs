@@ -1,5 +1,7 @@
 ﻿using Client.Models.Definitions;
+using Client.Models.Resources;
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -91,8 +93,9 @@ namespace Client.Models.Connection
                 while (Connection.IsConnected && IsReadingEnabled)
                 {
                     string msg = await Connection.ReceiveMsgAsync(_cts.Token);
-
-                    MsgReceived?.Invoke(msg);
+                    MsgData? msgData = DeserializeMsg(msg);
+                    if (msgData != null)
+                        MsgReceived?.Invoke(msgData);
                 }
             }
             catch (OperationCanceledException)
@@ -110,12 +113,34 @@ namespace Client.Models.Connection
             }
         }
 
+        /// <summary>
+        /// Hace que el receptor de mensajes para de recibirlos.
+        /// </summary>
+        /// <returns></returns>
         public async Task StopReceivingMsgs()
         {
+            if (!IsReadingEnabled)
+                return;
             IsReadingEnabled = false;
             _cts?.Cancel();
         }
-        
+
+
+        #endregion
+
+        #region Apoyo
+        /// <summary>
+        /// Deserializa un mensaje recibido por el servidor en un
+        /// contenedor de datos del mensaje (<see cref="MsgData"/>)
+        /// </summary>
+        /// <param name="msg">Mensaje a deserializar.</param>
+        /// <returns>Un contenedor de datos de mensajes del protocolo
+        /// si es posible deserializarlo a uno y <see langword="null"/>
+        /// de lo contrario.</returns>
+        private MsgData? DeserializeMsg(string msg)
+        {
+            return JsonSerializer.Deserialize<MsgData>(msg);
+        }
 
         #endregion
 
