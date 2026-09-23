@@ -1,3 +1,4 @@
+using Client.Models.Connection;
 using Client.ViewModels.Chat;
 using Client.ViewModels.Connection;
 using Client.ViewModels.Login;
@@ -70,7 +71,13 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel()
     {
         _connectionVM.ConnectionEstablished += ConnectionVM_ConnectionEstablished;
+        _loginVM.LoginSuccess += LoginVM_LoginSuccess;
+        _loginVM.ConnectionInterrupted += LoginVM_ConnectionInterrupted;
     }
+
+    
+
+
 
     #endregion
 
@@ -79,7 +86,20 @@ public partial class MainViewModel : ViewModelBase
     private void ConnectionVM_ConnectionEstablished()
     {
         IsConnectionVisible = false;
+        _ = MsgReceiver.Instance.StartReceivingMsgs();
         IsLoginVisible = true;
+    }
+
+    private void LoginVM_LoginSuccess()
+    {
+        IsLoginVisible = false;
+        IsChatVisible = true;
+    }
+
+    private void LoginVM_ConnectionInterrupted()
+    {
+        IsLoginVisible = false;
+        IsConnectionVisible = true;
     }
 
     #endregion
