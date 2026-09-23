@@ -17,6 +17,11 @@ namespace Client.Models.Connection
         /// </summary>
         public event Action? Disconnected;
 
+        /// <summary>
+        /// Ocurre cuando la conexión se encuentra leyendo y recibe un
+        /// mensaje del servidor.
+        /// </summary>
+        public event MsgReceivedEventHandler? MsgReceived;
         #endregion
 
 
@@ -114,7 +119,7 @@ namespace Client.Models.Connection
         }
 
         /// <summary>
-        /// Realiza la lectura de mensajes que envía el servidor.
+        /// Realiza la lectura y notificación de mensajes que envía el servidor.
         /// </summary>
         /// <returns>Una cadena de caracteres que representa el mensaje
         /// recibido por el cliente.</returns>
@@ -126,7 +131,9 @@ namespace Client.Models.Connection
             try
             {
                 int bytesRead = await _socket!.GetStream().ReadAsync(bytes);
-                return Decode(bytes, 0, bytesRead);
+                string msg = Decode(bytes, 0, bytesRead);
+                MsgReceived?.Invoke(msg);
+                return msg;
 
             }
             finally
