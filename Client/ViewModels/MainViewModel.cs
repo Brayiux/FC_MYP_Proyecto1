@@ -65,5 +65,23 @@ public partial class MainViewModel : ViewModelBase
 
     #endregion
 
+    #region Construcción
+
+    public MainViewModel()
+    {
+        _connectionVM.ConnectionEstablished += ConnectionVM_ConnectionEstablished;
+    }
+
+    #endregion
+
+    #region Apoyo
+
+    private void ConnectionVM_ConnectionEstablished()
+    {
+        IsConnectionVisible = false;
+        IsLoginVisible = true;
+    }
+
+    #endregion
 
 }

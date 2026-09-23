@@ -1,8 +1,37 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:connection="using:Client.ViewModels.Connection"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Client.Views.Connection.ConnectionView">
-  ConnectionView
+             x:Class="Client.Views.Connection.ConnectionView"
+             x:DataType="connection:ConnectionViewModel">
+  <Border Background="Gray"
+          CornerRadius="50"
+          Padding="30"
+          Width="400"
+          Height="260">
+      <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="12">
+          <TextBlock Text="Conexión con el Servidor"
+                     HorizontalAlignment="Center"
+                     />
+          <TextBox Grid.Row="1" PlaceholderText="IP del servidor" Text="{Binding Ip}"/>
+          <TextBox Grid.Row="2" PlaceholderText="Número de puerto" Text="{Binding Port}"/>
+          <TextBlock Grid.Row="3"
+                     Text="{Binding ErrorMsg}"
+                     Foreground="DarkRed"
+                     HorizontalAlignment="Center"
+                     TextWrapping="Wrap"
+                     IsVisible="{Binding ShowErrorMsg}"
+                     />
+          <Button Grid.Row="4"
+                  Content="Conectar"
+                  Command="{Binding ConnectCommand}"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  />
+          
+      </Grid>
+
+  </Border>
 </UserControl>
