@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Client.Models.Connection
 {
+    /// <summary>
+    /// Singleton encargado de establecer la conexión con el servidor, sirviendo
+    /// como punto de acceso para cualquier otro objeto que desee escribir o leer
+    /// de este.
+    /// </summary>
     public class ClientConnection
     {
         #region Eventos
