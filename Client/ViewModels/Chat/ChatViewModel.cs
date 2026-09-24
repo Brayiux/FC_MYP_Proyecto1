@@ -148,6 +148,9 @@ namespace Client.ViewModels.Chat
                 case "PUBLIC_TEXT_FROM":
                     HandlePublicTextFrom(msgData.Username!, msgData.Text!);
                     break;
+                case "INVITATION":
+                    HandleInvitation(msgData.Username!, msgData.Roomname!);
+                    break;
                 case "JOINED_ROOM":
                     HandleJoinedRoom(msgData.Roomname!, msgData.Username!);
                     break;
@@ -213,6 +216,11 @@ namespace Client.ViewModels.Chat
             MainChatRoom.Instance.RegisterMsg(new(
                 sender: username,
                 text: text));
+        }
+
+        private void HandleInvitation(string username, string roomname)
+        {
+
         }
 
         private void HandleJoinedRoom(string roomname, string username)
