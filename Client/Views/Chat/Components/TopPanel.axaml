@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:chat="using:Client.ViewModels.Chat"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Components.TopPanel"
+             x:DataType="chat:ChatViewModel"
+             Height="75">
+    <Panel Background="YellowGreen">
+        <TextBlock Text="Chat" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Content="Desconectar"
+                Command="{Binding DisconnectCommand}"
+                Margin="20"
+                HorizontalAlignment="Right"/>
+    </Panel>
+</UserControl>

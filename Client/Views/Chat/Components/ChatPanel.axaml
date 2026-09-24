@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:chat="using:Client.ViewModels.Chat"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Client.Views.Chat.Components"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Components.ChatPanel"
+             x:DataType="chat:ChatViewModel">
+    <Grid>
+        <ListBox ItemsSource="{Binding ChatMsgs}" Background="Transparent">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="LightYellow" Margin="0,2">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="{Binding Sender.Username}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Text}"/>
+                        </StackPanel>
+                    </Border>
+            </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

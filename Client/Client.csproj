@@ -21,4 +21,16 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Chat\Components\UsersPanel.axaml.cs">
+      <DependentUpon>UsersPanel.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Chat\Components\RoomsPanel.axaml.cs">
+      <DependentUpon>RoomsPanel.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Chat\Components\TopPanel.axaml.cs">
+      <DependentUpon>TopPanel.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

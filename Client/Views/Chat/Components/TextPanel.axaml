@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:chat="using:Client.ViewModels.Chat"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Components.TextPanel"
+             x:DataType="chat:ChatViewModel"
+             Height="75">
+    <Grid Background="Yellow" ColumnDefinitions="*, Auto">
+        <TextBox Grid.Column="0" 
+                 PlaceholderText="{Binding TextInstructions}" 
+                 Text="{Binding UserText}"
+                 Margin="10"/>
+        <Button Grid.Column="1"
+                Content="Enviar"
+                Command="{Binding SendTextCommand}"
+                Margin="10"/>
+        
+    </Grid>
+</UserControl>

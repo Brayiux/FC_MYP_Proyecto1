@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:chat="using:Client.ViewModels.Chat"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Components.RoomsPanel"
+             x:DataType="chat:ChatViewModel"
+             Width="200">
+    <StackPanel Grid.Row="1" Grid.Column="0" Background="IndianRed" Spacing="10">
+                
+        <!-- Botón para crear salas -->
+        <Button Content="Crear Sala" HorizontalAlignment="Stretch"/>
+
+        <!-- Lista de salas -->
+        <ListBox ItemsSource="{Binding Rooms}" Background="Transparent">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="DarkRed" CornerRadius="4" Padding="8" Margin="0,2">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <TextBlock Grid.Column="0"
+                                       Text="{Binding Roomname}"
+                                       VerticalAlignment="Center"/>
+                            <Button Grid.Column="1"
+                                    Content="Invitar"
+                                    Command="{Binding $parent[UserControl].DataContext.InviteUserCommand}"
+                                    CommandParameter="{Binding}"
+                                    Margin="4,0,0,0"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+</UserControl>

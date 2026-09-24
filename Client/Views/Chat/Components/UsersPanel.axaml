@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:chat="using:Client.ViewModels.Chat"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Components.UsersPanel"
+             x:DataType="chat:ChatViewModel"
+             Width="150">
+    <StackPanel Background="CadetBlue" Spacing="10">
+        <TextBlock Text="Usuarios" HorizontalAlignment="Center"/>
+        <!-- Lista de usuarios -->
+        <ListBox ItemsSource="{Binding Users}" Background="Transparent">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="CornflowerBlue" CornerRadius="4" Padding="8" Margin="0,2">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <TextBlock Grid.Column="0"
+                                        Text="{Binding Username}"
+                                        VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+</UserControl>
