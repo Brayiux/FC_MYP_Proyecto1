@@ -1,4 +1,5 @@
 ﻿using Client.Models.Definitions;
+using Client.Models.Resources;
 using System;
 using System.Collections.Generic;
 
@@ -32,6 +33,11 @@ namespace Client.Models.Entities
         /// </summary>
         private readonly Dictionary<string, ChatUser> _guests = [];
 
+        /// <summary>
+        /// Contiene los mensajes de la sala.
+        /// </summary>
+        private readonly List<ChatMsg> _messages = [];
+
         #endregion
 
         #region Propiedades
@@ -50,6 +56,11 @@ namespace Client.Models.Entities
         /// Obtiene la lista de invitados a la sala.
         /// </summary>
         public IReadOnlyDictionary<string, ChatUser> Guests => _guests;
+
+        /// <summary>
+        /// Obtiene los mensajes de la sala.
+        /// </summary>
+        public IReadOnlyList<ChatMsg> Messages => _messages;
 
         #endregion
 
@@ -149,6 +160,37 @@ namespace Client.Models.Entities
             }
             return wasRemoved;
         }
+
+        #region Acceso público
+
+        /// <summary>
+        /// Registra un mensaje en la sala.
+        /// </summary>
+        /// <param name="msg">El mensaje a registrar.</param>
+        public void RegisterMsg(ChatMsg msg)
+        {
+            ArgumentNullException.ThrowIfNull(msg);
+
+            _messages.Add(msg);
+        }
+        /// <summary>
+        /// Remueve un mensaje del registro de la sala.
+        /// <param name="msg">El mensaje a remover.</param>
+        public void RemoveMsg(ChatMsg msg)
+        {
+            ArgumentNullException.ThrowIfNull(msg);
+
+            _messages.Remove(msg);
+        }
+
+        /// <summary>
+        /// Elimina todos los mensajes registrados en la sala.
+        /// </summary>
+        public void ClearMsgs()
+        {
+            _messages.Clear();
+        }
+        #endregion
 
         #endregion
 

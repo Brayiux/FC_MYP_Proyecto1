@@ -1,5 +1,6 @@
 ﻿using Client.Models.Definitions;
 using System;
+using System.Collections.Generic;
 namespace Client.Models.Entities
 {
     /// <summary>
@@ -13,6 +14,11 @@ namespace Client.Models.Entities
         /// Estado actual del cliente en el chat.
         /// </summary>
         private UserStatus _status;
+
+        /// <summary>
+        /// Contiene los mensajes del chat privado con este usuario.
+        /// </summary>
+        private readonly List<ChatMsg> _messages = [];
 
         #endregion
 
@@ -35,6 +41,11 @@ namespace Client.Models.Entities
             }
         }
 
+        /// <summary>
+        /// Obtiene los mensajes del chat privado con este usuario.
+        /// </summary>
+        public IReadOnlyList<ChatMsg> Messages => _messages;
+
         #endregion
 
         #region Construcción
@@ -51,6 +62,40 @@ namespace Client.Models.Entities
 
         #endregion
 
+        #region Acceso público
+        
+        /// <summary>
+        /// Registra un mensaje en el chat privado con este
+        /// usuario.
+        /// </summary>
+        /// <param name="msg">El mensaje a registrar.</param>
+        public void RegisterMsg(ChatMsg msg)
+        {
+            ArgumentNullException.ThrowIfNull(msg);
+
+            _messages.Add(msg);
+        }
+        /// <summary>
+        /// Remueve un mensaje del registro de mensajes del chat
+        /// privado con este usuario.
+        /// </summary>
+        /// <param name="msg">El mensaje a remover.</param>
+        public void RemoveMsg(ChatMsg msg)
+        {
+            ArgumentNullException.ThrowIfNull(msg);
+
+            _messages.Remove(msg);
+        }
+
+        /// <summary>
+        /// Elimina todos los mensajes registrados en el chat privado
+        /// con este usuario.
+        /// </summary>
+        public void ClearMsgs()
+        {
+            _messages.Clear();
+        }
+        #endregion
 
         #region Apoyo
 
