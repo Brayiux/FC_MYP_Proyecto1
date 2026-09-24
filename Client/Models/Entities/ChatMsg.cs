@@ -9,9 +9,9 @@ namespace Client.Models.Entities
     {
         #region Propiedades
         /// <summary>
-        /// Obtiene al usuario que envía el mensaje.
+        /// Obtiene el nombre del usuario que envía el mensaje.
         /// </summary>
-        public ChatUser Sender { get; }
+        public string Sender { get; }
 
         /// <summary>
         /// Obtiene el contenido del mensaje.
@@ -26,9 +26,10 @@ namespace Client.Models.Entities
         /// Construye un nuevo mensaje con un emisor y un contenido
         /// (texto)
         /// </summary>
-        /// <param name="sender">Quien envía el mensaje.</param>
+        /// <param name="sender">El nombre de usuario de quien envía
+        /// el mensaje.</param>
         /// <param name="text">El contenido del mensaje.</param>
-        public ChatMsg(ChatUser sender, string text)
+        public ChatMsg(string sender, string text)
         {
             ValidateSender(sender);
             ValidateText(text);
@@ -45,9 +46,14 @@ namespace Client.Models.Entities
         /// Comprueba que el emisor sea válido.
         /// </summary>
         /// <param name="sender">El emisor.</param>
-        private void ValidateSender(ChatUser sender)
+        private void ValidateSender(string sender)
         {
-            ArgumentNullException.ThrowIfNull(sender);
+            if (string.IsNullOrEmpty(sender))
+            {
+                throw new ArgumentException(
+                    "Error: El emisor no puede ser vacío.",
+                    nameof(sender));
+            }
         }
 
         /// <summary>
@@ -60,8 +66,9 @@ namespace Client.Models.Entities
         {
             if (string.IsNullOrEmpty(text))
             {
-                throw new ArgumentException(nameof(text),
-                    "Error: El texto no puede ser vacío.");
+                throw new ArgumentException(
+                    "Error: El texto no puede ser vacío.",
+                    nameof(text));
             }
         }
 

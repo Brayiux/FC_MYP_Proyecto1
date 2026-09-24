@@ -13,7 +13,7 @@
                 <DataTemplate>
                     <Border Background="LightYellow" Margin="0,2">
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBlock Text="{Binding Sender.Username}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Sender}" FontWeight="Bold"/>
                             <TextBlock Text="{Binding Text}"/>
                         </StackPanel>
                     </Border>
