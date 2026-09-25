@@ -1,0 +1,15 @@
+\chapter{Implementación}
+
+\section{Paradigma y Lenguaje}
+
+El paradigma orientado a objetos es el más adecuado para este problema, pues los usuarios no son más que conetendores de datos como nombres y estados, las doce funciones que describe el protocolo: las responsabilidades de uno o varios objetos, y el almacenamiento de datos: el uso de estructuras de datos dentro de algún objeto que permita la manipulación y acceso protegido a estos. Esto aplica para ambos programas.
+
+El lenguaje a utilizar será \texttt{C\#} junto con los frameworks de \texttt{.NET} y \texttt{Avalonia}, por los siguientes motivos:
+\begin{itemize}
+	\item C\# y .Net: Ambos programas cliente-servidor esperan mensajes, lo cual puede ser fácilmente abordado mediante el patrón \texttt{await} que este lenguaje y framework permiten, además de permitir la programación asíncrona, lo cual sirve necesario para manejar a múltiples clientes a la vez y para no bloquear la interfaz de ningún usuario.
+	\item Avalonia: Ambos flujos del cliente descritos durante el análisis son implementables mediante una arquitectura MVVM, siendo el modelo el encargado de la comunicación con el servidor y definición de entidades (usuario, sala, etc.), la vista la interfaz del usuario y la vista-modelo quien los conecta, pero sin conocer a la vista y siendo un simple contenedor de contexto. Dado que los cambios dentro de las entidades de los modelos son visibles en la interfaz, el framework de Avalonia con sus propiedades observables facilita la implementación del cliente.
+\end{itemize}
+
+\section{Arquitecturas}
+
+La arquitectura del cliente ya se ha explicado por qué es MVVM, mientras que la del servidor es MVC, ya que permite la visibilidad de mensajes recibidos en consola (la vista del servidor) y la separación entre datos y entidades (el modelo del servidor) y la recepción y envío de mensajes (la conexión, el controlador del servidor).

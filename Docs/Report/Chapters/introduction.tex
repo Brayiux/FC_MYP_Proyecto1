@@ -1,0 +1,31 @@
+\chapter{Introducción}
+
+El proyecto consiste de dos programas ejecutables: un \textbf{cliente} y un \textbf{servidor}, para un chat que permita la comunicación entre múltiples usuarios al mismo tiempo, mediante los siguientes recursos:
+\begin{enumerate}
+	\item \textbf{Sala principal:} Es el espacio donde todos los usuarios envían mensajes públicos para todos los que estén conectados al mismo servidor.
+	\item \textbf{Salas}: Son espacios destinados al envío y recepción de mensajes, creados por una persona, los cuales permiten el ingreso de miembros mediante invitaciones enviadas por los miembros de las mismas.
+	\item \textbf{Chats privados:} Espacios para la comunicación privada entre dos usuarios del chat.
+	\item \textbf{Estado del usuario:} Le indican a un usuario si otro se encuentra conectado al chat, ocupado o lejos de la computadora.
+	
+\end{enumerate}
+
+Según un conjunto de reglas establecidas para la comunicación entre el programa del cliente y el del servidor (llamado \textbf{protocolo}) el programa del cliente debe cumplir con las siguientes funciones:
+\begin{enumerate}
+	\item Conectarse a un servidor.
+	\item Enviar mensajes y recibir mensajes del servidor.
+	\item Identificarse con un nombre único.
+	\item Solicitar la lista de usuarios de un chat y de una sala junto a sus estados.
+	\item Cambiar su estado entre:
+	\begin{itemize}
+		\item Active/Activo: Conectado al chat.
+		\item Away/Lejos: Lejos de la computadora.
+		\item Bussy/Ocupado.
+	\end{itemize}
+	\item Crear una nueva sala con un nombre único en el servidor.
+	\item Invitar a un usuario a una sala de la que sea miembro.
+	\item Unirse a una sala donde haya sido invitado.
+	\item Enviar mensajes a un usuario, a una sala o al chat público. 
+	\item Desconectarse del chat.
+\end{enumerate}
+
+Mientras que el servidor debe poder recibir, responder y manejar notificaciones a otros clientes de tal forma que todas estas funciones se cumplan, lo cual hace mediante la transmisión y recepción de datos vía un protocolo llamado TCP/IP, para más de un cliente a la vez, y usando el estándar JSON para los mensajes que envía y recibe.

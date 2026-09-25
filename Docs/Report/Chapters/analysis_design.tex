@@ -1,0 +1,25 @@
+\chapter{Análisis y diseño}
+
+\section{Computabilidad}
+
+El problema de crear un chat que utilice el protocolo indicado es computable, ya que consiste en la creación de dos programas (cliente y servidor) que utilizan algoritmos con un número finito de pasos, los cuales son las 12 funciones que describe el protocolo, que a su vez se descomponen en algoritmos con un número finito de pasos también.
+
+\section{Comunicación}
+La comunicación entre el cliente y el servidor se realiza mediante el uso de \textit{sockets} y el protocolo TCP/IP, donde el servidor conecta su socket a su dirección IP local en algún puerto y comienza a escuchar y, posteriormente, múltiples clientes conectan sus sockets a la IP y puerto del servidor, lo cual establece un canal de comunicación entre ambos. Una vez conectados, la comunicación comienza con el usuario, haciendo uso de la interfaz. para mandar un mensaje al servidor desde su programa, pasando por los sockets, llegando al servidor, decodificando e interpretando el mensaje, para posteriormente ejecutar acciones que cambien los registros de datos dentro del servidor y responder al mensaje enviado o notificar al resto de clientes conectados sobre la modificación.
+\\
+
+Por el lado del cliente, hay dos flujos de entrada y salida: uno de envío y otro de recepción de mensajes. A continuación, un ejemplo de ambos:
+\begin{enumerate}
+	\item Flujo de envío: Si el programa del cliente ya está en comunicación con el servidor, el usuario ingresa su nombre mediante una interfaz (entrada), esta valida que el formato sea correcto y luego se le notifica al cliente que envíe un mensaje que al servidor para identificarse. El flujo termina cuando cuando el mensaje es enviado (salida).
+	\item Flujo de recepción: El cliente se encuentra esperando una respuesta del servidor y recibe una que indica que la identificación del usuario fue exitosa (entrada), entonces notifica a la interfaz para que le muestre el chat (salida).
+\end{enumerate}
+
+Por el lado del servidor hay un único flujo de entrada y múltiples salidas. A continuación un ejemplo:
+\begin{enumerate}
+	\item El servidor se encuentra esperando recibir un mensaje y en cuanto lo recibe valida que tenga el formato correcto y lo interpreta (entrada). Este mensaje es una solicitud de un cliente para identificar a un usuario, entonces valida que el formato del nombre sea correcto o si ya existe en los registros y si no, entonces lo registra y le envía un mensaje de respuesta diciendo que la operación fue exitosa (salida), además de notificar al resto de usuarios ya conectados que hay un nuevo usuario en el chat (múltiples salidas).
+\end{enumerate}
+
+La unión de estos flujos (los dos del cliente y el del servidor) da como resultado mínimo una entrada desde el usuario y una salida (posiblemente vacía) al mismo usuario, así que es suficiente para manejar al menos a un cliente; pero además, al esperar entradas y tener múltiples salidas (el servidor) se completa y resuelve el problema de mantener múltiples usuarios, dando como resultado la solución al problema de crear el chat, y por finalizado el análisis. Las posteriores decisiones se fundamentan en este análisis.
+
+\section{Diseño del cliente}
+
