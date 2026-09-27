@@ -7,12 +7,15 @@
              x:Class="Client.Views.Chat.Views.ChatPanelView"
              x:DataType="viewmodels:ChatPanelViewModel">
     <Border Background="LightYellow">
-        <Grid RowDefinitions="Auto, Auto">
+        <Grid RowDefinitions="Auto, *, Auto">
             <!-- Encabezado -->
-            <TextBlock Grid.Row="0"
-                       Text="{Binding HeaderText}"
-                       HorizontalAlignment="Center">Hola</TextBlock>
-            <!-- Caja de mensajes -->
+            <Border Grid.Row="0"
+                    Background="MediumPurple">
+                <TextBlock Text="{Binding HeaderText}"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"/>
+            </Border>
+            <!-- Lista de mensajes -->
             <ScrollViewer Grid.Row="1"
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto">
@@ -28,7 +31,19 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </ScrollViewer>
-            <!-- Caja de mensajes -->
+            <!-- Caja de envío de mensajes -->
+            <Border Grid.Row="2"
+                    Background="Yellow">
+                <Grid ColumnDefinitions="*, Auto">
+                    <TextBox Grid.Column="0"
+                             PlaceholderText="Ingrese un mensaje"
+                             Text="{Binding UserMsg}"
+                             Margin="10"/>
+                    <Button Grid.Column="1"
+                            Content="Enviar"
+                            Margin="10"/>
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

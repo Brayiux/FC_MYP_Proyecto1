@@ -9,11 +9,16 @@ using System.Text;
 
 namespace Client.ViewModels.Chat.ViewModels
 {
+    /// <summary>
+    /// Vista modelo correspondiente al panel de chat del cliente.
+    /// </summary>
     public partial class ChatPanelViewModel : ViewModelBase
     {
         #region Eventos
-
-        public event Action<string>? MessageSent;
+        /// <summary>
+        /// Ocurre cuando un mensaje es eviado por el cliente.
+        /// </summary>
+        public event Action<ChatMsg>? MessageSent;
 
 
         #endregion
@@ -63,6 +68,16 @@ namespace Client.ViewModels.Chat.ViewModels
         }
 
         /// <summary>
+        /// Remueve un mensaje de la lista de mensajes del panel.
+        /// </summary>
+        /// <param name="msg"></param>
+        public void RemoveMsg(ChatMsg msg)
+        {
+            ArgumentNullException.ThrowIfNull(msg);
+            Messages.Remove(msg);
+        }
+
+        /// <summary>
         /// Elimina todos los mensajes del panel.
         /// </summary>
         public void ClearMsgs()
@@ -78,16 +93,15 @@ namespace Client.ViewModels.Chat.ViewModels
         /// Envía el mensaje a la caja y notifica que se ha enviado.
         /// </summary>
         [RelayCommand]
-        public void SendMsg()
+        private void SendMsg()
         {
             if (string.IsNullOrEmpty(UserMsg))
                 return;
-
-
-            AddMsg(new(
+            ChatMsg msg = new(
                 sender: ClientConnection.Instance.User!.Username,
-                text: UserMsg));
-            MessageSent?.Invoke(UserMsg);
+                text: UserMsg);
+            AddMsg(msg);
+            MessageSent?.Invoke(msg);
         }
 
         #endregion

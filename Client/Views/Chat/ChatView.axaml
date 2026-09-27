@@ -9,10 +9,11 @@
              x:DataType="chat:ChatViewModel">
     <Border Background="LightYellow"
             Padding="10">
-        <Grid RowDefinitions="*,*" ColumnDefinitions="Auto, Auto, Auto">
+        <Grid RowDefinitions="100,*" ColumnDefinitions="Auto, *, Auto">
             <views:InvitationsPanelView Grid.Row="0" Grid.Column="0"/>
             <views:RoomsPanelView Grid.Row="1" Grid.Column="0"/>
-            <views:UsersPanelView Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <views:ChatPanelView Grid.Row="1" Grid.Column="1"/>
+            <views:UsersPanelView Grid.Row="1" Grid.Column="2"/>
         </Grid>
         
     </Border>
