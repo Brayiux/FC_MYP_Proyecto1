@@ -9,9 +9,9 @@ namespace Client.Models.Entities
     {
         #region Propiedades
         /// <summary>
-        /// Obtiene al usuario que envía el mensaje.
+        /// Obtiene el nombre de quien envía el mensaje.
         /// </summary>
-        public ChatUser Sender { get; }
+        public string Sender { get; }
 
         /// <summary>
         /// Obtiene el contenido del mensaje.
@@ -28,7 +28,7 @@ namespace Client.Models.Entities
         /// </summary>
         /// <param name="sender">Quien envía el mensaje.</param>
         /// <param name="text">El contenido del mensaje.</param>
-        public ChatMsg(ChatUser sender, string text)
+        public ChatMsg(string sender, string text)
         {
             ValidateSender(sender);
             ValidateText(text);
@@ -45,7 +45,7 @@ namespace Client.Models.Entities
         /// Comprueba que el emisor sea válido.
         /// </summary>
         /// <param name="sender">El emisor.</param>
-        private void ValidateSender(ChatUser sender)
+        private void ValidateSender(string sender)
         {
             ArgumentNullException.ThrowIfNull(sender);
         }
