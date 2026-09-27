@@ -17,7 +17,9 @@
                            FontWeight="Bold"/>
             </Border>
             <!-- Lista de salas -->
-            <ScrollViewer Grid.Row="1">
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
                 <ListBox Background="Transparent"
                          ItemsSource="{Binding Rooms}"
                          SelectedItem="{Binding SelectedRoom}">
