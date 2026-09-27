@@ -11,6 +11,7 @@
             Padding="10">
         <Grid RowDefinitions="100,*" ColumnDefinitions="Auto, *, Auto">
             <views:InvitationsPanelView Grid.Row="0" Grid.Column="0"/>
+            <views:MainPanelView Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
             <views:RoomsPanelView Grid.Row="1" Grid.Column="0"/>
             <views:ChatPanelView Grid.Row="1" Grid.Column="1"/>
             <views:UsersPanelView Grid.Row="1" Grid.Column="2"/>

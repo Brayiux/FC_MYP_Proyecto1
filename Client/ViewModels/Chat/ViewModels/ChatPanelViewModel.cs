@@ -100,7 +100,6 @@ namespace Client.ViewModels.Chat.ViewModels
             ChatMsg msg = new(
                 sender: ClientConnection.Instance.User!.Username,
                 text: UserMsg);
-            AddMsg(msg);
             MessageSent?.Invoke(msg);
         }
 

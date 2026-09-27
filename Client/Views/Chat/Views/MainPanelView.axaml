@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:Client.ViewModels.Chat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Views.MainPanelView"
+             x:DataType="viewmodels:MainPanelViewModel"
+             Height="100">
+    <Border Background="Pink">
+        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Grid.RowSpan="2"
+                       Text="Chat"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <!-- Botón para invitar -->
+            <Button Grid.Row="0" Grid.Column="0"
+                    Content="Invitar"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    />
+            <!-- Botón para desconectarse -->
+            <Button Grid.Row="0" Grid.Column="2"
+                    Content="Desconectar"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"/>
+            <!-- Botón para cambiar de estado -->
+            <Button Grid.Row="1" Grid.Column="2"
+                    Content="Cambiar estado"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    />
+        </Grid>
+    </Border>
+</UserControl>
