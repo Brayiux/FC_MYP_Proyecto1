@@ -20,7 +20,6 @@ namespace Client.ViewModels.Login
         public event Action? ConnectionInterrupted;
         #endregion
 
-
         #region Propiedades observables
 
         /// <summary>
@@ -53,7 +52,6 @@ namespace Client.ViewModels.Login
         [RelayCommand]
         private async Task Login()
         {
-            Debugger.Launch();
             if (!ValidateUsername())
             {
                 ShowErrorMsg = true;
@@ -102,6 +100,7 @@ namespace Client.ViewModels.Login
                 case "IDENTIFY":
                     if (msg.Result == "SUCCESS")
                     {
+                        ClientConnection.Instance.User = new(Username);
                         LoginSuccess?.Invoke();
                     }
                     else

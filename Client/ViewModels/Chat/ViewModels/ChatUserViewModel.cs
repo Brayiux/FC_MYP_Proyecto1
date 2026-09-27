@@ -110,12 +110,6 @@ namespace Client.ViewModels.Chat.ViewModels
 
         #region Apoyo
 
-        // El nombre de usuario no se puede modificar
-        partial void OnUsernameChanged(string value)
-        {
-            throw new InvalidOperationException(
-                "Error: El nombre de usuario no puede ser modificado");
-        }
         #endregion
 
     }

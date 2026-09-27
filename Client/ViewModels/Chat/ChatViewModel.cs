@@ -1,5 +1,15 @@
-﻿using Client.ViewModels.Chat.ViewModels;
+﻿using Client.Models.Connection;
+using Client.Models.Definitions;
+using Client.Models.Entities;
+using Client.Models.Resources;
+using Client.ViewModels.Chat.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Client.ViewModels.Chat
 {
@@ -42,6 +52,160 @@ namespace Client.ViewModels.Chat
         [ObservableProperty]
         private UsersPanelViewModel _usersPanel = new();
 
+        #endregion
+
+        #region Propiedades
+
+        /// <summary>
+        /// Obtiene la conexión con el servidor.
+        /// </summary>
+        private ClientConnection Connection => ClientConnection.Instance;
+
+        /// <summary>
+        /// Obtiene el emisor de mensajes al servidor
+        /// </summary>
+        private MsgSender Sender => MsgSender.Instance;
+
+        /// <summary>
+        /// Obtiene el receptor de mensajes que llegan desde el servidor.
+        /// </summary>
+        private MsgReceiver Receiver => MsgReceiver.Instance;
+
+        /// <summary>
+        /// Obtiene la sala principal.
+        /// </summary>
+        private MainChatRoomViewModel MainRoom => MainChatRoomViewModel.Instance;
+
+        #endregion
+
+        #region Inicialización
+
+        public async Task InitializeAsync()
+        {
+            SuscribeToComponentsEvents();
+
+            // Inicializamos y añadimos la sala principal al panel:
+            ChatUserViewModel user = new(Connection.User!.Username);
+            MainRoom.AddMember(user);
+            RoomsPanel.AddRoom(MainRoom);
+
+            // Comenzamos a escuchar los mensajes del servidor:
+            Receiver.MsgReceived += Receiver_MsgReceived;
+
+            // Solicitamos la lista de usuarios:
+            await Sender.RequestUsersInChatAsync();
+        }
+
+        
+
+        #endregion
+
+        #region Apoyo a la inicialización
+
+        /// <summary>
+        /// Hace que se suscriba a los eventos de sus componentes
+        /// necesarios para coordinar el flujo.
+        /// </summary>
+        private void SuscribeToComponentsEvents()
+        {
+            // Panel de invitaciones:
+            InvitationsPanel.InvitationSelected += InvitationsPanel_InvitationSelected;
+
+            // Panel principal:
+            MainPanel.TryChangeStatus += MainPanel_TryChangeStatus;
+            MainPanel.TryDisconnect += MainPanel_TryDisconnect;
+            MainPanel.TryInvite += MainPanel_TryInvite;
+
+            // Panel de salas:
+            RoomsPanel.RoomSelected += RoomsPanel_RoomSelected;
+
+            // Panel de chat:
+            ChatPanel.MessageSent += ChatPanel_MessageSent;
+
+            // Panel de usuarios
+            UsersPanel.UserSelected += UsersPanel_UserSelected;
+        }
+
+        #endregion
+
+        #region Apoyo a eventos de las componentes
+
+        private void UsersPanel_UserSelected(ChatUserViewModel? obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ChatPanel_MessageSent(ChatMsg obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void RoomsPanel_RoomSelected(ChatRoomViewModel? obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainPanel_TryInvite()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void MainPanel_TryDisconnect()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void MainPanel_TryChangeStatus()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void InvitationsPanel_InvitationSelected(ChatRoomInvitation? obj)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region Apoyo a eventos de recepción de mensajes
+
+        // Apoyo a los eventos del receptor de mensajes:
+        private void Receiver_MsgReceived(MsgData msgData)
+        {
+            ArgumentNullException.ThrowIfNull(msgData);
+
+            switch (msgData.Type)
+            {
+                case "USER_LIST":
+                    HandleTypeUserList(msgData.Users!);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Maneja la recepción del mensaje de una lista de usuarios proveniente
+        /// del servidor.
+        /// </summary>
+        /// <param name="users"></param>
+        private void HandleTypeUserList(IReadOnlyDictionary<string, UserStatus> users)
+        {
+            if (MainRoom.Room.Members.Count > 1)
+                return;
+            // Llenamos la lista de usuarios de la sala principal
+            foreach (var (username, status) in users)
+            {
+                ChatUserViewModel user = new(username);
+                if (status != UserStatus.Active)
+                    user.Status = status;
+                MainRoom.AddMember(user);
+            }
+
+            IEnumerable<ChatUserViewModel> usrs = MainRoom.Users.Values.Where(
+                (usr) => usr.Username != Connection.User!.Username);
+            // Llenamos el panel de usuarios
+            UsersPanel.SetUsers(usrs);
+        }
+        
         #endregion
     }
 }
