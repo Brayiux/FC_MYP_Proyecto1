@@ -20,6 +20,14 @@ namespace Client.ViewModels.Chat
     /// </summary>
     public partial class ChatViewModel : ViewModelBase
     {
+        #region Campos
+
+        private ChatRoomViewModelBase? _currentRoom;
+
+        private ChatUserViewModel? _currentChatUser;
+
+        #endregion
+
         #region Componentes
 
         /// <summary>
@@ -176,6 +184,9 @@ namespace Client.ViewModels.Chat
 
             switch (msgData.Type)
             {
+                case "NEW_USER":
+                    HandleTypeNewUser(msgData.Username!);
+                    break;
                 case "USER_LIST":
                     HandleTypeUserList(msgData.Users!);
                     break;
@@ -183,8 +194,23 @@ namespace Client.ViewModels.Chat
         }
 
         /// <summary>
-        /// Maneja la recepción del mensaje de una lista de usuarios proveniente
-        /// del servidor.
+        /// Maneja al recepción del mensaje de tipo "NEW_USER"
+        /// </summary>
+        /// <param name="username"></param>
+        private void HandleTypeNewUser(string username)
+        {
+            // Lo registramos en la sala principal
+            ChatUserViewModel user = new(username);
+            MainRoom.AddMember(user);
+            // Actualizamos el panel de usuarios
+            if (_currentRoom == MainRoom)
+            {
+                UsersPanel.AddUser(user);
+            }
+        }
+
+        /// <summary>
+        /// Maneja la recepción del mensaje de tipo "USER_LIST"
         /// </summary>
         /// <param name="users"></param>
         private void HandleTypeUserList(IReadOnlyDictionary<string, UserStatus> users)
@@ -204,8 +230,15 @@ namespace Client.ViewModels.Chat
                 (usr) => usr.Username != Connection.User!.Username);
             // Llenamos el panel de usuarios
             UsersPanel.SetUsers(usrs);
+
+            // Actualizamos el panel del chat
+            ChatPanel.HeaderText = MainRoom.Roomname;
+
+            _currentChatUser = null;
+            _currentRoom = MainRoom;
         }
-        
+
         #endregion
+
     }
 }
