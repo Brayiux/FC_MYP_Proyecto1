@@ -27,7 +27,7 @@
                   <ListBox.ItemTemplate>
                       <DataTemplate>
                           <Border Background="{Binding StatusColor}">
-                              <TextBox Text="{Binding Username}"/>
+                              <TextBlock Text="{Binding Username}"/>
                           </Border>
                       </DataTemplate>
                   </ListBox.ItemTemplate>

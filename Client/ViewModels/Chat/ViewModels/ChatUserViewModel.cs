@@ -1,10 +1,10 @@
-﻿using Client.Models.Definitions;
+﻿using Avalonia.Media;
+using Client.Models.Definitions;
 using Client.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 
 namespace Client.ViewModels.Chat.ViewModels
 {
@@ -26,7 +26,7 @@ namespace Client.ViewModels.Chat.ViewModels
         /// El color correspondiente al estado del usuario.
         /// </summary>
         [ObservableProperty]
-        private Color _statusColor = StatusToColorMap[UserStatus.Active];
+        private IBrush _statusColor = StatusToColorMap[UserStatus.Active];
 
         /// <summary>
         /// Los mensajes del chat privado del cliente con este usuario.
@@ -63,11 +63,11 @@ namespace Client.ViewModels.Chat.ViewModels
         /// <summary>
         /// Mapeo de estado de usuario a su color correspondiente.
         /// </summary>
-        private static readonly IReadOnlyDictionary<UserStatus, Color> StatusToColorMap = new Dictionary<UserStatus, Color>()
+        private static readonly IReadOnlyDictionary<UserStatus, IBrush> StatusToColorMap = new Dictionary<UserStatus, IBrush>()
         {
-            { UserStatus.Active, Color.Green },
-            { UserStatus.Away, Color.Orange },
-            { UserStatus.Bussy, Color.Brown }
+            { UserStatus.Active, Brushes.Green },
+            { UserStatus.Away, Brushes.Orange },
+            { UserStatus.Bussy, Brushes.Brown }
         };
 
         #endregion
