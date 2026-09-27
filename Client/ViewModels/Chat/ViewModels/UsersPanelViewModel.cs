@@ -63,6 +63,38 @@ namespace Client.ViewModels.Chat.ViewModels
             }
         }
 
+        /// <summary>
+        /// Permite añadir un usuario al panel, sólo si no es que ya
+        /// se encuentra dentro.
+        /// </summary>
+        /// <param name="user">Usuario a introducir al panel.</param>
+        /// <returns><see langword="true"/> si el usuario no estaba en el panel
+        /// y se añadió y <see langword="false"/> si no.</returns>
+        public bool AddUser(ChatUserViewModel user)
+        {
+            if (Users.Contains(user))
+                return false;
+
+            Users.Add(user);
+
+            _usernameToUserMap[user.Username] = user;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Remueve a un usuario del panle por su nombre, si está dentro.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns><see langword="true"/> si el usuario estaba dentro del panel
+        /// y se pudo remover, y <see langword="false"/> si no.</returns>
+        public bool RemoveUser(string username)
+        {
+            if (!_usernameToUserMap.Remove(username, out ChatUserViewModel? user))
+                return false;
+            return Users.Remove(user); ;
+        }
+
         #endregion
 
         #region Apoyo
