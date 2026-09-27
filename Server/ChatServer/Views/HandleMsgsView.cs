@@ -26,7 +26,7 @@ namespace ChatServer.Views
             Console.WriteLine($">> {msg}");
         }
 
-        private void Sc_MessageReceived(string msg, string from)
+        private void Sc_MessageReceived(string msg)
         {
             Console.WriteLine($"<< {msg}");
         }
