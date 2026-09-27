@@ -3,6 +3,7 @@ using Client.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace Client.ViewModels.Chat.ViewModels
@@ -27,19 +28,30 @@ namespace Client.ViewModels.Chat.ViewModels
         [ObservableProperty]
         private Color _statusColor = StatusToColorMap[UserStatus.Active];
 
+        /// <summary>
+        /// Los mensajes del chat privado del cliente con este usuario.
+        /// </summary>
+        [ObservableProperty]
+        private ObservableCollection<ChatMsg> _messages = [];
+
         #endregion
 
         #region Propiedades
+
+        /// <summary>
+        /// Obtiene al usuario del modelo.
+        /// </summary>
+        public ChatUser User { get; }
 
         /// <summary>
         /// Estado del usuario.
         /// </summary>
         public UserStatus Status
         {
-            get => _user.Status;
+            get => User.Status;
             set
             {
-                _user.Status = value;
+                User.Status = value;
                 StatusColor = StatusToColorMap[value];
             }
         }
@@ -60,15 +72,6 @@ namespace Client.ViewModels.Chat.ViewModels
 
         #endregion
 
-        #region Campos
-
-        /// <summary>
-        /// Usuario del modelo.
-        /// </summary>
-        private readonly ChatUser _user;
-
-        #endregion
-
         #region Construcción
 
         /// <summary>
@@ -78,9 +81,31 @@ namespace Client.ViewModels.Chat.ViewModels
         /// <param name="username"></param>
         public ChatUserViewModel(string username)
         {
-            _user = new(username);
+            User = new(username);
             Username = username;
         }
+        #endregion
+
+        #region Acceso público
+
+        /// <summary>
+        /// Añade un mensaje a la lista de mensajes privados.
+        /// </summary>
+        /// <param name="msg"></param>
+        public void AddMsg(ChatMsg msg)
+        {
+            ArgumentNullException.ThrowIfNull(msg);
+            Messages.Add(msg);
+        }
+
+        /// <summary>
+        /// Limpia la lista de mensajes del chat privado.
+        /// </summary>
+        public void ClearMsgs()
+        {
+            Messages.Clear();
+        }
+
         #endregion
 
         #region Apoyo
