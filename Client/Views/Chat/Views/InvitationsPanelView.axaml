@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:Client.ViewModels.Chat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Views.InvitationsPanelView"
+             x:DataType="viewmodels:InvitationsPanelViewModel"
+             Width="150">
+    <Border Background="DarkGray">
+        <Grid RowDefinitions="Auto, Auto">
+            <!-- Encabezado "Invitaciones" -->
+            <Border Grid.Row="0"
+                    Background="DimGray">
+                <TextBlock Text="Invitaciones"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"/>
+            </Border>
+            <!-- Lista de invitaciones -->
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <ListBox ItemsSource="{Binding Invitations}"
+                         SelectedItem="{Binding SelectedInvitation}"
+                         Background="Transparent">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="Gray">
+                                <TextBlock Text="{Binding Roomname}"/>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>
