@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:Client.ViewModels.Chat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Views.InviteUserPanelView"
+             x:DataType="viewmodels:InviteUserPanelViewModel"
+             IsVisible="{Binding !IsPanelClosed}">
+    <Border Background="Gray"
+            Height="250"
+            Width="250"
+            Padding="10"
+            CornerRadius="15">
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+              RowSpacing="10">
+            <!-- Ecabezado -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="*, Auto" ColumnSpacing="5">
+                <!-- Texto "Invitar usuario" -->
+                <Border Grid.Column="0" Background="DimGray"
+                        Padding="5"
+                        CornerRadius="10">
+                    <TextBlock Text="Invitar usuario"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"/>
+                </Border>
+                <!-- Botón para cerrar panel -->
+                <Button Grid.Column="1"
+                        Content="X"
+                        FontWeight="Bold"
+                        Command="{Binding CloseCommand}"
+                        HorizontalAlignment="Right"
+                        CornerRadius="10"
+                        />
+            </Grid>
+            <!-- Mensaje de Error -->
+            <TextBlock Grid.Row="1"
+                       IsVisible="{Binding ShowErrorMsg}"
+                       Text="{Binding ErrorMsg}"
+                       Foreground="DarkRed"
+                       TextWrapping="Wrap"/>
+            <!-- Caja para nombre de la sala -->
+            <TextBox Grid.Row="2"
+                     PlaceholderText="Nombre de la sala"
+                     Text="{Binding Roomname}"/>
+            <!-- Caja para nombre del invitado -->
+            <TextBox Grid.Row="3"
+                     PlaceholderText="Nombre del usuario"
+                     Text="{Binding Guest}"/>
+            <!-- Botón para invitar -->
+            <Button Grid.Row="4"
+                    Content="Invitar"
+                    Command="{Binding InviteUserCommand}"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"/>
+        </Grid>
+    </Border>
+</UserControl>

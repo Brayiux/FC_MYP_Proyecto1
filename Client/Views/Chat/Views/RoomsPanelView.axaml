@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:Client.ViewModels.Chat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Views.RoomsPanelView"
+             x:DataType="viewmodels:RoomsPanelViewModel"
+             Width="150">
+    <Border Background="IndianRed">
+        <Grid RowDefinitions="Auto, Auto">
+            <!-- Encabezado "Salas" -->
+            <Border Grid.Row="0"
+                    Background="DarkRed">
+                <TextBlock Text="Salas"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"/>
+            </Border>
+            <!-- Lista de salas -->
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <ListBox Background="Transparent"
+                         ItemsSource="{Binding Rooms}"
+                         SelectedItem="{Binding SelectedRoom}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="OrangeRed">
+                                <TextBlock Text="{Binding Roomname}"
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

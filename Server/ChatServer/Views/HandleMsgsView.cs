@@ -23,12 +23,12 @@ namespace ChatServer.Views
 
         private void Sc_MessageSent(string msg)
         {
-            Console.WriteLine($">> {msg}");
+            Console.WriteLine($"<< {msg}");
         }
 
-        private void Sc_MessageReceived(string msg, string from)
+        private void Sc_MessageReceived(string msg)
         {
-            Console.WriteLine($"<< {msg}");
+            Console.WriteLine($">> {msg}");
         }
 
         public void Dispose()

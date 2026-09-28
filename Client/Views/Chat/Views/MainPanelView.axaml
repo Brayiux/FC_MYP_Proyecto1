@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:Client.ViewModels.Chat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Views.MainPanelView"
+             x:DataType="viewmodels:MainPanelViewModel">
+    <Border Background="Pink"
+            Height="100">
+        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Grid.RowSpan="2"
+                       Text="{Binding HeaderText}"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <!-- Botón para invitar -->
+            <Button Grid.Row="0" Grid.Column="0"
+                    Content="Invitar"
+                    Command="{Binding NotifyInviteCommand}"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    />
+            <!-- Botón para crear una sala -->
+            <Button Grid.Row="1" Grid.Column="0"
+                    Content="Crear Sala"
+                    Command="{Binding NotifyCreateRoomCommand}"
+                    Margin="10"
+                    HorizontalAlignment="Stretch">
+            </Button>
+            <!-- Botón para desconectarse -->
+            <Button Grid.Row="0" Grid.Column="2"
+                    Content="Desconectar"
+                    Command="{Binding NotifyDisconnectCommand}"
+                    Margin="10"
+                    HorizontalAlignment="Stretch"/>
+            <!-- Opciones para cambiar de estado -->
+            <ComboBox Grid.Row="1" Grid.Column="2"
+                      ItemsSource="{Binding StatusOptions}"
+                      SelectedItem="{Binding SelectedOption}"
+                      DisplayMemberBinding="{Binding StatusName}"
+                      Margin="10"
+                      HorizontalAlignment="Stretch"
+                      PlaceholderText="Estado">
+                <ComboBox.Styles>
+                    <Style Selector="ComboBoxItem" x:CompileBindings="False">
+                        <Setter Property="IsEnabled"
+                                Value="{Binding IsEnabled}"/>
+                    </Style>
+                </ComboBox.Styles>
+            </ComboBox>
+        </Grid>
+    </Border>
+</UserControl>

@@ -2,272 +2,406 @@
 using Client.Models.Definitions;
 using Client.Models.Entities;
 using Client.Models.Resources;
+using Client.ViewModels.Chat.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SkiaSharp;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Client.ViewModels.Chat
 {
+    /// <summary>
+    /// Controla el flujo de todas las componentes del chat
+    /// y la comunicación con el servidor, para notificarlo
+    /// a la vista del chat.
+    /// </summary>
     public partial class ChatViewModel : ViewModelBase
     {
         #region Campos
 
-        private readonly Dictionary<string, ChatUser> _usersRegistry = [];
+        /// <summary>
+        /// Sala actualmente seleccionada.
+        /// </summary>
+        private ChatRoomViewModelBase? _currentRoom;
 
-        private readonly Dictionary<string, ChatRoom> _roomsRegistry = [];
+        /// <summary>
+        /// Usuario actualmente seleccionado.
+        /// </summary>
+        private ChatUserViewModel? _currentChatUser;
+
+        /// <summary>
+        /// El usuario que usa la aplicación.
+        /// </summary>
+        private ChatUserViewModel? _client;
+
 
         #endregion
 
-        #region Propiedades observables
+        #region Componentes
 
+        /// <summary>
+        /// Panel de invitaciones.
+        /// </summary>
         [ObservableProperty]
-        private ObservableCollection<ChatRoom> _rooms = [];
+        private InvitationsPanelViewModel _invitationsPanel = new();
 
+        /// <summary>
+        /// Panel principal.
+        /// </summary>
         [ObservableProperty]
-        private ObservableCollection<ChatUser> _users = [];
+        private MainPanelViewModel _mainPanel = new();
 
+        /// <summary>
+        /// Panel de salas.
+        /// </summary>
         [ObservableProperty]
-        private ObservableCollection<ChatMsg> _chatMsgs = [];
+        private RoomsPanelViewModel _roomsPanel = new();
 
+        /// <summary>
+        /// Panel de chat.
+        /// </summary>
         [ObservableProperty]
-        private ChatRoom? _selectedRoom;
+        private ChatPanelViewModel _chatPanel = new();
+        
+        /// <summary>
+        /// Panel de usuarios.
+        /// </summary>
+        [ObservableProperty]
+        private UsersPanelViewModel _usersPanel = new();
 
+        /// <summary>
+        /// Panel para invitar usuarios.
+        /// </summary>
         [ObservableProperty]
-        private ChatUser? _selectedUser;
+        private InviteUserPanelViewModel _inviteUserPanel = new();
+        
 
-        [ObservableProperty]
-        private string _textInstructions = string.Empty;
+        #endregion
 
+        #region Contexto
+
+        /// <summary>
+        /// Indica si el chat completo es visible.
+        /// </summary>
         [ObservableProperty]
-        private string _userText = string.Empty;
+        private bool _isChatVisible = true;
+
+        /// <summary>
+        /// Indica si el panel para invitar a un usuario es visible.
+        /// </summary>
+        [ObservableProperty]
+        private bool _isInviteUserPanelVisible = false;
+
+        /// <summary>
+        /// Indica si el panel para crear una sala es visible.
+        /// </summary>
+        [ObservableProperty]
+        private bool _isCreateRoomPanelVisible = false;
 
         #endregion
 
         #region Propiedades
 
+        /// <summary>
+        /// Obtiene la conexión con el servidor.
+        /// </summary>
+        private ClientConnection Connection => ClientConnection.Instance;
+
+        /// <summary>
+        /// Obtiene el emisor de mensajes al servidor
+        /// </summary>
         private MsgSender Sender => MsgSender.Instance;
 
+        /// <summary>
+        /// Obtiene el receptor de mensajes que llegan desde el servidor.
+        /// </summary>
         private MsgReceiver Receiver => MsgReceiver.Instance;
 
-        #endregion
-
-        #region Construcción
-
-        public ChatViewModel() : base()
-        {
-            _ = Initialize();
-        }
+        /// <summary>
+        /// Obtiene la sala principal.
+        /// </summary>
+        private MainChatRoomViewModel MainRoom => MainChatRoomViewModel.Instance;
 
         #endregion
 
-        #region Comandos
+        #region Inicialización
 
-        [RelayCommand]
-        private void CreateRoom()
+        public async Task InitializeAsync()
         {
+            SuscribeToComponentsEvents();
 
-        }
+            // Inicializamos y añadimos la sala principal al panel:
+            ChatUserViewModel user = new(Connection.User!.Username);
+            _client = user;
+            MainRoom.AddMember(user);
+            RoomsPanel.AddRoom(MainRoom);
 
-        [RelayCommand]
-        private void InviteUser()
-        {
-            
-        }
-
-        [RelayCommand]
-        private void SendText()
-        {
-
-        }
-
-        [RelayCommand]
-        private void Disconnect()
-        {
-
-        }
-
-        [RelayCommand]
-        private async Task UpdateUsersList()
-        {
-            
-        }
-
-        #endregion
-
-        #region Detección
-
-        partial void OnSelectedRoomChanged(ChatRoom? value)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        partial void OnSelectedUserChanged(ChatUser? value)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
-
-        #region Apoyo
-
-        private async Task Initialize()
-        {
+            // Comenzamos a escuchar los mensajes del servidor:
             Receiver.MsgReceived += Receiver_MsgReceived;
-            // Registrar al cliente
-            ChatUser currentUser = ClientConnection.Instance.User!;
-            _usersRegistry[currentUser.Username] = currentUser;
 
-            // Registrar la sala principal
-            ChatRoom mainRoom = MainChatRoom.Instance;
-            mainRoom.AddGuest(currentUser);
-            mainRoom.AddMember(currentUser.Username);
-            RegisterRoom(mainRoom);
+            // Actualizamos el panel principal:
+            MainPanel.ResetStatusOptions(user.Status);
+            MainPanel.HeaderText = $"Chat de {user.User.Username}";
 
-            _ = Sender.RequestUsersInChatAsync();
+            // Solicitamos la lista de usuarios:
+            await Sender.RequestUsersInChatAsync();
         }
 
+        
+
+        #endregion
+
+        #region Apoyo a la inicialización
+
+        /// <summary>
+        /// Hace que se suscriba a los eventos de sus componentes
+        /// necesarios para coordinar el flujo.
+        /// </summary>
+        private void SuscribeToComponentsEvents()
+        {
+            // Panel de invitaciones:
+            InvitationsPanel.InvitationSelected += InvitationsPanel_InvitationSelected;
+
+            // Panel principal:
+            MainPanel.TryChangeStatus += MainPanel_TryChangeStatus;
+            MainPanel.TryDisconnect += MainPanel_TryDisconnect;
+            MainPanel.TryInvite += MainPanel_TryInvite;
+            MainPanel.TryCreateRoom += MainPanel_TryCreateRoom;
+            // Panel de salas:
+            RoomsPanel.RoomSelected += RoomsPanel_RoomSelected;
+
+            // Panel de chat:
+            ChatPanel.MessageSent += ChatPanel_MessageSent;
+
+            // Panel de usuarios
+            UsersPanel.UserSelected += UsersPanel_UserSelected;
+
+            // Panel para invitar usuarios
+            InviteUserPanel.UserInvited += InviteUserPanel_UserInvited;
+            InviteUserPanel.PanelClosed += InviteUserPanel_PanelClosed;
+        }
+
+        #endregion
+
+        #region Apoyo a eventos de las componentes
+
+        private void InviteUserPanel_PanelClosed()
+        {
+            IsChatVisible = true;
+        }
+
+        private void InviteUserPanel_UserInvited(string arg1, string arg2)
+        {
+            InviteUserPanel.Close();
+
+            ChatRoomViewModelBase? room = RoomsPanel.Rooms.Where((r) => r.Roomname.Equals(arg2))
+                                                          .FirstOrDefault();
+            if (room == null)
+                return;
+
+            ChatUserViewModel? guest = MainRoom.GetUserOrNull(arg1);
+            if (guest == null)
+                return;
+
+            room.AddGuest(guest);
+        }
+
+        private void UsersPanel_UserSelected(ChatUserViewModel? obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void ChatPanel_MessageSent(ChatMsg obj)
+        {
+            if (_currentRoom != null)
+            {
+                _currentRoom.AddMsg(obj);
+                ChatPanel.AddMsg(obj);
+                await Sender.SendPublicTextAsync(obj.Text);
+                return;
+            }
+            else if (_currentChatUser != null)
+            {
+                _currentChatUser.AddMsg(obj);
+                ChatPanel.AddMsg(obj);
+                await Sender.TextToAsync(_currentChatUser.User.Username, obj.Text);
+            }
+        }
+
+        private void RoomsPanel_RoomSelected(ChatRoomViewModel? room)
+        {
+            throw new NotImplementedException();
+        }
+        private void MainPanel_TryCreateRoom()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainPanel_TryInvite()
+        {
+            InviteUserPanel.Open();
+        }
+
+        private void MainPanel_TryDisconnect()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private async void MainPanel_TryChangeStatus(UserStatus obj)
+        {
+            await Sender.ChangeStatusAsync(obj);
+            MainPanel.ResetStatusOptions(obj);
+        }
+
+        private void InvitationsPanel_InvitationSelected(ChatRoomInvitation? obj)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region Apoyo a eventos de recepción de mensajes
+
+        // Apoyo a los eventos del receptor de mensajes:
         private void Receiver_MsgReceived(MsgData msgData)
         {
-            switch (msgData.Operation)
+            ArgumentNullException.ThrowIfNull(msgData);
+
+            switch (msgData.Type)
             {
                 case "NEW_USER":
-                    HandleNewUser(msgData.Username!);
+                    HandleTypeNewUser(msgData.Username!);
                     break;
                 case "NEW_STATUS":
-                    HandleNewStatus(msgData.Username!, msgData.Status!.Value);
+                    HandleTypeNewStatus(msgData.Username!, msgData.Status!.Value);
                     break;
                 case "USER_LIST":
-                    HandleUserList(msgData.Users!);
+                    HandleTypeUserList(msgData.Users!);
                     break;
                 case "TEXT_FROM":
-                    HandleTextFrom(msgData.Username!, msgData.Text!);
+                    HandleTypeTextFrom(msgData.Username!, msgData.Text!);
                     break;
                 case "PUBLIC_TEXT_FROM":
-                    HandlePublicTextFrom(msgData.Username!, msgData.Text!);
+                    HandleTypePublicTextFrom(msgData.Username!, msgData.Text!);
                     break;
-                case "INVITATION":
-                    HandleInvitation(msgData.Username!, msgData.Roomname!);
-                    break;
-                case "JOINED_ROOM":
-                    HandleJoinedRoom(msgData.Roomname!, msgData.Username!);
-                    break;
-                case "ROOM_USER_LIST":
-                    break;
-                case "ROOM_TEXT_FROM":
-                    HandleRoomTextFrom(msgData.Roomname!, msgData.Username!, msgData.Text!);
-                    break;
-                case "LEFT_ROOM":
-                    HandleLeftRoom(msgData.Roomname!, msgData.Username!);
-                    break;
-                case "DISCONNECTED":
-                    RemoveUser(msgData.Username!);
-                    break;
-
             }
         }
 
-        #endregion
-
-
-        #region Apoyo
-
-        private void HandleNewUser(string username)
+        /// <summary>
+        /// Maneja al recepción del mensaje de tipo "NEW_USER"
+        /// </summary>
+        /// <param name="username"></param>
+        private void HandleTypeNewUser(string username)
         {
-            ChatUser user = new(username)
+            // Lo registramos en la sala principal
+            ChatUserViewModel user = new(username);
+            MainRoom.AddMember(user);
+            ChatMsg msg = new(
+                sender: MainRoom.Roomname,
+                text: $"{username} se ha unido al chat, dale la bienvenida.");
+            MainRoom.AddMsg(msg);
+
+            // Actualizamos el panel de usuarios y el del chat
+            if (_currentRoom == MainRoom)
             {
-                Status = UserStatus.Active
-            };
-            RegisterUser(user);
-        }
-
-        private void HandleNewStatus(string username, UserStatus status)
-        {
-            _usersRegistry[username].Status = status;
-        }
-
-        private void HandleUserList(IReadOnlyDictionary<string, UserStatus> users)
-        {
-            if (Users.Count <= 1)
-            {
-                foreach (var (username, status) in users)
-                {
-                    if (username.Equals(ClientConnection.Instance.User!.Username))
-                        continue;
-                    ChatUser user = new(username)
-                    {
-                        Status = status
-                    };
-                    RegisterUser(user);
-                }
+                UsersPanel.AddUser(user);
+                ChatPanel.AddMsg(msg);
             }
         }
 
-        private void HandleTextFrom(string username, string text)
+        /// <summary>
+        /// Maneja la recepción del mensaje de tipo "NEW_STATUS"
+        /// </summary>
+        /// <param name="username">Nombre de usuario de quien cambió su
+        /// estado.</param>
+        /// <param name="status">Estado al que cambió.</param>
+        private void HandleTypeNewStatus(string username, UserStatus status)
         {
-            ChatUser sender = _usersRegistry[username];
-            sender.RegisterMsg(new(sender: sender.Username, text: text));
+            ChatUserViewModel? user = MainRoom.GetUserOrNull(username);
+            if (user == null || status == user.Status)
+                return;
+            user.Status = status;
         }
 
-        private void HandlePublicTextFrom(string username, string text)
+        /// <summary>
+        /// Maneja la recepción del mensaje de tipo "USER_LIST"
+        /// </summary>
+        /// <param name="users"></param>
+        private void HandleTypeUserList(IReadOnlyDictionary<string, UserStatus> users)
         {
-            MainChatRoom.Instance.RegisterMsg(new(
+            if (MainRoom.Room.Members.Count > 1)
+                return;
+            // Llenamos la lista de usuarios de la sala principal
+            foreach (var (username, status) in users)
+            {
+                ChatUserViewModel user = new(username);
+                if (status != UserStatus.Active)
+                    user.Status = status;
+                MainRoom.AddMember(user);
+            }
+
+            IEnumerable<ChatUserViewModel> usrs = MainRoom.Users.Values.Where(
+                (usr) => usr.Username != Connection.User!.Username);
+            // Llenamos el panel de usuarios
+            UsersPanel.SetUsers(usrs);
+
+            // Actualizamos el panel del chat
+            ChatPanel.HeaderText = MainRoom.Roomname;
+
+            _currentChatUser = null;
+            _currentRoom = MainRoom;
+        }
+
+        /// <summary>
+        /// Maneja la recepción del mensaje de tipo "TEXT_FROM"
+        /// </summary>
+        /// <param name="username">Nombre del usuario que envía el texto.</param>
+        /// <param name="text">El texto.</param>
+        private void HandleTypeTextFrom(string username, string text)
+        {
+            ChatUserViewModel? user = MainRoom.GetUserOrNull(username);
+            if (user == null)
+                return;
+            ChatMsg msg = new(
                 sender: username,
-                text: text));
-        }
+                text: text);
 
-        private void HandleInvitation(string username, string roomname)
-        {
+            user!.AddMsg(msg);
 
-        }
-
-        private void HandleJoinedRoom(string roomname, string username)
-        {
-            if (_roomsRegistry.TryGetValue(roomname, out ChatRoom? room))
+            if (_currentChatUser == user)
             {
-                room.RegisterMsg(new(sender: roomname, text: $"Se ha unido {username}."));
+                ChatPanel.AddMsg(msg);
             }
         }
 
-        private void HandleRoomTextFrom(string roomname, string username, string text)
+        /// <summary>
+        /// Maneja la recepción del mensaje de tipo "PUBLIC_TEXT_FROM"
+        /// </summary>
+        /// <param name="username">Nombre del usuario que envía el texto.</param>
+        /// <param name="text">El texto.</param>
+        private void HandleTypePublicTextFrom(string username, string text)
         {
-            if (_roomsRegistry.TryGetValue(roomname, out ChatRoom? room))
+            ChatUserViewModel? user = MainRoom.GetUserOrNull(username);
+            if (user == null)
+                return;
+            
+            ChatMsg msg = new(
+                sender: username,
+                text: text);
+
+            MainRoom.AddMsg(msg);
+
+            if (_currentRoom == MainRoom)
             {
-                room.RegisterMsg(new(sender: username, text: text));
+                ChatPanel.AddMsg(msg);
             }
-        }
 
-        private void HandleLeftRoom(string roomname, string username)
-        {
-            if (_roomsRegistry.TryGetValue(roomname, out ChatRoom? room))
-            {
-                room.RemoveMember(username);
-            }
-        }
-        
-        // Apoyo General:
-
-        private void RegisterUser(ChatUser user)
-        {
-            _usersRegistry[user.Username] = user;
-            Users.Add(user);
-        }
-
-        private void RegisterRoom(ChatRoom room)
-        {
-            _roomsRegistry[room.Roomname] = room;
-            Rooms.Add(room);
-        }
-
-        private void RemoveUser(string username)
-        {
-            _usersRegistry.Remove(username, out ChatUser? user);
-            if (user != null)
-                Users.Remove(user);
         }
 
         #endregion
+
     }
 }

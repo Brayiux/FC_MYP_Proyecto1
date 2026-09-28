@@ -9,7 +9,7 @@ namespace Client.Models.Entities
     {
         #region Propiedades
         /// <summary>
-        /// Obtiene el nombre del usuario que envía el mensaje.
+        /// Obtiene el nombre de quien envía el mensaje.
         /// </summary>
         public string Sender { get; }
 
@@ -48,12 +48,7 @@ namespace Client.Models.Entities
         /// <param name="sender">El emisor.</param>
         private void ValidateSender(string sender)
         {
-            if (string.IsNullOrEmpty(sender))
-            {
-                throw new ArgumentException(
-                    "Error: El emisor no puede ser vacío.",
-                    nameof(sender));
-            }
+            ArgumentNullException.ThrowIfNull(sender);
         }
 
         /// <summary>

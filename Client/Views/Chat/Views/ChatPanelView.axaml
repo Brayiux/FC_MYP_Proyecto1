@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:Client.ViewModels.Chat.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Client.Views.Chat.Views.ChatPanelView"
+             x:DataType="viewmodels:ChatPanelViewModel">
+    <Border Background="LightYellow">
+        <Grid RowDefinitions="Auto, *, Auto">
+            <!-- Encabezado -->
+            <Border Grid.Row="0"
+                    Background="MediumPurple">
+                <TextBlock Text="{Binding HeaderText}"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"/>
+            </Border>
+            <!-- Lista de mensajes -->
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <ListBox ItemsSource="{Binding Messages}"
+                         Background="Transparent">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Sender}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Text}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+            <!-- Caja de envío de mensajes -->
+            <Border Grid.Row="2"
+                    Background="Yellow">
+                <Grid ColumnDefinitions="*, Auto">
+                    <TextBox Grid.Column="0"
+                             PlaceholderText="Ingrese un mensaje"
+                             Text="{Binding UserMsg}"
+                             Margin="10"/>
+                    <Button Grid.Column="1"
+                            Content="Enviar"
+                            Command="{Binding SendMsgCommand}"
+                            Margin="10"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

@@ -107,8 +107,11 @@ public class ServerController
 				{
 					if (string.IsNullOrWhiteSpace(msg))
 						continue;
+					MessageReceived?.Invoke(msg);
                     IARStrategy s = _translator.Translate(msg);
+                    s.MessageSent += Strategy_MessageSent;
                     await s.ExecuteAsync(c);
+					s.MessageSent -= Strategy_MessageSent;
                 }
 				
 			}
@@ -127,7 +130,13 @@ public class ServerController
 		}
 
 	}
-	private void DisconnectAll()
+
+    private void Strategy_MessageSent(string msg)
+    {
+		MessageSent?.Invoke(msg);
+    }
+
+    private void DisconnectAll()
 	{
 		foreach (var (_,c) in ChatData.Instance.GetAllClients())
 		{

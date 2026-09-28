@@ -90,10 +90,11 @@ public partial class MainViewModel : ViewModelBase
         IsLoginVisible = true;
     }
 
-    private void LoginVM_LoginSuccess()
+    private async void LoginVM_LoginSuccess()
     {
         IsLoginVisible = false;
         IsChatVisible = true;
+        await ChatVM.InitializeAsync();
     }
 
     private void LoginVM_ConnectionInterrupted()

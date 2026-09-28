@@ -1,4 +1,5 @@
-﻿using ChatServer.Views;
+﻿
+using ChatServer.Views;
 using Controller;
 using System.Diagnostics;
 using System.Net;

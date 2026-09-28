@@ -2,11 +2,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Client.Views.Chat.Components
+namespace Client.Views.Chat.Views
 {
-    public partial class UsersPanel : UserControl
+    public partial class InviteUserPanelView : UserControl
     {
-        public UsersPanel()
+        public InviteUserPanelView()
         {
             InitializeComponent();
         }
