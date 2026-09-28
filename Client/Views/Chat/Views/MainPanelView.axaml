@@ -42,7 +42,6 @@
                                 Value="{Binding IsEnabled}"/>
                     </Style>
                 </ComboBox.Styles>
-                
             </ComboBox>
         </Grid>
     </Border>
