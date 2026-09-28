@@ -22,8 +22,14 @@ namespace Client.ViewModels.Chat
     {
         #region Campos
 
+        /// <summary>
+        /// Sala actualmente seleccionada.
+        /// </summary>
         private ChatRoomViewModelBase? _currentRoom;
 
+        /// <summary>
+        /// Usuario actualmente seleccionado.
+        /// </summary>
         private ChatUserViewModel? _currentChatUser;
 
 
@@ -128,7 +134,7 @@ namespace Client.ViewModels.Chat
             MainPanel.TryChangeStatus += MainPanel_TryChangeStatus;
             MainPanel.TryDisconnect += MainPanel_TryDisconnect;
             MainPanel.TryInvite += MainPanel_TryInvite;
-
+            MainPanel.TryCreateRoom += MainPanel_TryCreateRoom;
             // Panel de salas:
             RoomsPanel.RoomSelected += RoomsPanel_RoomSelected;
 
@@ -138,6 +144,8 @@ namespace Client.ViewModels.Chat
             // Panel de usuarios
             UsersPanel.UserSelected += UsersPanel_UserSelected;
         }
+
+        
 
         #endregion
 
@@ -154,6 +162,10 @@ namespace Client.ViewModels.Chat
         }
 
         private void RoomsPanel_RoomSelected(ChatRoomViewModel? obj)
+        {
+            throw new NotImplementedException();
+        }
+        private void MainPanel_TryCreateRoom()
         {
             throw new NotImplementedException();
         }

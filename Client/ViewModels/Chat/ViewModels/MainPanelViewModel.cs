@@ -30,6 +30,11 @@ namespace Client.ViewModels.Chat.ViewModels
         /// </summary>
         public event Action? TryInvite;
 
+        /// <summary>
+        /// Ocurre cuando el usuario intenta crear una nueva sala.
+        /// </summary>
+        public event Action? TryCreateRoom;
+
         #endregion
 
         #region Contexto
@@ -79,7 +84,7 @@ namespace Client.ViewModels.Chat.ViewModels
 
         #region Comandos
         /// <summary>
-        /// Notifica el intento de desconexión del cliente.
+        /// Notifica la intención de desconexión del cliente.
         /// </summary>
         [RelayCommand]
         private void NotifyDisconnect()
@@ -88,12 +93,21 @@ namespace Client.ViewModels.Chat.ViewModels
         }
 
         /// <summary>
-        /// Notifica el intento del cliente de invitar a un usuario a una sala.
+        /// Notifica la intención del cliente de invitar a un usuario a una sala.
         /// </summary>
         [RelayCommand]
         private void NotifyInvite()
         {
             TryInvite?.Invoke();
+        }
+
+        /// <summary>
+        /// Notifica la intención del cliente de crear una nueva sala.
+        /// </summary>
+        [RelayCommand]
+        private void NotifyCreateRoom()
+        {
+            TryCreateRoom?.Invoke();
         }
 
         #endregion
