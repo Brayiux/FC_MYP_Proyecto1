@@ -100,6 +100,9 @@ namespace Client.ViewModels.Chat
             // Comenzamos a escuchar los mensajes del servidor:
             Receiver.MsgReceived += Receiver_MsgReceived;
 
+            // Bloqueamos la elección de estado Active del panel principal:
+            MainPanel.ResetStatusOptions(user.Status);
+
             // Solicitamos la lista de usuarios:
             await Sender.RequestUsersInChatAsync();
         }
@@ -163,9 +166,10 @@ namespace Client.ViewModels.Chat
             throw new System.NotImplementedException();
         }
 
-        private void MainPanel_TryChangeStatus(UserStatus obj)
+        private async void MainPanel_TryChangeStatus(UserStatus obj)
         {
-            throw new System.NotImplementedException();
+            await Sender.ChangeStatusAsync(obj);
+            MainPanel.ResetStatusOptions(obj);
         }
 
         private void InvitationsPanel_InvitationSelected(ChatRoomInvitation? obj)
