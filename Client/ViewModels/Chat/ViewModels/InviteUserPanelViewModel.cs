@@ -15,8 +15,19 @@ namespace Client.ViewModels.Chat.ViewModels
     /// Vista-modelo del panel usado para invitar usuarios
     /// por nombre de sala y nombre de usuario.
     /// </summary>
-    public partial class InviteUserPanelViewModel : ViewModelBase
+    public partial class InviteUserPanelViewModel : ClosablePanelViewModelBase
     {
+        #region Eventos
+
+        /// <summary>
+        /// Ocurre cuando el cliente consiguió invitar a un usuario,
+        /// pasando como parámetros los nombres de la sala y del usuario,
+        /// respectivamente.
+        /// </summary>
+        public event Action<string, string>? UserInvited;
+
+        #endregion
+
         #region Campos
 
         /// <summary>
@@ -84,7 +95,6 @@ namespace Client.ViewModels.Chat.ViewModels
         }
         #endregion
 
-
         #region Comandos
 
         /// <summary>
@@ -112,6 +122,7 @@ namespace Client.ViewModels.Chat.ViewModels
             MsgReceiver.Instance.MsgReceived += Instance_MsgReceived;
             await MsgSender.Instance.InviteToRoomAsync(Roomname, Guest);
             MsgReceiver.Instance.MsgReceived -= Instance_MsgReceived;
+            UserInvited?.Invoke(Roomname, Guest);
         }
 
         #endregion
@@ -144,5 +155,6 @@ namespace Client.ViewModels.Chat.ViewModels
 
         }
         #endregion
+
     }
 }

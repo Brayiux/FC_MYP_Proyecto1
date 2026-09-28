@@ -5,22 +5,35 @@
              xmlns:viewmodels="using:Client.ViewModels.Chat.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Client.Views.Chat.Views.InviteUserPanelView"
-             x:DataType="viewmodels:InviteUserPanelViewModel">
+             x:DataType="viewmodels:InviteUserPanelViewModel"
+             IsVisible="{Binding !IsPanelClosed}">
     <Border Background="Gray"
-            Height="225"
+            Height="250"
             Width="250"
             Padding="10"
             CornerRadius="15">
-        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="10">
-            <!-- Ecabezado "Invitar usuario" -->
-            <Border Grid.Row="0"
-                    Background="DimGray"
-                    Padding="5"
-                    CornerRadius="15">
-                <TextBlock Text="Invitar usuario"
-                           FontWeight="Bold"
-                           HorizontalAlignment="Center"/>
-            </Border>
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+              RowSpacing="10">
+            <!-- Ecabezado -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="*, Auto" ColumnSpacing="5">
+                <!-- Texto "Invitar usuario" -->
+                <Border Grid.Column="0" Background="DimGray"
+                        Padding="5"
+                        CornerRadius="10">
+                    <TextBlock Text="Invitar usuario"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"/>
+                </Border>
+                <!-- Botón para cerrar panel -->
+                <Button Grid.Column="1"
+                        Content="X"
+                        FontWeight="Bold"
+                        Command="{Binding CloseCommand}"
+                        HorizontalAlignment="Right"
+                        CornerRadius="10"
+                        />
+            </Grid>
             <!-- Mensaje de Error -->
             <TextBlock Grid.Row="1"
                        IsVisible="{Binding ShowErrorMsg}"

@@ -72,6 +72,35 @@ namespace Client.ViewModels.Chat
         [ObservableProperty]
         private UsersPanelViewModel _usersPanel = new();
 
+        /// <summary>
+        /// Panel para invitar usuarios.
+        /// </summary>
+        [ObservableProperty]
+        private InviteUserPanelViewModel _inviteUserPanel = new();
+        
+
+        #endregion
+
+        #region Contexto
+
+        /// <summary>
+        /// Indica si el chat completo es visible.
+        /// </summary>
+        [ObservableProperty]
+        private bool _isChatVisible = true;
+
+        /// <summary>
+        /// Indica si el panel para invitar a un usuario es visible.
+        /// </summary>
+        [ObservableProperty]
+        private bool _isInviteUserPanelVisible = false;
+
+        /// <summary>
+        /// Indica si el panel para crear una sala es visible.
+        /// </summary>
+        [ObservableProperty]
+        private bool _isCreateRoomPanelVisible = false;
+
         #endregion
 
         #region Propiedades
@@ -149,13 +178,36 @@ namespace Client.ViewModels.Chat
 
             // Panel de usuarios
             UsersPanel.UserSelected += UsersPanel_UserSelected;
-        }
 
-        
+            // Panel para invitar usuarios
+            InviteUserPanel.UserInvited += InviteUserPanel_UserInvited;
+            InviteUserPanel.PanelClosed += InviteUserPanel_PanelClosed;
+        }
 
         #endregion
 
         #region Apoyo a eventos de las componentes
+
+        private void InviteUserPanel_PanelClosed()
+        {
+            IsChatVisible = true;
+        }
+
+        private void InviteUserPanel_UserInvited(string arg1, string arg2)
+        {
+            InviteUserPanel.Close();
+
+            ChatRoomViewModelBase? room = RoomsPanel.Rooms.Where((r) => r.Roomname.Equals(arg2))
+                                                          .FirstOrDefault();
+            if (room == null)
+                return;
+
+            ChatUserViewModel? guest = MainRoom.GetUserOrNull(arg1);
+            if (guest == null)
+                return;
+
+            room.AddGuest(guest);
+        }
 
         private void UsersPanel_UserSelected(ChatUserViewModel? obj)
         {
@@ -179,7 +231,7 @@ namespace Client.ViewModels.Chat
             }
         }
 
-        private void RoomsPanel_RoomSelected(ChatRoomViewModel? obj)
+        private void RoomsPanel_RoomSelected(ChatRoomViewModel? room)
         {
             throw new NotImplementedException();
         }
@@ -190,7 +242,7 @@ namespace Client.ViewModels.Chat
 
         private void MainPanel_TryInvite()
         {
-            throw new System.NotImplementedException();
+            InviteUserPanel.Open();
         }
 
         private void MainPanel_TryDisconnect()
