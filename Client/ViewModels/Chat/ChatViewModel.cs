@@ -101,8 +101,9 @@ namespace Client.ViewModels.Chat
             // Comenzamos a escuchar los mensajes del servidor:
             Receiver.MsgReceived += Receiver_MsgReceived;
 
-            // Bloqueamos la elección de estado Active del panel principal:
+            // Actualizamos el panel principal:
             MainPanel.ResetStatusOptions(user.Status);
+            MainPanel.HeaderText = $"Chat de {user.User.Username}";
 
             // Solicitamos la lista de usuarios:
             await Sender.RequestUsersInChatAsync();
