@@ -1,7 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Client.Models.Definitions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Client.ViewModels.Chat.ViewModels
@@ -21,7 +23,7 @@ namespace Client.ViewModels.Chat.ViewModels
         /// <summary>
         /// Ocurre cuando el usuario intenta cambiar de estado.
         /// </summary>
-        public event Action? TryChangeStatus;
+        public event Action<UserStatus>? TryChangeStatus;
 
         /// <summary>
         /// Ocurre cuando el usuario intenta invitar a otro a una sala.
@@ -38,7 +40,42 @@ namespace Client.ViewModels.Chat.ViewModels
         [ObservableProperty]
         private string _headerText = string.Empty;
 
+        /// <summary>
+        /// Contiene los estados a los que puede cambiar el usuario.
+        /// </summary>
+        [ObservableProperty]
+        private ObservableCollection<StatusOptionViewModel> _statusOptions = [];
+
+        /// <summary>
+        /// Estado seleccionado por el usuario.
+        /// </summary>
+        [ObservableProperty]
+        private StatusOptionViewModel? _selectedOption;
+
         #endregion
+
+        #region Acceso público
+        /// <summary>
+        /// Resetea la lista de opciones que están habilitadas
+        /// con base al estado actual del usuario.
+        /// </summary>
+        /// <param name="currentStatus">Estado actual del usuario.</param>
+        public void ResetStatusOptions(UserStatus currentStatus)
+        {
+            StatusOptions.Clear();
+
+            foreach (UserStatus status in Enum.GetValues<UserStatus>())
+            {
+                StatusOptionViewModel option = new()
+                {
+                    Status = status,
+                    IsEnabled = status != currentStatus
+                };
+                StatusOptions.Add(option);
+            }
+        }
+        #endregion
+
 
         #region Comandos
         /// <summary>
@@ -56,7 +93,8 @@ namespace Client.ViewModels.Chat.ViewModels
         [RelayCommand]
         private void NotifyChangeStatus()
         {
-            TryChangeStatus?.Invoke();
+            if (SelectedOption != null)
+                TryChangeStatus?.Invoke(SelectedOption.Status);
         }
 
         /// <summary>

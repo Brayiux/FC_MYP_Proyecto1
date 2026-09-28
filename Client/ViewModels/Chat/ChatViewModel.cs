@@ -163,7 +163,7 @@ namespace Client.ViewModels.Chat
             throw new System.NotImplementedException();
         }
 
-        private void MainPanel_TryChangeStatus()
+        private void MainPanel_TryChangeStatus(UserStatus obj)
         {
             throw new System.NotImplementedException();
         }
