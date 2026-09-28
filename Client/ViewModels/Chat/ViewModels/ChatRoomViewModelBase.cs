@@ -45,6 +45,7 @@ namespace Client.ViewModels.Chat.ViewModels
         public ChatRoomViewModelBase(string roomname)
         {
             Room = new(roomname);
+            Roomname = roomname;
         }
 
         #endregion

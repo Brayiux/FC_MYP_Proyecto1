@@ -247,10 +247,15 @@ namespace Client.ViewModels.Chat
             // Lo registramos en la sala principal
             ChatUserViewModel user = new(username);
             MainRoom.AddMember(user);
+            ChatMsg msg = new(
+                sender: MainRoom.Roomname,
+                text: $"{username} se ha unido al chat, dale la bienvenida.");
+            MainRoom.AddMsg(msg);
             // Actualizamos el panel de usuarios
             if (_currentRoom == MainRoom)
             {
                 UsersPanel.AddUser(user);
+                ChatPanel.AddMsg(msg);
             }
         }
 
