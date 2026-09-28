@@ -20,6 +20,8 @@ namespace Client.ViewModels.Chat.ViewModels
         /// </summary>
         private readonly Dictionary<string, ChatUserViewModel> _guests = [];
 
+
+        private readonly Dictionary<string, ChatUserViewModel> _users = [];
         #endregion
 
         #region Propiedades
@@ -40,7 +42,7 @@ namespace Client.ViewModels.Chat.ViewModels
         /// Lleva el registro de los usuarios del chat principal en la
         /// capa de vista-modelo.
         /// </summary>
-        public readonly Dictionary<string, ChatUserViewModel> Users = [];
+        public IReadOnlyDictionary<string, ChatUserViewModel> Users => _users;
 
         #endregion
 
@@ -83,7 +85,7 @@ namespace Client.ViewModels.Chat.ViewModels
         {
             if (Room.AddMember(username))
             {
-                Users[username] = _guests[username];
+                _users[username] = _guests[username];
                 return true;
             }
             return false;
@@ -98,7 +100,7 @@ namespace Client.ViewModels.Chat.ViewModels
         {
             if (Room.RemoveMember(username))
             {
-                return Users.Remove(username);
+                return _users.Remove(username);
             }
             return false;
         }
@@ -132,7 +134,19 @@ namespace Client.ViewModels.Chat.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// Obtiene un usuario del registro de usuarios de la sala.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public ChatUserViewModel? GetUserOrNull(string username)
+        {
+            _users.TryGetValue(username, out ChatUserViewModel? user);
+            return user;
+        }
         #endregion
+
+
 
     }
 }

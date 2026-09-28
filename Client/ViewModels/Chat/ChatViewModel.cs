@@ -26,6 +26,7 @@ namespace Client.ViewModels.Chat
 
         private ChatUserViewModel? _currentChatUser;
 
+
         #endregion
 
         #region Componentes
@@ -191,6 +192,9 @@ namespace Client.ViewModels.Chat
                 case "NEW_USER":
                     HandleTypeNewUser(msgData.Username!);
                     break;
+                case "NEW_STATUS":
+                    HandleTypeNewStatus(msgData.Username!, msgData.Status!.Value);
+                    break;
                 case "USER_LIST":
                     HandleTypeUserList(msgData.Users!);
                     break;
@@ -211,6 +215,20 @@ namespace Client.ViewModels.Chat
             {
                 UsersPanel.AddUser(user);
             }
+        }
+
+        /// <summary>
+        /// Maneja la recepción del mensaje de tipo "NEW_STATUS"
+        /// </summary>
+        /// <param name="username">Nombre de usuario de quien cambió su
+        /// estado.</param>
+        /// <param name="status">Estado al que cambió.</param>
+        private void HandleTypeNewStatus(string username, UserStatus status)
+        {
+            ChatUserViewModel? user = MainRoom.GetUserOrNull(username);
+            if (user == null || status == user.Status)
+                return;
+            user.Status = status;
         }
 
         /// <summary>
