@@ -41,6 +41,7 @@
                              Margin="10"/>
                     <Button Grid.Column="1"
                             Content="Enviar"
+                            Command="{Binding SendMsgCommand}"
                             Margin="10"/>
                 </Grid>
             </Border>

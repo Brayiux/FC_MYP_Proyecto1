@@ -18,12 +18,14 @@
             <!-- Botón para invitar -->
             <Button Grid.Row="0" Grid.Column="0"
                     Content="Invitar"
+                    Command="{Binding NotifyInviteCommand}"
                     Margin="10"
                     HorizontalAlignment="Stretch"
                     />
             <!-- Botón para desconectarse -->
             <Button Grid.Row="0" Grid.Column="2"
                     Content="Desconectar"
+                    Command="{Binding NotifyDisconnectCommand}"
                     Margin="10"
                     HorizontalAlignment="Stretch"/>
             <!-- Opciones para cambiar de estado -->

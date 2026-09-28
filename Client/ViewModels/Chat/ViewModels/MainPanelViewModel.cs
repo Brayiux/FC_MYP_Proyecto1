@@ -88,22 +88,23 @@ namespace Client.ViewModels.Chat.ViewModels
         }
 
         /// <summary>
-        /// Notifica el intento del cliente de cambiar su estado actual.
-        /// </summary>
-        [RelayCommand]
-        private void NotifyChangeStatus()
-        {
-            if (SelectedOption != null)
-                TryChangeStatus?.Invoke(SelectedOption.Status);
-        }
-
-        /// <summary>
         /// Notifica el intento del cliente de invitar a un usuario a una sala.
         /// </summary>
         [RelayCommand]
         private void NotifyInvite()
         {
             TryInvite?.Invoke();
+        }
+
+        #endregion
+
+        #region Intercepción de eventos
+
+        // Notifica el evento de selección de un estado
+        partial void OnSelectedOptionChanged(StatusOptionViewModel? value)
+        {
+            if (SelectedOption != null)
+                TryChangeStatus?.Invoke(SelectedOption.Status);
         }
 
         #endregion
