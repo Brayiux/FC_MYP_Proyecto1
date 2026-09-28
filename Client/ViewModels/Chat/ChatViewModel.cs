@@ -32,6 +32,11 @@ namespace Client.ViewModels.Chat
         /// </summary>
         private ChatUserViewModel? _currentChatUser;
 
+        /// <summary>
+        /// El usuario que usa la aplicación.
+        /// </summary>
+        private ChatUserViewModel? _client;
+
 
         #endregion
 
@@ -101,6 +106,7 @@ namespace Client.ViewModels.Chat
 
             // Inicializamos y añadimos la sala principal al panel:
             ChatUserViewModel user = new(Connection.User!.Username);
+            _client = user;
             MainRoom.AddMember(user);
             RoomsPanel.AddRoom(MainRoom);
 
@@ -156,9 +162,21 @@ namespace Client.ViewModels.Chat
             throw new NotImplementedException();
         }
 
-        private void ChatPanel_MessageSent(ChatMsg obj)
+        private async void ChatPanel_MessageSent(ChatMsg obj)
         {
-            throw new NotImplementedException();
+            if (_currentRoom != null)
+            {
+                _currentRoom.AddMsg(obj);
+                ChatPanel.AddMsg(obj);
+                await Sender.SendPublicTextAsync(obj.Text);
+                return;
+            }
+            else if (_currentChatUser != null)
+            {
+                _currentChatUser.AddMsg(obj);
+                ChatPanel.AddMsg(obj);
+                await Sender.TextToAsync(_currentChatUser.User.Username, obj.Text);
+            }
         }
 
         private void RoomsPanel_RoomSelected(ChatRoomViewModel? obj)
@@ -210,6 +228,12 @@ namespace Client.ViewModels.Chat
                     break;
                 case "USER_LIST":
                     HandleTypeUserList(msgData.Users!);
+                    break;
+                case "TEXT_FROM":
+                    HandleTypeTextFrom(msgData.Username!, msgData.Text!);
+                    break;
+                case "PUBLIC_TEXT_FROM":
+                    HandleTypePublicTextFrom(msgData.Username!, msgData.Text!);
                     break;
             }
         }
@@ -271,6 +295,52 @@ namespace Client.ViewModels.Chat
 
             _currentChatUser = null;
             _currentRoom = MainRoom;
+        }
+
+        /// <summary>
+        /// Maneja la recepción del mensaje de tipo "TEXT_FROM"
+        /// </summary>
+        /// <param name="username">Nombre del usuario que envía el texto.</param>
+        /// <param name="text">El texto.</param>
+        private void HandleTypeTextFrom(string username, string text)
+        {
+            ChatUserViewModel? user = MainRoom.GetUserOrNull(username);
+            if (user == null)
+                return;
+            ChatMsg msg = new(
+                sender: username,
+                text: text);
+
+            user!.AddMsg(msg);
+
+            if (_currentChatUser == user)
+            {
+                ChatPanel.AddMsg(msg);
+            }
+        }
+
+        /// <summary>
+        /// Maneja la recepción del mensaje de tipo "PUBLIC_TEXT_FROM"
+        /// </summary>
+        /// <param name="username">Nombre del usuario que envía el texto.</param>
+        /// <param name="text">El texto.</param>
+        private void HandleTypePublicTextFrom(string username, string text)
+        {
+            ChatUserViewModel? user = MainRoom.GetUserOrNull(username);
+            if (user == null)
+                return;
+            
+            ChatMsg msg = new(
+                sender: username,
+                text: text);
+
+            MainRoom.AddMsg(msg);
+
+            if (_currentRoom == MainRoom)
+            {
+                ChatPanel.AddMsg(msg);
+            }
+
         }
 
         #endregion
