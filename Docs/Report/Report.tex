@@ -4,9 +4,13 @@
 
 \usepackage[spanish, mexico]{babel}
 
-\usepackage{biblatex}   % Bibliografía
+\usepackage[backend=biber, style=numeric]{biblatex}
 
-\usepackage{dirtree}    %  Árboles de directorios
+\addbibresource{references.bib}
+
+\nocite{*}
+
+\usepackage{url}
 
 % --------------------------
 
@@ -32,8 +36,8 @@
 
 \input{Chapters/conclusions.tex}
 
-\input{Chapters/fundamental_analysis.tex}
+\newpage
 
-\input{Chapters/design.tex}
+\printbibliography[title={Referencias}]
 
 \end{document}

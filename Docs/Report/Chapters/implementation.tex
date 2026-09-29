@@ -12,4 +12,111 @@ El lenguaje a utilizar será \texttt{C\#} junto con los frameworks de \texttt{.N
 
 \section{Arquitecturas}
 
-La arquitectura del cliente ya se ha explicado por qué es MVVM, mientras que la del servidor es MVC, ya que permite la visibilidad de mensajes recibidos en consola (la vista del servidor) y la separación entre datos y entidades (el modelo del servidor) y la recepción y envío de mensajes (la conexión, el controlador del servidor).
+La arquitectura del cliente ya se ha explicado por qué es MVVM, mientras que la del servidor es MVC, ya que permite la visibilidad de mensajes recibidos y emitidos por el servidor desde la consola (la vista del servidor) y la separación entre datos y entidades (el modelo del servidor) y la recepción y envío de mensajes (la conexión, el controlador del servidor).
+
+\section{Implementación del servidor}
+
+Se describen a mayor detalle las responsabilidades de los objetos mediante los diagramas del repositorio, pero con base en el diseño se implementa lo siguiente:
+\begin{itemize}
+	\item \textbf{Entidades que contienen y validan datos}: forman parte del modelo y se implementan mediante los siguientes objetos.
+	\begin{itemize}
+		\item Usuario del chat.
+		\item Sala del chat.
+		\item Reglas de texto
+		\item Excepciones:
+		\begin{itemize}
+			\item Por nombre de sala fuera de rango.
+			\item Por nombre de usuario fuera de rango.
+			\item Por estado inválido del usuario: Cuando su estado se modifica a un valor no válido (como al mismo estado por ejemplo).
+			\item Por texto inválido: Cuando el formato del texto sale del rango de caracteres permitidos o tiene cualquier formato que no sea considerado en este modelo.
+			\item Por usuario ya existente: Cuando se intenta crear un usuario con un nombre que ya existe.
+			\item Por usuario no encontrado: Cuando se intenta encontrar a un usuario por algún identificador pero no se consigue.
+			\item Por sala ya existente: Cuando una sala ya existe y se intenta crear otra con el mismo nombre.
+			\item Por sala no encontrada: Cuando se intenta encontrar a una sala por algún identificador, pero no se consigue.
+			\item Por usuario no invitado: Cuando se intenta agregar un usuario a una sala sin haber sido previamente invitado.
+		\end{itemize}
+	\end{itemize}
+	\item \textbf{Encargados de la conexión:}
+	\begin{itemize}
+		\item Conexión con el cliente: permite enviar y leer mensajes de un cliente asociado a un usuario.
+		\item Manejador de la conexión con el cliente: maneja la conexión y desconexión segura de un cliente dado.
+	\end{itemize}
+	\item \textbf{Notificaciones de entrada/salida de mensajes:}
+	\begin{itemize}
+		\item Manejador de eventos de mensaje recibido.
+		\item Manejador de eventos de mensaje enviado.
+	\end{itemize}
+	\item \textbf{Contenedor global de datos:}
+	\begin{itemize}
+		\item Datos del chat: contiene y permite acceso y modificación a los usuarios y salas registrados.
+	\end{itemize}
+	\item \textbf{Actores en el servidor:}
+	\begin{itemize}
+		\item Interfaz de estrategia de acción respuesta: Define una acción a ejecutar para responder a un mensaje recibido por el servidor. Sus implementaciones son estrategias para cada uno de los doce tipos de mensajes que recibe el servidor, \textit{i.e.} estrategias para: IDENTIFY, STATUS, USERS, TEXT, PUBLIC\_TEXT, NEW\_ROOM, INVITE, JOIN\_ROOM, ROOM\_USERS, ROOM\_TEXT, LEAVE\_ROOM, DISCONNECT.
+	\end{itemize}
+	\item \textbf{Traductores de mensajes:}
+	\begin{itemize}
+		\item Codificador UTF8: Traduce de bytes a string en formato UTF8 y viceversa. parámetros del mensaje.
+		\item Traductor de mensajes: Traduce un mensaje recibido por el servidor a una estrategia de acción respuesta.
+		\item Datos base de mensaje: define al menos un campo ``type'' para cada mensaje. Cada una de sus implementaciones es por cada uno de los doce tipos de mensajes recibidos por el servidor y contiene los campos necesarios para ello. Sirve para la lectura de mensajes.
+		\item Constructor de mensajes: Construye mensajes en formato JSON por medio de varias operaciones que definen los. Sirve para el envío de mensajes.
+	\end{itemize}
+
+\end{itemize}
+
+Un detalle no considerado en el diseño es el controlador y la vista. El controlador se encarga de iniciar el bucle de lectura y ejecución de estrategias del servidor, mientras que la vista se encarga de leer si el controlador indica que ha recibido o enviado un mensaje a algún cliente, para mostrarlo en consola. Sus implementaciones son dos clases: Controlador del servidor y Vista de mensajes, respectivamente.
+
+\section{Implementación del cliente}
+
+\begin{itemize}
+	\item \textbf{Entidades observadas:}
+	\begin{itemize}
+		\item Usuario del chat: contiene los datos de un usuario enlazado con el cliente que usa la aplicación.
+		\item Sala del chat: contiene los datos de una sala creada por el cliente o por otro usuario.
+		\item Sala principal del chat: contiene los datos de la sala principal, información de registros de usuarios, etc.
+		\item Mensaje de chat: enlaza el nombre de un emisor de un mensaje (que puede ser una sala o un usuario) con un texto (el contenido del mensaje).
+		\item Invitación a sala del chat: contiene los datos de una invitación al cliente a una sala.
+	\end{itemize}
+	\item \textbf{Conexiones con el servidor:}
+	\begin{itemize}
+		\item Conexión del cliente: permite enviar y leer mensajes del servidor y se asocia al único usuario que el programa del cliente tiene responsabilidad de manejar su conexión (el propio cliente).
+	
+	\end{itemize}
+	\item \textbf{Emisores y receptores de mensajes:}
+	\begin{itemize}
+		\item Receptor de mensajes: Sirve como interfaz para recibir mensajes del servidor a través de la conexión.
+		\item Emisor de mensajes: Sirve como interfaz para enviar mensajes al servidor a través de la conexión, por cada tipo de mensaje que el cliente puede enviar.
+	
+	\end{itemize}
+	\item \textbf{Traductores de mensajes:} La conexión del cliente  sirve como traductor de mensajes de bytes a cadenas, y el emisor y receptor como traductores de mensajes a acciones y viceversa, pero además están:
+	\begin{itemize}
+		\item Datos de mensaje: Contiene los campos necesarios para la serialización y deserialización de mensajes entrantes, con todos los parámetros que puede tener un mensaje en formato JSON recibido por el cliente y descrito por el protocolo.
+	
+	\end{itemize}
+	\item \textbf{Vistas:}
+	\begin{itemize}
+		\item Vista de conexión: lo que se muestra para establecer la conexión con un servidor (admitiendo IP y puerto).
+		\item Vista de registro: lo que se muestra para identificar al cliente en el servidor al que se conectó.
+		\item Vista de chat: lo que muestra las vistas necesarias para brindar las funciones principales de la aplicación (envío de mensajes, visualización de lista de usuarios, etc.) al usuario desde la interfaz gráfica.
+		\begin{itemize}
+			\item Vista de panel principal: muestra las opciones para invitar, crear sala, desconectarse y cambiar el estado, así como el nombre con el cual el cliente se registró.
+			\item Vista de panel de invitaciones: muestra las invitaciones a salas que el cliente ha recibido y permite aceptarlas/rechazarlas.
+			\item Vista de panel de usuarios: muestra la lista de usuarios de la sala (o chat privado) en la que el cliente escribe, así como sus estados. También permite al usuario seleccionar un usuario para entrar a su chat privado.
+			\item Vista del panel de salas: muestra todas las salas (incluyendo la principal) de las cuales el cliente es miembro, y permite seleccionar alguna para entrar en su chat.
+			\item Vista de panel de chat: muestra los mensajes de la sala (o chat privado con algún usuario) actual, así como un panel que permite escribir un mensaje y enviarlo a la misma.
+			\item Vista de panel de invitar usuario: muestra un panel que permite invitar a un usuario a una sala indicando ambos nombres.
+			\item Vista de panel de crear sala: muestra un panel que permite crear una nueva sala ingresando su nombre.
+		\end{itemize}
+	
+	\end{itemize}
+	\item \textbf{Proveedores de contexto:}
+	\begin{itemize}
+		\item Un proovedor de contexto por cada vista descrita anteriormente.
+		\item Vista-modelo de usuario de chat: Envuelve los datos de un usuario del chat para hacerlos observables y añadirle propiedades adicionales (como color al status).
+		\item Vista-modelo de sala de chat: Cumple la misma función que la VM de usuario de chat con un usuario de chat, pero para la sala de chat.
+		\item Vista-modelo de opción de estado: Tiene la información observable de un estado que puede ser seleccionado por el usuario, así como métodos para seleccionar las opciones válidas.
+	
+	\end{itemize}
+\end{itemize}
+
+El proyecto no cuenta con la implementación completa del cliente que se tenía diseñada, faltan las vistas y proveedores de contexto relacionados con la creación, uso e invitación de salas, así como manejar eventos como la desconexión del cliente.

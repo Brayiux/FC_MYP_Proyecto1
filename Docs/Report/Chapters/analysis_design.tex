@@ -21,5 +21,29 @@ Por el lado del servidor hay un único flujo de entrada y múltiples salidas. A 
 
 La unión de estos flujos (los dos del cliente y el del servidor) da como resultado mínimo una entrada desde el usuario y una salida (posiblemente vacía) al mismo usuario, así que es suficiente para manejar al menos a un cliente; pero además, al esperar entradas y tener múltiples salidas (el servidor) se completa y resuelve el problema de mantener múltiples usuarios, dando como resultado la solución al problema de crear el chat, y por finalizado el análisis. Las posteriores decisiones se fundamentan en este análisis.
 
+Más adelante se expone el motivo del paradigma escogido; sin embargo, a partir de ahora el diseño del cliente y servidor se inclinan a la orientación a objetos. Así mismo, se indica al lector que en el repositorio público de este proyecto se encuentran los diagramas necesarios para el diseño e implementación, así que aquí solamente se expondrá la parte teórica.
+
+\section{Diseño del servidor}
+
+El servidor funciona mediante las siguientes entidades y eventos:
+\begin{itemize}
+	\item \textbf{Entidades que contienen y validan datos:} Son las entidades que almacenan datos (como nombres de usuario, estados, nombres de sala, miembros, invitaciones, etc.) y que validan que su estado sea el adecuado. Entre estas entidades se encuentran un \textit{usuario}, una \textit{sala} y una entidad que valida que el formato de textos enviados a salas y usuarios sea el adecuado.
+	\item \textbf{Encargados de la conexión:} Son entidades que se encargan de la comunicación directa con los sockets de los clientes para la escritura o lectura de mensajes.
+	\item \textbf{Notificaciones de entrada/salida de mensajes:} para la entrada y la salida de mensajes del servidor.
+	\item \textbf{Contenedor global de datos:} Contiene la información concreta de usuarios y salas existentes en el servidor y permite operar con ella.
+	\item \textbf{Actores en el servidor:} Modifican el estado interno del servidor (sus datos, el estado de sus entidades, etc.) como respuesta a un mensaje recibido; además, tienen salida a otros clientes (manejan notificaciones).
+	\item \textbf{Traductores de mensajes:} Traducen los mensajes recibidos y emitidos por el servidor a un formato apto para la transmisión de datos de sockets o a actores dentro del servidor.
+\end{itemize}
+Estas entidades se dividen, a su vez, en varios objetos implementados en el servidor y algunos mostrados en los diagramas de clases.
+
 \section{Diseño del cliente}
 
+El cliente funciona por medio de las siguientes entidades y eventos:
+\begin{itemize}
+	\item \textbf{Entidades observadas:} Son entidades que almacenan datos (nombres de usuario, estados, etc.) y los validan, pero cuyas modificaciones (cambio de estado) pueden ser notadas por las entidades que las utilicen.
+	\item \textbf{Conexiones con el servidor:} Son entidades encargadas de realizar la escritura y lectura directa de mensajes con el servidor.
+	\item \textbf{Emisores y receptores de mensajes:} Sirven como puente o interfaz entre las acciones que puede realizar el usuario (descritas en el protocolo) y la emisión de dicho mensaje o la recepción de alguno, mediante las conexiones con el servidor.
+	\item \textbf{Traductores de mensajes:} Sirven para traducir mensajes recibidos y emitidos por el cliente al servidor en un formato compatible con los sockets.
+	\item \textbf{Proveedores de contexto:} Son todas las entidades que proveen datos y comandos como puente entre el usuario y la emisión/recepción de mensajes.
+	\item \textbf{Vistas:} Son las entidades encargadas de comunicarse con los proveedores de contexto para comunicarse a su vez con el servidor. Dependen del contexto para saber qué mostrarle y permitirle hacer al usuario.
+\end{itemize}
